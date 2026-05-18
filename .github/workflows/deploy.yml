@@ -32,7 +32,10 @@ env:
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
-  # ── build both images in Azure Container Registry ─────────────────────────
+  # ── build both images and push to ACR ─────────────────────────────────────
+  # The runner builds with plain `docker build` (native linux/amd64 — no
+  # emulation needed). ACR Tasks (`az acr build`) is NOT used: it is blocked
+  # on Azure for Students subscriptions.
   build:
     runs-on: ubuntu-latest
     steps:
@@ -43,28 +46,35 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Log Docker in to ACR
+        run: az acr login --name "$ACR"
+
       - name: Build & push backend image
         run: |
-          az acr build --registry "$ACR" \
-            --image "poet-backend:$IMAGE_TAG" \
-            --image "poet-backend:latest" \
+          docker build \
             -f apps/backend/Dockerfile \
+            -t "$ACR.azurecr.io/poet-backend:$IMAGE_TAG" \
+            -t "$ACR.azurecr.io/poet-backend:latest" \
             ./apps/backend
+          docker push "$ACR.azurecr.io/poet-backend:$IMAGE_TAG"
+          docker push "$ACR.azurecr.io/poet-backend:latest"
 
       # NEXT_PUBLIC_* values are inlined into the client bundle at build time,
       # so they are passed as build args (see apps/web/Dockerfile). The web
       # build context is the monorepo root so workspace packages resolve.
       - name: Build & push web image
         run: |
-          az acr build --registry "$ACR" \
-            --image "poet-web:$IMAGE_TAG" \
-            --image "poet-web:latest" \
+          docker build \
             -f apps/web/Dockerfile \
+            -t "$ACR.azurecr.io/poet-web:$IMAGE_TAG" \
+            -t "$ACR.azurecr.io/poet-web:latest" \
             --build-arg NEXT_PUBLIC_MEDUSA_BACKEND_URL='${{ vars.NEXT_PUBLIC_MEDUSA_BACKEND_URL }}' \
             --build-arg NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY='${{ vars.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY }}' \
             --build-arg NEXT_PUBLIC_MEDUSA_REGION_ID='${{ vars.NEXT_PUBLIC_MEDUSA_REGION_ID }}' \
             --build-arg NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY='${{ vars.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}' \
             .
+          docker push "$ACR.azurecr.io/poet-web:$IMAGE_TAG"
+          docker push "$ACR.azurecr.io/poet-web:latest"
 
   # ── run DB migrations on the runner host (NOT in a container) ──────────────
   migrate:

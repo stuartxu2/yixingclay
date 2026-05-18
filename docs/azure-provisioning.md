@@ -73,26 +73,36 @@ az containerapp env create \
 
 ## 5. First image build
 
-The container apps need an image to start from. Build both images in ACR once
-(the CI pipeline does this on every push thereafter):
+The container apps need an image to start from.
+
+> **ACR Tasks (`az acr build`) is blocked on Azure for Students** — cloud
+> builds are not permitted. Build locally with Docker and push instead. Azure
+> Container Apps runs `linux/amd64`; on an Apple-Silicon Mac you must
+> cross-build with buildx + QEMU.
+
+One-time buildx setup (Apple Silicon):
 
 ```bash
-# from the monorepo root
-az acr build --registry "$ACR" --image poet-backend:latest \
-  -f apps/backend/Dockerfile ./apps/backend
-
-az acr build --registry "$ACR" --image poet-web:latest \
-  -f apps/web/Dockerfile \
-  --build-arg NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://api.yixingclay.com \
-  --build-arg NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_... \
-  --build-arg NEXT_PUBLIC_MEDUSA_REGION_ID=reg_... \
-  --build-arg NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_... \
-  .
+docker run --privileged --rm tonistiigi/binfmt --install amd64
+docker buildx create --name xbuilder --driver docker-container --use --bootstrap
+az acr login --name "$ACR"
 ```
 
-> The web image inlines `NEXT_PUBLIC_*` at build time. The publishable key and
-> region id come from the backend — if you don't have them yet, deploy the
-> backend first (steps 6–7), create them in the Medusa admin, then rebuild web.
+Build & push the backend image:
+
+```bash
+docker buildx build --platform linux/amd64 --builder xbuilder \
+  -f apps/backend/Dockerfile \
+  -t "$ACR.azurecr.io/poet-backend:latest" \
+  --push ./apps/backend
+```
+
+The web image is built later (step 6a) once the Medusa publishable key and
+region id exist. It inlines `NEXT_PUBLIC_*` at build time, so those values
+must be known before its build.
+
+> On every subsequent deploy the GitHub Actions pipeline builds both images
+> (natively, on an amd64 runner — fast, no emulation) and pushes them.
 
 ## 6. Backend container app (`poet-backend`)
 
