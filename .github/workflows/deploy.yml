@@ -72,6 +72,8 @@ jobs:
             --build-arg NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY='${{ vars.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY }}' \
             --build-arg NEXT_PUBLIC_MEDUSA_REGION_ID='${{ vars.NEXT_PUBLIC_MEDUSA_REGION_ID }}' \
             --build-arg NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY='${{ vars.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}' \
+            --build-arg NEXT_PUBLIC_POSTHOG_KEY='${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}' \
+            --build-arg NEXT_PUBLIC_POSTHOG_HOST='${{ vars.NEXT_PUBLIC_POSTHOG_HOST }}' \
             .
           docker push "$ACR.azurecr.io/poet-web:$IMAGE_TAG"
           docker push "$ACR.azurecr.io/poet-web:latest"
