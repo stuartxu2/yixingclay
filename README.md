@@ -58,3 +58,4 @@ answer engines:
   UX so the MedusaJS backend can drop straight in without UI changes.
 - The product catalogue lives in `lib/products.ts` as seed data, shaped close
   to a Medusa product for the same reason.
+# yixingclay
