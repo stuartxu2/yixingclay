@@ -153,6 +153,33 @@ export default async function orderPlacedHandler({
       "[order-placed] ORDER_NOTIFICATION_EMAIL not set — skipping staff alert",
     )
   }
+
+  // ── 3. Analytics: server-confirmed order event ────────────────────────────
+  // Not ad-blockable, unlike the storefront's checkout_completed event.
+  try {
+    const analytics = container.resolve(Modules.ANALYTICS)
+    await analytics.track({
+      event: "order_placed",
+      actor_id: order.customer_id ?? email,
+      properties: {
+        order_id: order.id,
+        display_id: displayId,
+        total,
+        currency_code: currency,
+        item_count: items.reduce((n, i) => n + i.quantity, 0),
+        items: items.map((i) => ({
+          title: i.title,
+          quantity: i.quantity,
+          unit_price: i.unit_price,
+        })),
+      },
+    })
+    console.log(`[order-placed] analytics tracked order #${displayId}`)
+  } catch (e) {
+    console.warn(
+      `[order-placed] analytics track failed: ${(e as Error).message}`,
+    )
+  }
 }
 
 export const config: SubscriberConfig = {
