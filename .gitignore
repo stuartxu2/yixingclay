@@ -26,3 +26,6 @@ yarn-error.log*
 .env
 .env*.local
 .azure-deploy.env
+
+# Claude Code runtime artifacts
+.claude/scheduled_tasks.lock
