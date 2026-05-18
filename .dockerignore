@@ -1,0 +1,16 @@
+# Context for the storefront image (built from the monorepo root).
+**/node_modules
+**/.next
+**/.turbo
+**/.medusa
+.git
+.gitignore
+**/*.log
+**/.env*
+**/.DS_Store
+
+# Not needed by the web build
+apps/backend
+apps/app
+images
+ONBOARDING.md

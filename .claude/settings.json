@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(/Users/stuartxu/Documents/claude_website_building/index.html)"
+    ]
+  },
+  "enabledPlugins": {
+    "ecommerce-storefront@medusa": true
+  }
+}

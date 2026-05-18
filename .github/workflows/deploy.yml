@@ -1,0 +1,110 @@
+# Build → migrate → deploy pipeline for yixingclay.com (Azure).
+#
+# Trigger: push to main, or manual run.
+# Flow:
+#   build    – build both images in ACR (cloud build, no Docker on runner)
+#   migrate  – run `medusa db:migrate` ON THE RUNNER HOST against the prod DB
+#              (running it inside the container hangs — see apps/backend/Dockerfile)
+#   deploy   – roll both Azure Container Apps to the new image tag
+#
+# Required GitHub configuration (Settings → Secrets and variables → Actions):
+#   Secrets:
+#     AZURE_CREDENTIALS  – service-principal JSON (see docs/azure-provisioning.md)
+#     DATABASE_URL       – prod Postgres connection string (for the migrate step)
+#   Variables:
+#     ACR_NAME                          – registry name, e.g. poetacr
+#     AZURE_RESOURCE_GROUP              – resource group, e.g. poet-rg
+#     NEXT_PUBLIC_MEDUSA_BACKEND_URL    – https://api.yixingclay.com
+#     NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+#     NEXT_PUBLIC_MEDUSA_REGION_ID
+#     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+
+name: Deploy to Azure
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  ACR: ${{ vars.ACR_NAME }}
+  RG: ${{ vars.AZURE_RESOURCE_GROUP }}
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  # ── build both images in Azure Container Registry ─────────────────────────
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build & push backend image
+        run: |
+          az acr build --registry "$ACR" \
+            --image "poet-backend:$IMAGE_TAG" \
+            --image "poet-backend:latest" \
+            -f apps/backend/Dockerfile \
+            ./apps/backend
+
+      # NEXT_PUBLIC_* values are inlined into the client bundle at build time,
+      # so they are passed as build args (see apps/web/Dockerfile). The web
+      # build context is the monorepo root so workspace packages resolve.
+      - name: Build & push web image
+        run: |
+          az acr build --registry "$ACR" \
+            --image "poet-web:$IMAGE_TAG" \
+            --image "poet-web:latest" \
+            -f apps/web/Dockerfile \
+            --build-arg NEXT_PUBLIC_MEDUSA_BACKEND_URL='${{ vars.NEXT_PUBLIC_MEDUSA_BACKEND_URL }}' \
+            --build-arg NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY='${{ vars.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY }}' \
+            --build-arg NEXT_PUBLIC_MEDUSA_REGION_ID='${{ vars.NEXT_PUBLIC_MEDUSA_REGION_ID }}' \
+            --build-arg NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY='${{ vars.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}' \
+            .
+
+  # ── run DB migrations on the runner host (NOT in a container) ──────────────
+  migrate:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/backend/package-lock.json
+
+      - name: Install backend dependencies
+        working-directory: apps/backend
+        run: npm ci
+
+      - name: Apply migrations
+        working-directory: apps/backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npx medusa db:migrate
+
+  # ── roll the Container Apps to the freshly built tag ──────────────────────
+  deploy:
+    needs: migrate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy backend
+        run: |
+          az containerapp update -n poet-backend -g "$RG" \
+            --image "$ACR.azurecr.io/poet-backend:$IMAGE_TAG"
+
+      - name: Deploy web
+        run: |
+          az containerapp update -n poet-web -g "$RG" \
+            --image "$ACR.azurecr.io/poet-web:$IMAGE_TAG"

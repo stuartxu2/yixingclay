@@ -1,0 +1,23 @@
+/**
+ * PO/ET design tokens as CSS custom properties.
+ * Imported by the web storefront's Tailwind theme; the single source of
+ * truth for brand colour. Palette: nipponcolors.com.
+ */
+:root {
+  /* Surfaces */
+  --poet-paper: #fcfaf2;     /* 白練  Shironeri */
+  --poet-surface: #fffffb;   /* 胡粉  Gofun     */
+  --poet-sand: #dac9a6;      /* 鳥の子 Torinoko  */
+
+  /* Ink */
+  --poet-ink: #1c1c1c;       /* 墨   Sumi       */
+  --poet-kogecha: #563f2e;   /* 焦茶  Kogecha    */
+  --poet-ink-faint: #b4a582; /* 利休白茶 Rikyushiracha */
+
+  /* Clay accents */
+  --poet-clay: #9a5034;      /* 弁柄  Bengara    */
+  --poet-clay-deep: #734338; /* 海老茶 Ebicha     */
+
+  /* Jade */
+  --poet-jade: #a8d8b9;      /* 白緑  Byakuroku  */
+}
