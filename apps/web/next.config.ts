@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
     formats: ["image/webp"],
     // Cache optimized images for 24 h so repeated visits skip re-encoding.
     minimumCacheTTL: 86400,
+    // Product images uploaded through the Medusa admin are served from Azure
+    // Blob Storage (see apps/backend/src/modules/file-azure).
+    remotePatterns: [
+      { protocol: "https", hostname: "*.blob.core.windows.net" },
+    ],
   },
   // Compile workspace packages shipped as TypeScript source.
   transpilePackages: ["@yixingclay/ts-types"],

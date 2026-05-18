@@ -36,5 +36,23 @@ module.exports = defineConfig({
         ],
       },
     },
+    {
+      // File storage on Azure Blob. Containers are stateless, so the default
+      // local-disk provider loses admin-uploaded images on every redeploy —
+      // see src/modules/file-azure.
+      resolve: "@medusajs/medusa/file",
+      options: {
+        providers: [
+          {
+            resolve: "./src/modules/file-azure",
+            id: "azure-blob",
+            options: {
+              connectionString: process.env.AZURE_STORAGE_CONNECTION_STRING,
+              containerName: process.env.AZURE_STORAGE_CONTAINER || "media",
+            },
+          },
+        ],
+      },
+    },
   ],
 })
