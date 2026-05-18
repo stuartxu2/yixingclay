@@ -23,6 +23,19 @@ const nextConfig: NextConfig = {
   // production container — see apps/web/Dockerfile.
   output: "standalone",
   poweredByHeader: false,
+  // Proxy PostHog ingestion through our own origin so the browser only ever
+  // talks to yixingclay.com/ingest — first-party requests survive ad-blockers.
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      { source: "/ingest/:path*", destination: "https://us.i.posthog.com/:path*" },
+    ];
+  },
+  // PostHog ingestion paths must not be trailing-slash-redirected.
+  skipTrailingSlashRedirect: true,
 };
 
 export default nextConfig;
