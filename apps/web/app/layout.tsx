@@ -8,6 +8,7 @@ import { CartDrawer } from "@/components/cart/cart-drawer";
 import { AuthProvider } from "@/components/auth/auth-context";
 import { AnnouncementBar } from "@/components/announcement-bar";
 import { RevealObserver } from "@/components/reveal-observer";
+import { PostHogProvider } from "@/components/posthog-provider";
 
 /**
  * Ekster — the studio typeface, loaded locally so it ships from our own
@@ -106,12 +107,14 @@ export default function RootLayout({
           Skip to content
         </a>
         <AnnouncementBar />
-        <AuthProvider>
-          <CartProvider>
-            {children}
-            <CartDrawer />
-          </CartProvider>
-        </AuthProvider>
+        <PostHogProvider>
+          <AuthProvider>
+            <CartProvider>
+              {children}
+              <CartDrawer />
+            </CartProvider>
+          </AuthProvider>
+        </PostHogProvider>
         <RevealObserver />
       </body>
     </html>
