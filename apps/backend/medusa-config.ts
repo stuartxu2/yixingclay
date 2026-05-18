@@ -72,4 +72,30 @@ module.exports = defineConfig({
       },
     },
   ],
+  plugins: [
+    {
+      resolve: "@rokmohar/medusa-plugin-meilisearch",
+      options: {
+        config: {
+          host: process.env.MEILISEARCH_HOST ?? "",
+          apiKey: process.env.MEILISEARCH_API_KEY ?? "",
+        },
+        settings: {
+          // The key `products` is the Meilisearch index name.
+          products: {
+            type: "products",
+            enabled: true,
+            // description is indexed for search but intentionally not returned in results
+            fields: ["id", "title", "description", "handle", "thumbnail"],
+            indexSettings: {
+              searchableAttributes: ["title", "description"],
+              displayedAttributes: ["id", "title", "handle", "thumbnail"],
+              filterableAttributes: ["id", "handle"],
+            },
+            primaryKey: "id",
+          },
+        },
+      },
+    },
+  ],
 })
