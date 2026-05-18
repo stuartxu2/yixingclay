@@ -4,6 +4,7 @@ import { useState } from "react";
 import { formatPrice } from "@/lib/products";
 import { useCart } from "./cart/cart-context";
 import { useAuth } from "./auth/auth-context";
+import { track } from "@/lib/analytics";
 
 /** Quantity stepper + add-to-tray action for the product detail page. */
 export function AddToTray({
@@ -64,7 +65,10 @@ export function AddToTray({
 
       <button
         type="button"
-        onClick={() => add({ slug, name, price: unit }, qty)}
+        onClick={() => {
+          add({ slug, name, price: unit }, qty);
+          track("add_to_cart", { slug, title: name, price: unit, quantity: qty });
+        }}
         className="group inline-flex flex-1 items-center justify-center gap-2.5 rounded-full bg-ink px-8 py-4 text-[14px] font-medium text-paper transition-all duration-300 hover:-translate-y-0.5 hover:bg-clay"
       >
         Add to tea tray

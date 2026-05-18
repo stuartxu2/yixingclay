@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { medusa } from "@/lib/medusa";
+import { identifyUser, resetUser } from "@/lib/analytics";
 
 interface Customer {
   id: string;
@@ -59,7 +60,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     medusa.store.customer
       .retrieve()
-      .then(({ customer: c }) => setCustomer(c as Customer))
+      .then(({ customer: c }) => {
+        setCustomer(c as Customer);
+        identifyUser((c as Customer).id, { email: (c as Customer).email });
+      })
       .catch(() => setCustomer(null))
       .finally(() => setLoading(false));
   }, []);
@@ -108,6 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await medusa.auth.login("customer", "emailpass", { email, password });
     const { customer: c } = await medusa.store.customer.retrieve();
     setCustomer(c as Customer);
+    identifyUser((c as Customer).id, { email: (c as Customer).email });
   }, []);
 
   const register = useCallback(
@@ -131,6 +136,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // required for /store/orders, the account page, and linking the cart.
       await medusa.auth.login("customer", "emailpass", { email, password });
       setCustomer(c as Customer);
+      identifyUser((c as Customer).id, { email: (c as Customer).email });
     },
     []
   );
@@ -138,6 +144,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = useCallback(async () => {
     await medusa.auth.logout();
     setCustomer(null);
+    resetUser();
   }, []);
 
   return (

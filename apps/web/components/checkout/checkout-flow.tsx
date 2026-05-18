@@ -9,6 +9,7 @@ import { useCart } from "@/components/cart/cart-context";
 import { useAuth } from "@/components/auth/auth-context";
 import { formatPrice } from "@/lib/products";
 import { medusa } from "@/lib/medusa";
+import { track } from "@/lib/analytics";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -350,6 +351,11 @@ export function CheckoutFlow() {
     }
   }, [customer]);
 
+  useEffect(() => {
+    track("checkout_started");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Step 1 → 2: optionally register, update cart, fetch shipping options
   const handleContactSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -469,6 +475,7 @@ export function CheckoutFlow() {
   const handleOrderSuccess = useCallback(
     (orderId: string) => {
       closeCart();
+      track("checkout_completed", { order_id: orderId });
       router.push(`/order/${orderId}`);
     },
     [closeCart, router]

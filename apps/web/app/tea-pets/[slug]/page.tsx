@@ -17,6 +17,7 @@ import { ProductGallery } from "@/components/product-gallery";
 import { AddToTray } from "@/components/add-to-tray";
 import { ProductPrice } from "@/components/product-price";
 import { ProductCard } from "@/components/product-card";
+import { TrackOnMount } from "@/components/analytics/track-on-mount";
 
 /** Pre-render every tea pet at build time; refresh on a one-hour ISR window. */
 export const revalidate = 3600;
@@ -77,6 +78,14 @@ export default async function ProductPage({ params }: Params) {
 
   return (
     <>
+      <TrackOnMount
+        event="product_viewed"
+        properties={{
+          slug: product.slug,
+          title: product.name,
+          price: product.price,
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
