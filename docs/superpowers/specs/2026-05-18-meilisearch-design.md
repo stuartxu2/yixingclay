@@ -1,113 +1,152 @@
 # Meilisearch Storefront Search — Design Spec
 
 **Date:** 2026-05-18
-**Status:** Approved (design); pending spec review
+**Status:** Approved (design, revised after plugin inspection); pending spec review
 
 ## Goal
 
 Add fast, typo-tolerant product search to the yixingclay.com storefront, powered by
-a self-hosted Meilisearch instance on Azure. The storefront browser queries
-Meilisearch directly with a search-only key; Medusa keeps the index in sync.
+a self-hosted Meilisearch instance on Azure. The storefront searches **through the
+Medusa backend** — no Meilisearch credentials reach the browser.
 
 ## Architecture
 
 ```
-Medusa backend ──(admin key, index writes)──▶  Meilisearch (Azure Container App)
-                                                       ▲
-Storefront browser ──(search-only key, queries)────────┘
+Medusa backend ──(plugin: index writes + search)──▶  Meilisearch
+   │                                                  (Azure Container App,
+   │ exposes GET /store/meilisearch/products            INTERNAL ingress)
+   ▼
+Storefront browser ──(Medusa publishable key)──▶ Medusa /store/meilisearch/products
 ```
 
 Three moving parts:
 
 1. **Meilisearch service** — a new Azure Container App `poet-meilisearch` running the
-   official `getmeili/meilisearch` image. External ingress, port 7700, protected by a
-   master key. Storage is **ephemeral**: the container has no persistent volume, so the
-   index is rebuilt from Medusa after any restart (see "Re-sync job").
+   official `getmeili/meilisearch` image. **Internal ingress** (reachable only from
+   inside the `poet-env` Container Apps environment), port 7700, protected by a
+   master key. Storage is **ephemeral** — no persistent volume; the index is rebuilt
+   from Medusa automatically (see "Re-indexing").
 
-2. **Medusa plugin** — `@rokmohar/medusa-plugin-meilisearch` v1.3.8 (peer-dep
-   `@medusajs/medusa ^2.13.4`; backend runs 2.15.2 — compatible) added to
-   `apps/backend/medusa-config.ts`. It subscribes to product create/update/delete
-   events and writes to the `products` index.
+2. **Medusa plugin** — `@rokmohar/medusa-plugin-meilisearch` v1.3.8 (compatibility
+   table: `^1.3.7` ⇒ Medusa `^2.13.4`; backend runs 2.15.2 — compatible) added to the
+   `plugins` array in `apps/backend/medusa-config.ts`. The plugin bundles:
+   - Event subscribers that index product create/update/delete in real time.
+   - A scheduled job `meilisearch-products-index` (runs every minute) that performs a
+     **full re-index** via its `syncProductsWorkflow`.
+   - Store API routes `GET /store/meilisearch/products` and `/products-hits`.
 
-3. **Storefront search overlay** — a `SearchOverlay` client component using the
-   `meilisearch` JS client. A search icon in `site-header.tsx` opens it; debounced
-   live queries hit Meilisearch directly; results link to `/tea-pets/[slug]`.
+   Because the plugin's subscribers and job require Medusa's worker processing, the
+   backend must run in `shared` mode (the default). It is a single-instance
+   monolith, so **`MEDUSA_WORKER_MODE` / `WORKER_MODE` must remain unset** — no
+   change needed, just don't introduce them.
+
+3. **Storefront search overlay** — a `SearchOverlay` client component. A search icon
+   in `site-header.tsx` opens it; debounced live queries call the Medusa store
+   endpoint `GET /store/meilisearch/products` (via the existing `@medusajs/js-sdk`
+   client, which attaches the publishable key). Results render thumbnail + title +
+   price and link to `/tea-pets/[slug]`.
 
 ## Meilisearch service (Azure)
 
 Provisioned **once**, manually, via `az` — not part of the CI build pipeline (it
 runs a stock public image, nothing to build).
 
-- App name: `poet-meilisearch`, resource group `poet-rg`, env `poet-env`.
-- Image: `getmeili/meilisearch:v1.x` (pin a concrete minor version).
-- Ingress: external, target port 7700.
+- App name: `poet-meilisearch`, resource group `poet-rg`, environment `poet-env`.
+- Image: `getmeili/meilisearch:v1.13` (pin a concrete minor version).
+- Ingress: **internal**, target port 7700.
 - Env vars on the container:
   - `MEILI_MASTER_KEY` — generated secret (stored in `.azure-deploy.env`).
   - `MEILI_ENV=production`.
   - `MEILI_NO_ANALYTICS=true`.
-- No volume mount — index lives in container memory/disk and is lost on restart.
-- After first deploy, derive two scoped keys from the master key via the Meilisearch
-  `/keys` API:
-  - **Admin key** — search + write on `products`. Used by the Medusa backend.
-  - **Search-only key** — `search` action on `products`. Safe to ship in the
-    browser bundle.
+- No volume mount — the index lives in container storage and is lost on restart;
+  the every-minute re-index job repopulates it.
 
-Document the provisioning commands in `docs/azure-provisioning.md`.
+Provisioning commands documented in `docs/azure-provisioning.md`.
 
 ## Medusa plugin configuration
 
-In `apps/backend/medusa-config.ts`, add the plugin to `plugins` (or `modules` per
-the plugin's README) with this `products` index config:
+In `apps/backend/medusa-config.ts`, add to the `plugins` array:
 
-- **searchableAttributes:** `title`, `description`, clay type / 泥料 attribute.
-- **displayedAttributes:** `id`, `title`, `handle`, `thumbnail`, `price`.
-- **filterableAttributes:** (none required for v1; keep minimal).
+```ts
+plugins: [
+  {
+    resolve: "@rokmohar/medusa-plugin-meilisearch",
+    options: {
+      config: {
+        host: process.env.MEILISEARCH_HOST ?? "",
+        apiKey: process.env.MEILISEARCH_API_KEY ?? "",
+      },
+      settings: {
+        products: {
+          type: "products",
+          enabled: true,
+          fields: ["id", "title", "description", "handle", "thumbnail"],
+          indexSettings: {
+            searchableAttributes: ["title", "description"],
+            displayedAttributes: ["id", "title", "handle", "thumbnail"],
+            filterableAttributes: ["id", "handle"],
+          },
+          primaryKey: "id",
+        },
+      },
+    },
+  },
+],
+```
+
+No `i18n` block — the catalog is single-language for v1. Prices are NOT indexed;
+the store endpoint enriches search hits with live Medusa `calculated_price`, so the
+index only needs identity/display fields.
 
 New backend env vars:
-- `MEILISEARCH_HOST` — `https://poet-meilisearch.<region>.azurecontainerapps.io`.
-- `MEILISEARCH_ADMIN_API_KEY` — the scoped admin key.
+- `MEILISEARCH_HOST` — `http://poet-meilisearch:7700` (internal Container Apps DNS).
+- `MEILISEARCH_API_KEY` — the Meilisearch master key.
 
 Both added to the backend Container App via `az containerapp update --set-env-vars`
 and recorded in `.azure-deploy.env`.
 
-## Re-sync job (ephemeral-index backfill)
+## Re-indexing
 
-Because the index is ephemeral, a Medusa scheduled job in
-`apps/backend/src/jobs/meilisearch-resync.ts` performs a periodic **full re-index**:
-list all products via the product module and upsert them into the `products` index.
-
-- Schedule: every 6 hours (cron `0 */6 * * *`).
-- This is the safety net if the container restarts between event-driven updates;
-  event subscriptions keep the index live in between.
+No custom job is needed. The plugin's bundled `meilisearch-products-index` job runs
+every minute and full-re-indexes all products, which also serves as the backfill
+for the ephemeral index after any Meilisearch restart. Event subscribers keep the
+index live between job runs.
 
 ## Storefront search overlay
 
 New files in `apps/web`:
-- `components/search/search-overlay.tsx` — client component. Full-screen / dropdown
-  overlay with a text input; debounced (~250 ms) queries via the `meilisearch` JS
-  client; renders result rows (thumbnail + title + price) linking to
-  `/tea-pets/[slug]`. Closes on Escape / backdrop click.
-- `lib/search.ts` — constructs the `meilisearch` client from env; exposes a typed
-  `searchProducts(query)` helper. No-ops gracefully if env is unset.
+- `lib/search.ts` — `searchProducts(query)` helper. Calls
+  `GET /store/meilisearch/products` through the `@medusajs/js-sdk` client, passing
+  `query`, `limit`, `region_id` (`NEXT_PUBLIC_MEDUSA_REGION_ID`), and
+  `currency_code`. Returns a typed array of `{ id, title, handle, thumbnail, price }`.
+  Returns `[]` on error or empty query — callers never need to guard.
+- `components/search/search-overlay.tsx` — client component. A dropdown/overlay with
+  a text input; debounced (~250 ms) calls to `searchProducts`; renders result rows
+  (thumbnail + title + price) linking to `/tea-pets/[slug]`. Closes on Escape /
+  backdrop click.
 
 Modify `components/site-header.tsx` — add a search icon button that opens the
 overlay.
 
-New web env vars (inlined at build time, so passed as Docker build args in
-`deploy.yml` and `build-image.yml`):
-- `NEXT_PUBLIC_MEILISEARCH_HOST`
-- `NEXT_PUBLIC_MEILISEARCH_SEARCH_KEY` — the search-only scoped key.
+**No new web env vars and no `meilisearch` JS dependency** — the storefront reaches
+Meilisearch only through the Medusa backend it already talks to.
 
 ## Out of scope (YAGNI)
 
-- Faceted filtering, sorting UI, search-result pages with pagination.
+- Faceted filtering, sorting UI, dedicated search-results page with pagination.
 - Indexing collections, artisans, or blog content.
+- Semantic / vector search (the plugin supports it; not enabled for v1).
 - Persistent Meilisearch storage / Azure Files volume.
+- i18n indexing.
 
 ## Testing
 
-- Backend: unit-test the re-sync job's product-to-document mapping.
-- Web: test `searchProducts` no-ops without env; test the debounce/overlay behavior
-  of `SearchOverlay`.
-- Manual: provision `poet-meilisearch`, confirm products index, type a query in the
-  storefront, confirm a result links to the correct `/tea-pets/[slug]`.
+- Web unit test: `searchProducts` returns `[]` for an empty/whitespace query
+  without making a request.
+- Web unit test: `searchProducts` maps a store-endpoint product payload to the
+  `{ id, title, handle, thumbnail, price }` result shape.
+- Web component test: `SearchOverlay` debounces input and renders result rows
+  linking to the correct `/tea-pets/[slug]`.
+- Manual: provision `poet-meilisearch`, deploy, wait for the index job, hit
+  `GET /store/meilisearch/products?query=…` and confirm hits; type a query in the
+  storefront and confirm a result links to the correct product page.
