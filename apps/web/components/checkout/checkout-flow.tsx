@@ -109,7 +109,13 @@ function OrderSummary({
   subtotal,
   shippingAmount,
 }: {
-  lines: { slug: string; name: string; price: number; quantity: number }[];
+  lines: {
+    slug: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image?: string;
+  }[];
   subtotal: number;
   shippingAmount: number;
 }) {
@@ -122,7 +128,7 @@ function OrderSummary({
           <li key={line.slug} className="flex items-center gap-3.5">
             <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-cream">
               <Image
-                src={`/products/${line.slug}/front.jpg`}
+                src={line.image ?? `/products/${line.slug}/front.jpg`}
                 alt={line.name}
                 fill
                 sizes="56px"

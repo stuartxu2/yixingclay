@@ -8,6 +8,7 @@
 
 import { SITE } from "./site";
 import { PRODUCTS, PRICE_FLOOR, heroImage, type Product } from "./products";
+import { ARTISTS, type Teapot } from "./teapots";
 
 const abs = (path: string) => `${SITE.url}${path}`;
 
@@ -73,6 +74,42 @@ export function productDetailSchema(p: Product) {
   return {
     "@context": "https://schema.org",
     ...productSchema(p, `${SITE.url}/tea-pets/${p.slug}`),
+  };
+}
+
+/** Standalone Product schema for a single teapot detail page. */
+export function teapotDetailSchema(t: Teapot) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${t.name} (${t.zh})`,
+    description: t.blurb,
+    sku: t.sku,
+    category: "Yixing teapot",
+    image: abs(t.images[0]),
+    material: t.clay,
+    brand: { "@type": "Brand", name: SITE.name },
+    width: { "@type": "QuantitativeValue", value: t.capacity, unitCode: "MLT" },
+    weight: { "@type": "QuantitativeValue", value: t.weight, unitCode: "GRM" },
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Maker",
+        value: `${ARTISTS[t.artist].name} (${ARTISTS[t.artist].zh})`,
+      },
+      { "@type": "PropertyValue", name: "Capacity", value: `${t.capacity} ml` },
+      { "@type": "PropertyValue", name: "Form", value: t.shape },
+    ],
+    offers: {
+      "@type": "Offer",
+      price: (t.price / 100).toFixed(2),
+      priceCurrency: SITE.currency,
+      availability:
+        t.stock > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+      url: `${SITE.url}/teapots/${t.slug}`,
+    },
   };
 }
 

@@ -4,17 +4,22 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { SectionHead } from "@/components/section-head";
-import { Cta } from "@/components/cta";
+import { TeapotCollection } from "@/components/teapot-collection";
 import { breadcrumbSchema } from "@/lib/seo";
 import { SITE } from "@/lib/site";
-import { TEAPOTS } from "@/lib/teapots";
+import {
+  TEAPOTS,
+  TEAPOT_PRICE_FLOOR,
+  TEAPOT_PRICE_CEILING,
+} from "@/lib/teapots";
+import { formatPrice } from "@/lib/products";
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Yixing Teapots",
   description:
-    "The PO/ET teapots — handmade Yixing zisha teapots thrown from purple sand clay. Classic Xishi, Shi Piao, and Ju Lun Zhu forms, unglazed and made to order.",
+    "The PO/ET teapots — 24 handmade Yixing zisha teapots thrown from purple sand clay. Classic Xishi, Shi Piao, gourd and bamboo forms, unglazed and ready to brew.",
   alternates: { canonical: "/teapots" },
   openGraph: {
     type: "website",
@@ -28,7 +33,7 @@ export const metadata: Metadata = {
 
 const trail = [
   { name: "Home", path: "/" },
-  { name: "Teapots", path: "/teapots" },
+  { name: "The Pots", path: "/teapots" },
 ];
 
 export default function TeapotsPage() {
@@ -37,7 +42,7 @@ export default function TeapotsPage() {
     "@type": "ItemList",
     name: "PO/ET Yixing Teapots",
     description:
-      "Handmade Yixing zisha teapots thrown from purple sand clay — classic Chinese teapot forms, unglazed and made to order.",
+      "Handmade Yixing zisha teapots thrown from purple sand clay — classic Chinese teapot forms, unglazed and ready to brew.",
     numberOfItems: TEAPOTS.length,
     itemListElement: TEAPOTS.map((pot, i) => ({
       "@type": "ListItem",
@@ -46,10 +51,21 @@ export default function TeapotsPage() {
         "@type": "Product",
         name: `${pot.name} (${pot.zh})`,
         description: pot.blurb,
+        sku: pot.sku,
         material: pot.clay,
         category: "Yixing teapot",
         brand: { "@type": "Brand", name: SITE.name },
-        image: `${SITE.url}${pot.image}`,
+        image: `${SITE.url}${pot.images[0]}`,
+        offers: {
+          "@type": "Offer",
+          price: (pot.price / 100).toFixed(2),
+          priceCurrency: SITE.currency,
+          availability:
+            pot.stock > 0
+              ? "https://schema.org/InStock"
+              : "https://schema.org/OutOfStock",
+          url: `${SITE.url}/teapots/${pot.slug}`,
+        },
       },
     })),
   };
@@ -85,10 +101,12 @@ export default function TeapotsPage() {
             Teapots, thrown to{" "}
             <em className="font-normal not-italic text-clay">pour</em>.
           </h1>
-          <p className="mt-6 max-w-[46ch] text-[17px] font-light text-ink-soft">
+          <p className="mt-6 max-w-[48ch] text-[17px] font-light text-ink-soft">
             PO is the pot; ET is the pet. The same Yixing purple sand clay that
             becomes our tea pets is thrown, paddled, and fired into teapots —
-            unglazed, single-walled, and made to brew.
+            unglazed, single-walled, and made to brew. {TEAPOTS.length} pots in
+            stock, from {formatPrice(TEAPOT_PRICE_FLOOR)} to{" "}
+            {formatPrice(TEAPOT_PRICE_CEILING)}.
           </p>
 
           <div className="relative mt-10 aspect-[16/7] overflow-hidden rounded-2xl bg-cream">
@@ -135,96 +153,21 @@ export default function TeapotsPage() {
           </div>
         </section>
 
-        {/* The teapots — alternating rows */}
+        {/* The teapots — filterable collection */}
         <section className="mt-20" aria-labelledby="the-teapots">
           <SectionHead
             id="the-teapots"
-            kicker="Three Forms"
+            kicker="The Collection"
             title={
               <>
-                Each one a{" "}
-                <em className="font-normal not-italic text-clay">classic</em>.
+                Every teapot, sorted by{" "}
+                <em className="font-normal not-italic text-clay">clay</em>.
               </>
             }
-            note="Time-honoured Yixing shapes, each thrown by hand and fired once. Made to order in the studio."
+            note="Hand-thrown Yixing pots, each fired once and unglazed. Filter by clay body, then choose the pour that suits your tea."
           />
 
-          <div className="mt-14 flex flex-col gap-16">
-            {TEAPOTS.map((pot, i) => (
-              <article
-                key={pot.slug}
-                className="reveal grid items-center gap-8 lg:grid-cols-2 lg:gap-14"
-              >
-                <div
-                  className={`relative aspect-[4/3] overflow-hidden rounded-2xl bg-cream ${
-                    i % 2 === 1 ? "lg:order-2" : ""
-                  }`}
-                >
-                  <Image
-                    src={pot.image}
-                    alt={`${pot.name} — a ${pot.clay} Yixing teapot by PO/ET`}
-                    fill
-                    sizes="(max-width: 1024px) 90vw, 620px"
-                    className="object-cover"
-                  />
-                </div>
-
-                <div>
-                  <p className="eyebrow">{pot.shape}</p>
-                  <h3 className="mt-4 text-[clamp(26px,3vw,38px)] font-extralight tracking-[-0.02em]">
-                    {pot.name}{" "}
-                    <span className="text-ink-faint">{pot.zh}</span>
-                  </h3>
-                  <p className="mt-3 max-w-[34ch] text-[15px] font-light italic text-ink-soft">
-                    {pot.poem}
-                  </p>
-                  <p className="mt-5 max-w-[42ch] text-[15px] font-light text-ink-soft">
-                    {pot.blurb}
-                  </p>
-
-                  <dl className="mt-7 max-w-[24rem] border-t border-ink-faint/25">
-                    {[
-                      ["Clay body", pot.clay],
-                      ["Capacity", pot.capacity],
-                      ["Form", "Hand-thrown, unglazed"],
-                      ["Availability", "Made to order"],
-                    ].map(([label, value]) => (
-                      <div
-                        key={label}
-                        className="flex justify-between gap-6 border-b border-ink-faint/15 py-3 text-[13.5px]"
-                      >
-                        <dt className="text-ink-faint">{label}</dt>
-                        <dd className="font-medium">{value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* Made-to-order enquiry */}
-        <section className="mt-24 rounded-2xl bg-ink px-8 py-16 text-center sm:px-12">
-          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-paper/55">
-            Made to order
-          </p>
-          <h2 className="mx-auto mt-5 max-w-[18ch] text-[clamp(26px,3.4vw,42px)] font-extralight leading-[1.1] tracking-[-0.02em] text-paper">
-            Commission a pot from the studio.
-          </h2>
-          <p className="mx-auto mt-5 max-w-[44ch] text-[15px] font-light text-paper/65">
-            Each teapot is thrown to order — choose a form and clay, and we will
-            shape, fire, and ship it to you. Retail and wholesale enquiries
-            welcome.
-          </p>
-          <div className="mt-9 flex flex-wrap justify-center gap-4">
-            <Cta href={`mailto:${SITE.email}`} variant="light">
-              Enquire about a teapot
-            </Cta>
-            <Cta href="/#wholesale" variant="light" arrow={false}>
-              Wholesale
-            </Cta>
-          </div>
+          <TeapotCollection teapots={TEAPOTS} />
         </section>
       </main>
 

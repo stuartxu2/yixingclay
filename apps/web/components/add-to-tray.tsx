@@ -12,11 +12,16 @@ export function AddToTray({
   name,
   price,
   soldOut,
+  image,
+  href,
 }: {
   slug: string;
   name: string;
   price: number;
   soldOut?: boolean;
+  /** Thumbnail + detail route stored on the tray line (teapots vs. pets). */
+  image?: string;
+  href?: string;
 }) {
   const { add } = useCart();
   const { priceFor } = useAuth();
@@ -66,7 +71,7 @@ export function AddToTray({
       <button
         type="button"
         onClick={() => {
-          add({ slug, name, price: unit }, qty);
+          add({ slug, name, price: unit, image, href }, qty);
           track("add_to_cart", { slug, title: name, price: unit, quantity: qty });
         }}
         className="group inline-flex flex-1 items-center justify-center gap-2.5 rounded-full bg-ink px-8 py-4 text-[14px] font-medium text-paper transition-all duration-300 hover:-translate-y-0.5 hover:bg-clay"

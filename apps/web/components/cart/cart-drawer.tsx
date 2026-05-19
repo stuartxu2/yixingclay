@@ -89,16 +89,20 @@ export function CartDrawer() {
             </div>
           ) : (
             <ul className="space-y-5" role="list">
-              {lines.map((line) => (
+              {lines.map((line) => {
+                const href = line.href ?? `/tea-pets/${line.slug}`;
+                const image =
+                  line.image ?? `/products/${line.slug}/front.jpg`;
+                return (
                 <li key={line.slug} className="flex gap-4">
                   {/* Product image */}
                   <Link
-                    href={`/tea-pets/${line.slug}`}
+                    href={href}
                     onClick={closeCart}
                     className="relative h-[84px] w-[84px] shrink-0 overflow-hidden rounded-xl bg-cream"
                   >
                     <Image
-                      src={`/products/${line.slug}/front.jpg`}
+                      src={image}
                       alt={line.name}
                       fill
                       sizes="84px"
@@ -110,7 +114,7 @@ export function CartDrawer() {
                   <div className="flex flex-1 flex-col gap-2 py-0.5">
                     <div className="flex items-start justify-between gap-3">
                       <Link
-                        href={`/tea-pets/${line.slug}`}
+                        href={href}
                         onClick={closeCart}
                         className="text-[14px] font-medium leading-snug hover:text-clay transition-colors"
                       >
@@ -162,7 +166,8 @@ export function CartDrawer() {
                     </div>
                   </div>
                 </li>
-              ))}
+                );
+              })}
             </ul>
           )}
         </div>

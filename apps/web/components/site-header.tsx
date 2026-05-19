@@ -45,12 +45,12 @@ export function SiteHeader() {
 
         {/* Desktop nav */}
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex gap-9">
+          <ul className="flex gap-5 xl:gap-7">
             {NAV.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="group relative py-1.5 text-[13.5px] font-medium tracking-[0.06em] text-ink-soft transition-colors hover:text-ink"
+                  className="group relative py-1.5 text-[13px] font-medium tracking-[0.04em] text-ink-soft transition-colors hover:text-ink"
                 >
                   {item.label}
                   <span className="absolute bottom-0 left-0 h-px w-0 bg-clay transition-all duration-300 group-hover:w-full" />

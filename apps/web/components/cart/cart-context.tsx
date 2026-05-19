@@ -16,10 +16,14 @@ export interface TrayLine {
   name: string;
   price: number; // cents, per unit
   quantity: number;
+  /** Thumbnail path — lets the tray show pots and pets without a slug lookup. */
+  image?: string;
+  /** Detail-page route for this line. */
+  href?: string;
 }
 
 /** What `add` accepts — a product without a quantity. */
-type AddItem = Pick<TrayLine, "slug" | "name" | "price">;
+type AddItem = Pick<TrayLine, "slug" | "name" | "price" | "image" | "href">;
 
 interface CartValue {
   lines: TrayLine[];
@@ -62,6 +66,8 @@ function normalizeLines(raw: unknown): TrayLine[] {
         name: String(r.name ?? ""),
         price: Number(r.price ?? 0),
         quantity: qty,
+        image: typeof r.image === "string" ? r.image : undefined,
+        href: typeof r.href === "string" ? r.href : undefined,
       });
     }
   }

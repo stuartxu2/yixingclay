@@ -17,30 +17,32 @@ export const SITE = {
 } as const;
 
 export const NAV = [
-  { label: "Teapots", href: "/teapots" },
-  { label: "Tea Pets", href: "/tea-pets" },
+  { label: "Shop", href: "/shop" },
+  { label: "The Pots", href: "/teapots" },
+  { label: "The Pets", href: "/tea-pets" },
   { label: "The Clay", href: "/#clay" },
+  { label: "The Artists", href: "/artists" },
   { label: "Our Craft", href: "/#craft" },
-  { label: "Wholesale", href: "/#wholesale" },
+  { label: "About", href: "/about" },
 ] as const;
 
 export const FOOTER_LINKS = [
   {
     heading: "Shop",
     links: [
-      { label: "Teapots", href: "/teapots" },
-      { label: "All Tea Pets", href: "/tea-pets" },
-      { label: "Cats", href: "/tea-pets" },
-      { label: "Creatures", href: "/tea-pets" },
+      { label: "Everything", href: "/shop" },
+      { label: "The Pots", href: "/teapots" },
+      { label: "The Pets", href: "/tea-pets" },
+      { label: "The Artists", href: "/artists" },
     ],
   },
   {
     heading: "Studio",
     links: [
+      { label: "About PO/ET", href: "/about" },
       { label: "The Clay", href: "/#clay" },
       { label: "Our Craft", href: "/#craft" },
       { label: "The Maker", href: "/#story" },
-      { label: "Journal", href: "/#journal" },
     ],
   },
   {
