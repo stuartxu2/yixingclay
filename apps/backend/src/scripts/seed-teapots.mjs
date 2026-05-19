@@ -1,50 +1,27 @@
-import { ExecArgs } from "@medusajs/framework/types";
-import {
-  ContainerRegistrationKeys,
-  Modules,
-  ProductStatus,
-} from "@medusajs/framework/utils";
-import {
-  createInventoryLevelsWorkflow,
-  createProductCategoriesWorkflow,
-  createProductsWorkflow,
-} from "@medusajs/medusa/core-flows";
-
 /**
  * Seed the 24 PO/ET teapots into Medusa as purchasable products.
  *
  * The storefront renders teapot pages from static data in
- * `apps/web/lib/teapots.ts`, but checkout maps each handle to a Medusa
- * variant — so the catalogue needs matching products here. Product handles
- * equal the storefront slugs (`s0103`…), USD prices are in cents to match
- * `medusaToProduct`, and each variant manages inventory at its own stock
- * level.
+ * `apps/web/lib/teapots.ts`, but checkout maps each product handle to a
+ * Medusa variant — so the catalogue needs matching products here. Handles
+ * equal the storefront slugs (`s0103`…), USD prices are in cents, and each
+ * variant manages inventory at its own stock level.
  *
- * Run from apps/backend:  npx medusa exec ./src/scripts/seed-teapots.ts
+ * This hits the Medusa admin REST API directly (the running backend), the
+ * same approach as `seed-tea-pets.mjs` — no local module bootstrap needed.
+ *
+ *   node src/scripts/seed-teapots.mjs                 # → production
+ *   MEDUSA_URL=http://localhost:9000 node src/scripts/seed-teapots.mjs
+ *
  * Safe to re-run — teapots whose handle already exists are skipped.
  */
 
+const MEDUSA_URL = process.env.MEDUSA_URL ?? "https://api.yixingclay.com";
+const ADMIN_EMAIL = process.env.MEDUSA_ADMIN_EMAIL ?? "admin@yixingclay.com";
+const ADMIN_PASSWORD = process.env.MEDUSA_ADMIN_PASSWORD ?? "PoetAdmin2026!";
 const STORE_ORIGIN = "https://yixingclay.com";
 
-interface SeedTeapot {
-  slug: string;
-  name: string;
-  zh: string;
-  artist: string;
-  clay: string;
-  shape: string;
-  capacity: number;
-  dimensions: string;
-  weight: number;
-  /** Price in USD cents. */
-  price: number;
-  stock: number;
-  poem: string;
-  blurb: string;
-  featured?: boolean;
-}
-
-const TEAPOTS: SeedTeapot[] = [
+const TEAPOTS = [
   { slug: "s0103", name: "The Coin Pot", zh: "钱多多", artist: "Yao Yun", clay: "Purple Gold Sand · 紫玉金砂", shape: "Round-bellied gongfu pot", capacity: 90, dimensions: "11.3 × 7.5 × 5.2 cm", weight: 110, price: 28000, stock: 12, poem: "A small pot named for abundance.", blurb: "A compact, low-shouldered pot thrown from purple gold sand — a zini variant flecked with mica that catches light like scattered grit of gold. At 90 ml it is built for solo gongfu sessions and warms to a deeper aubergine the longer it is brewed.", featured: true },
   { slug: "s0119", name: "The Gourd of Fortune", zh: "福禄", artist: "Yi Fou", clay: "Purple Clay · 紫泥", shape: "Gourd form, double-stacked", capacity: 175, dimensions: "10.8 × 7.5 × 8.8 cm", weight: 116, price: 28000, stock: 3, poem: "Fu and Lu — fortune stacked on prosperity.", blurb: "A tall gourd pot, its body pinched into the twin swell of the fu-lu — the bottle-gourd that Chinese craft has carried as a blessing for centuries. Classic Zi Ni purple clay, dense and even, holds the carved waist crisply through the kiln." },
   { slug: "s0136", name: "Door God — Peace", zh: "门神（平安）", artist: "Yi Fou", clay: "Blended Purple Clay · 拼紫泥", shape: "Relief-carved figural pot", capacity: 160, dimensions: "9.5 × 6.3 × 9.7 cm", weight: 102, price: 33500, stock: 2, poem: "A guardian pressed into the clay.", blurb: "A tall pot carrying a low-relief door god — the painted guardian pasted to Chinese gates at New Year — modelled directly into the soft wall. Blended purple clay gives a warm, even brown that lets the carved figure read clearly without glaze." },
@@ -71,128 +48,140 @@ const TEAPOTS: SeedTeapot[] = [
   { slug: "s0315", name: "The Ingot Vessel", zh: "元宝手抓宝瓶", artist: "Yi Fou", clay: "Purple Gold Sand · 紫玉金砂", shape: "Bao Ping — grip-top treasure pot", capacity: 126, dimensions: "9.5 × 8 × 7.1 cm", weight: 136, price: 40500, stock: 2, poem: "Shaped like the old gold ingot, lifted from the top.", blurb: "A bao ping — a treasure-vase pot lifted by a moulded grip across the top rather than a side handle, its silhouette drawn from the yuan bao, the boat-shaped gold ingot of imperial China. Purple gold sand gives the auspicious form a mica-bright body." },
 ];
 
-export default async function seedTeapots({ container }: ExecArgs) {
-  const logger = container.resolve(ContainerRegistrationKeys.LOGGER);
-  const query = container.resolve(ContainerRegistrationKeys.QUERY);
-  const productService = container.resolve(Modules.PRODUCT);
-  const salesChannelService = container.resolve(Modules.SALES_CHANNEL);
-  const stockLocationService = container.resolve(Modules.STOCK_LOCATION);
-
-  // 1. Resolve the shared store context — teapots must land in the same
-  //    sales channel as the tea pets so the storefront key can see them.
-  const [salesChannel] = await salesChannelService.listSalesChannels({});
-  if (!salesChannel) throw new Error("No sales channel found — seed the store first.");
-
-  const [stockLocation] = await stockLocationService.listStockLocations({});
-  if (!stockLocation) throw new Error("No stock location found — seed the store first.");
-
-  const { data: shippingProfiles } = await query.graph({
-    entity: "shipping_profile",
-    fields: ["id"],
-  });
-  const shippingProfileId = shippingProfiles[0]?.id;
-  if (!shippingProfileId) throw new Error("No shipping profile found.");
-
-  logger.info(
-    `Seeding teapots into sales channel "${salesChannel.name}" / location "${stockLocation.name}".`,
-  );
-
-  // 2. Ensure a "Teapots" category exists (idempotent).
-  let teapotCategoryId: string;
-  const existingCats = await productService.listProductCategories({
-    name: "Teapots",
-  });
-  if (existingCats.length > 0) {
-    teapotCategoryId = existingCats[0].id;
-    logger.info("Category 'Teapots' already exists.");
-  } else {
-    const { result } = await createProductCategoriesWorkflow(container).run({
-      input: { product_categories: [{ name: "Teapots", is_active: true }] },
-    });
-    teapotCategoryId = result[0].id;
-    logger.info("Created category 'Teapots'.");
-  }
-
-  // 3. Skip teapots whose handle already exists — keeps the script re-runnable.
-  const existing = await productService.listProducts(
-    { handle: TEAPOTS.map((t) => t.slug) },
-    { take: 1000 },
-  );
-  const existingHandles = new Set(existing.map((p) => p.handle));
-  const toCreate = TEAPOTS.filter((t) => !existingHandles.has(t.slug));
-
-  if (toCreate.length === 0) {
-    logger.info("All 24 teapots already seeded — nothing to do.");
-    return;
-  }
-  logger.info(`Creating ${toCreate.length} teapot product(s)...`);
-
-  // 4. Create the products. Variant SKUs are the upper-cased handle, and
-  //    `manage_inventory: true` makes the workflow mint an inventory item.
-  await createProductsWorkflow(container).run({
-    input: {
-      products: toCreate.map((t) => ({
-        title: t.name,
-        handle: t.slug,
-        description: t.blurb,
-        status: ProductStatus.PUBLISHED,
-        category_ids: [teapotCategoryId],
-        shipping_profile_id: shippingProfileId,
-        weight: t.weight,
-        thumbnail: `${STORE_ORIGIN}/teapots/${t.slug}/1.jpg`,
-        images: [1, 2, 3, 4, 5].map((n) => ({
-          url: `${STORE_ORIGIN}/teapots/${t.slug}/${n}.jpg`,
-        })),
-        metadata: {
-          zh: t.zh,
-          clay: t.clay,
-          poem: t.poem,
-          shape: t.shape,
-          artist: t.artist,
-          capacity_ml: t.capacity,
-          dimensions: t.dimensions,
-          weight_g: t.weight,
-          kind: "teapot",
-          ...(t.featured ? { featured: true } : {}),
-        },
-        options: [{ title: "Title", values: ["Default"] }],
-        variants: [
-          {
-            title: "Default",
-            sku: t.slug.toUpperCase(),
-            manage_inventory: true,
-            options: { Title: "Default" },
-            prices: [{ amount: t.price, currency_code: "usd" }],
-          },
-        ],
-        sales_channels: [{ id: salesChannel.id }],
-      })),
+async function api(method, path, token, body) {
+  const res = await fetch(`${MEDUSA_URL}${path}`, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
+    ...(body ? { body: JSON.stringify(body) } : {}),
   });
-  logger.info(`Created ${toCreate.length} teapot product(s).`);
-
-  // 5. Stock each new variant at its own inventory level.
-  const stockBySku = new Map(
-    toCreate.map((t) => [t.slug.toUpperCase(), t.stock]),
-  );
-  const { data: inventoryItems } = await query.graph({
-    entity: "inventory_item",
-    fields: ["id", "sku"],
-    filters: { sku: [...stockBySku.keys()] },
-  });
-
-  await createInventoryLevelsWorkflow(container).run({
-    input: {
-      inventory_levels: inventoryItems.map((item: { id: string; sku?: string | null }) => ({
-        location_id: stockLocation.id,
-        inventory_item_id: item.id,
-        stocked_quantity: stockBySku.get(item.sku ?? "") ?? 0,
-      })),
-    },
-  });
-  logger.info(
-    `Stocked ${inventoryItems.length} teapot variant(s) at "${stockLocation.name}".`,
-  );
-
-  logger.info("Done — teapots are live in Medusa.");
+  if (!res.ok) {
+    throw new Error(`${method} ${path} → ${res.status}: ${await res.text()}`);
+  }
+  return res.json();
 }
+
+async function main() {
+  console.log(`Seeding teapots into ${MEDUSA_URL} ...`);
+  const { token } = await api("POST", "/auth/user/emailpass", null, {
+    email: ADMIN_EMAIL,
+    password: ADMIN_PASSWORD,
+  });
+
+  // Resolve the shared store context.
+  const { sales_channels } = await api("GET", "/admin/sales-channels?limit=1", token);
+  const salesChannelId = sales_channels[0]?.id;
+  if (!salesChannelId) throw new Error("No sales channel found.");
+
+  const { stock_locations } = await api("GET", "/admin/stock-locations?limit=100", token);
+  const location =
+    stock_locations.find((l) => /us/i.test(l.name)) ?? stock_locations[0];
+  if (!location) throw new Error("No stock location found.");
+  console.log(`Sales channel ${salesChannelId} · stock location "${location.name}"`);
+
+  // Ensure a "Teapots" category exists.
+  let teapotCategoryId;
+  const { product_categories } = await api(
+    "GET",
+    "/admin/product-categories?q=Teapots&limit=10",
+    token,
+  );
+  const existingCat = product_categories.find((c) => c.name === "Teapots");
+  if (existingCat) {
+    teapotCategoryId = existingCat.id;
+    console.log("Category 'Teapots' already exists.");
+  } else {
+    const { product_category } = await api("POST", "/admin/product-categories", token, {
+      name: "Teapots",
+      is_active: true,
+    });
+    teapotCategoryId = product_category.id;
+    console.log("Created category 'Teapots'.");
+  }
+
+  let created = 0;
+  let skipped = 0;
+
+  for (const t of TEAPOTS) {
+    const sku = t.slug.toUpperCase();
+
+    // Skip if the handle already exists — keeps the script re-runnable.
+    const { products: found } = await api(
+      "GET",
+      `/admin/products?handle=${t.slug}&limit=1`,
+      token,
+    );
+    if (found.length > 0) {
+      console.log(`  ~ ${t.name} (${t.slug}) already exists, skipping`);
+      skipped++;
+      continue;
+    }
+
+    // 1. Create the product with an inventory-managed variant.
+    const { product } = await api("POST", "/admin/products", token, {
+      title: t.name,
+      handle: t.slug,
+      description: t.blurb,
+      status: "published",
+      weight: t.weight,
+      thumbnail: `${STORE_ORIGIN}/teapots/${t.slug}/1.jpg`,
+      images: [1, 2, 3, 4, 5].map((n) => ({
+        url: `${STORE_ORIGIN}/teapots/${t.slug}/${n}.jpg`,
+      })),
+      metadata: {
+        zh: t.zh,
+        clay: t.clay,
+        poem: t.poem,
+        shape: t.shape,
+        artist: t.artist,
+        capacity_ml: t.capacity,
+        dimensions: t.dimensions,
+        weight_g: t.weight,
+        kind: "teapot",
+        ...(t.featured ? { featured: true } : {}),
+      },
+      categories: [{ id: teapotCategoryId }],
+      sales_channels: [{ id: salesChannelId }],
+      options: [{ title: "Title", values: ["Default"] }],
+      variants: [
+        {
+          title: "Default",
+          sku,
+          manage_inventory: true,
+          options: { Title: "Default" },
+          prices: [{ amount: t.price, currency_code: "usd" }],
+        },
+      ],
+    });
+
+    // 2. Stock the variant. A managed-inventory variant gets an inventory
+    //    item with a matching SKU; give it a level at the warehouse.
+    const { inventory_items } = await api(
+      "GET",
+      `/admin/inventory-items?sku=${sku}&limit=1`,
+      token,
+    );
+    const inventoryItemId = inventory_items[0]?.id;
+    if (inventoryItemId) {
+      await api(
+        "POST",
+        `/admin/inventory-items/${inventoryItemId}/location-levels`,
+        token,
+        { location_id: location.id, stocked_quantity: t.stock },
+      );
+      console.log(`  ✓ ${t.name} (${t.slug}) — ${t.stock} in stock`);
+    } else {
+      console.log(`  ✓ ${t.name} (${t.slug}) — created (no inventory item?)`);
+    }
+    created++;
+  }
+
+  console.log(`\nDone — ${created} created, ${skipped} skipped.`);
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

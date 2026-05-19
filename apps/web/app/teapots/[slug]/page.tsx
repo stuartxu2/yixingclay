@@ -9,6 +9,7 @@ import {
   teapotGallery,
   teapotHero,
 } from "@/lib/teapots";
+import { fetchTeapot, fetchTeapots } from "@/lib/medusa";
 import { SITE } from "@/lib/site";
 import { breadcrumbSchema, teapotDetailSchema } from "@/lib/seo";
 import { SiteHeader } from "@/components/site-header";
@@ -23,15 +24,16 @@ import { TrackOnMount } from "@/components/analytics/track-on-mount";
 /** Pre-render every teapot at build time; refresh on a one-hour ISR window. */
 export const revalidate = 3600;
 
-export function generateStaticParams() {
-  return TEAPOTS.map((t) => ({ slug: t.slug }));
+export async function generateStaticParams() {
+  const live = await fetchTeapots();
+  return (live.length > 0 ? live : TEAPOTS).map((t) => ({ slug: t.slug }));
 }
 
 type Params = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const teapot = getTeapot(slug);
+  const teapot = (await fetchTeapot(slug)) ?? getTeapot(TEAPOTS, slug);
   if (!teapot) return { title: "Teapot not found" };
 
   const title = `${teapot.name} (${teapot.zh})`;
@@ -60,11 +62,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function TeapotPage({ params }: Params) {
   const { slug } = await params;
-  const teapot = getTeapot(slug);
+  const live = await fetchTeapots();
+  const list = live.length > 0 ? live : TEAPOTS;
+  const teapot = getTeapot(list, slug);
   if (!teapot) notFound();
 
   const shots = teapotGallery(teapot);
-  const related = relatedTeapots(teapot.slug, 3);
+  const related = relatedTeapots(list, teapot.slug, 3);
   const artist = ARTISTS[teapot.artist];
   const soldOut = teapot.stock <= 0;
   const trail = [

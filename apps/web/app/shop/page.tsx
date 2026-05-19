@@ -7,7 +7,7 @@ import { ShopGrid } from "@/components/shop-grid";
 import { breadcrumbSchema } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 import { PRODUCTS, formatPrice } from "@/lib/products";
-import { fetchAllProducts } from "@/lib/medusa";
+import { fetchAllProducts, fetchTeapots } from "@/lib/medusa";
 import { TEAPOTS } from "@/lib/teapots";
 
 export const revalidate = 3600;
@@ -33,16 +33,20 @@ const trail = [
 ];
 
 export default async function ShopPage() {
-  const liveProducts = await fetchAllProducts();
+  const [liveProducts, liveTeapots] = await Promise.all([
+    fetchAllProducts(),
+    fetchTeapots(),
+  ]);
   const products = liveProducts.length > 0 ? liveProducts : PRODUCTS;
+  const teapots = liveTeapots.length > 0 ? liveTeapots : TEAPOTS;
 
   const prices = [
     ...products.map((p) => p.price),
-    ...TEAPOTS.map((t) => t.price),
+    ...teapots.map((t) => t.price),
   ];
   const floor = Math.min(...prices);
   const ceiling = Math.max(...prices);
-  const total = products.length + TEAPOTS.length;
+  const total = products.length + teapots.length;
 
   const itemList = {
     "@context": "https://schema.org",
@@ -52,7 +56,7 @@ export default async function ShopPage() {
       "The complete PO/ET catalogue of handmade Yixing clay teapots and tea pets.",
     numberOfItems: total,
     itemListElement: [
-      ...TEAPOTS.map((t, i) => ({
+      ...teapots.map((t, i) => ({
         "@type": "ListItem",
         position: i + 1,
         url: `${SITE.url}/teapots/${t.slug}`,
@@ -60,7 +64,7 @@ export default async function ShopPage() {
       })),
       ...products.map((p, i) => ({
         "@type": "ListItem",
-        position: TEAPOTS.length + i + 1,
+        position: teapots.length + i + 1,
         url: `${SITE.url}/tea-pets/${p.slug}`,
         name: `${p.name} (${p.zh})`,
       })),
@@ -101,7 +105,7 @@ export default async function ShopPage() {
                 .
               </>
             }
-            note={`${total} pieces in clay — ${TEAPOTS.length} teapots and ${products.length} tea pets, from ${formatPrice(
+            note={`${total} pieces in clay — ${teapots.length} teapots and ${products.length} tea pets, from ${formatPrice(
               floor,
             )} to ${formatPrice(
               ceiling,
@@ -109,7 +113,7 @@ export default async function ShopPage() {
           />
         </div>
 
-        <ShopGrid products={products} teapots={TEAPOTS} />
+        <ShopGrid products={products} teapots={teapots} />
       </main>
 
       <SiteFooter />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { type Teapot, TEAPOT_CLAYS } from "@/lib/teapots";
+import { type Teapot, clayKeys } from "@/lib/teapots";
 import { TeapotCard } from "./teapot-card";
 
 type Sort = "default" | "price-asc" | "price-desc";
@@ -17,7 +17,7 @@ export function TeapotCollection({ teapots }: { teapots: Teapot[] }) {
   const [clay, setClay] = useState<string>("all");
   const [sort, setSort] = useState<Sort>("default");
 
-  const filters = useMemo(() => ["all", ...TEAPOT_CLAYS], []);
+  const filters = useMemo(() => ["all", ...clayKeys(teapots)], [teapots]);
 
   const visible = useMemo(() => {
     let list =

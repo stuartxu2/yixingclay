@@ -2,11 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { SectionHead } from "./section-head";
 import { Cta } from "./cta";
-import { ARTISTS, FEATURED_TEAPOTS } from "@/lib/teapots";
+import { ARTISTS, TEAPOTS, featuredTeapots } from "@/lib/teapots";
+import { fetchTeapots } from "@/lib/medusa";
 import { formatPrice } from "@/lib/products";
 
 /** Homepage section for the "pot" half of PO/ET — a teapot showcase. */
-export function Teapots() {
+export async function Teapots() {
+  const live = await fetchTeapots();
+  const list = live.length > 0 ? live : TEAPOTS;
+  const featured = featuredTeapots(list);
+  const showcase = (featured.length > 0 ? featured : list).slice(0, 3);
+
   return (
     <section
       id="teapots"
@@ -27,7 +33,7 @@ export function Teapots() {
         />
 
         <div className="reveal mt-14 grid gap-6 md:grid-cols-3">
-          {FEATURED_TEAPOTS.slice(0, 3).map((pot) => (
+          {showcase.map((pot) => (
             <Link
               key={pot.slug}
               href={`/teapots/${pot.slug}`}

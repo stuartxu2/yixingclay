@@ -8,6 +8,7 @@ import { TeapotCard } from "@/components/teapot-card";
 import { breadcrumbSchema } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 import { ARTISTS, TEAPOTS, getTeapot, type ArtistKey } from "@/lib/teapots";
+import { fetchTeapots } from "@/lib/medusa";
 
 export const revalidate = 3600;
 
@@ -32,7 +33,10 @@ const trail = [
 
 const ORDER: ArtistKey[] = ["yao-yun", "yi-fou"];
 
-export default function ArtistsPage() {
+export default async function ArtistsPage() {
+  const live = await fetchTeapots();
+  const teapots = live.length > 0 ? live : TEAPOTS;
+
   const peopleSchema = ORDER.map((key) => {
     const a = ARTISTS[key];
     return {
@@ -92,8 +96,8 @@ export default function ArtistsPage() {
         <div className="mt-20 flex flex-col gap-24">
           {ORDER.map((key, i) => {
             const artist = ARTISTS[key];
-            const portrait = getTeapot(artist.portrait);
-            const works = TEAPOTS.filter((t) => t.artist === key);
+            const portrait = getTeapot(teapots, artist.portrait);
+            const works = teapots.filter((t) => t.artist === key);
             return (
               <section
                 key={key}

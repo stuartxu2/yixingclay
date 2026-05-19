@@ -7,11 +7,8 @@ import { SectionHead } from "@/components/section-head";
 import { TeapotCollection } from "@/components/teapot-collection";
 import { breadcrumbSchema } from "@/lib/seo";
 import { SITE } from "@/lib/site";
-import {
-  TEAPOTS,
-  TEAPOT_PRICE_FLOOR,
-  TEAPOT_PRICE_CEILING,
-} from "@/lib/teapots";
+import { TEAPOTS, priceRange } from "@/lib/teapots";
+import { fetchTeapots } from "@/lib/medusa";
 import { formatPrice } from "@/lib/products";
 
 export const revalidate = 3600;
@@ -36,15 +33,19 @@ const trail = [
   { name: "The Pots", path: "/teapots" },
 ];
 
-export default function TeapotsPage() {
+export default async function TeapotsPage() {
+  const live = await fetchTeapots();
+  const teapots = live.length > 0 ? live : TEAPOTS;
+  const [floor, ceiling] = priceRange(teapots);
+
   const itemList = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "PO/ET Yixing Teapots",
     description:
       "Handmade Yixing zisha teapots thrown from purple sand clay — classic Chinese teapot forms, unglazed and ready to brew.",
-    numberOfItems: TEAPOTS.length,
-    itemListElement: TEAPOTS.map((pot, i) => ({
+    numberOfItems: teapots.length,
+    itemListElement: teapots.map((pot, i) => ({
       "@type": "ListItem",
       position: i + 1,
       item: {
@@ -104,9 +105,8 @@ export default function TeapotsPage() {
           <p className="mt-6 max-w-[48ch] text-[17px] font-light text-ink-soft">
             PO is the pot; ET is the pet. The same Yixing purple sand clay that
             becomes our tea pets is thrown, paddled, and fired into teapots —
-            unglazed, single-walled, and made to brew. {TEAPOTS.length} pots in
-            stock, from {formatPrice(TEAPOT_PRICE_FLOOR)} to{" "}
-            {formatPrice(TEAPOT_PRICE_CEILING)}.
+            unglazed, single-walled, and made to brew. {teapots.length} pots in
+            stock, from {formatPrice(floor)} to {formatPrice(ceiling)}.
           </p>
 
           <div className="relative mt-10 aspect-[16/7] overflow-hidden rounded-2xl bg-cream">
@@ -167,7 +167,7 @@ export default function TeapotsPage() {
             note="Hand-thrown Yixing pots, each fired once and unglazed. Filter by clay body, then choose the pour that suits your tea."
           />
 
-          <TeapotCollection teapots={TEAPOTS} />
+          <TeapotCollection teapots={teapots} />
         </section>
       </main>
 

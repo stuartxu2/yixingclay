@@ -699,11 +699,24 @@ export const TEAPOTS: Teapot[] = [
 
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
 
-/** Distinct clay bodies present in the catalogue, for filter UI. */
-export const TEAPOT_CLAYS: string[] = [...new Set(TEAPOTS.map((t) => t.clayKey))];
+/**
+ * Teapots are served from Medusa (`fetchTeapots`) so the admin is the source
+ * of truth; `TEAPOTS` above is the build-time fallback used only when the
+ * backend is unreachable. These helpers therefore operate on whatever list
+ * the page was given — live or fallback — never a global.
+ */
 
-export const TEAPOT_PRICE_FLOOR = Math.min(...TEAPOTS.map((t) => t.price));
-export const TEAPOT_PRICE_CEILING = Math.max(...TEAPOTS.map((t) => t.price));
+/** Distinct clay bodies in a teapot list, for filter UI. */
+export function clayKeys(list: Teapot[]): string[] {
+  return [...new Set(list.map((t) => t.clayKey))];
+}
+
+/** [lowest, highest] price across a teapot list, in cents. */
+export function priceRange(list: Teapot[]): [number, number] {
+  if (list.length === 0) return [0, 0];
+  const prices = list.map((t) => t.price);
+  return [Math.min(...prices), Math.max(...prices)];
+}
 
 /** First gallery photo — the card's resting image. */
 export function teapotHero(t: Teapot): string {
@@ -715,20 +728,23 @@ export function teapotAlt(t: Teapot): string {
   return t.images[1] ?? t.images[0];
 }
 
-export function getTeapot(slug: string): Teapot | undefined {
-  return TEAPOTS.find((t) => t.slug === slug);
+export function getTeapot(list: Teapot[], slug: string): Teapot | undefined {
+  return list.find((t) => t.slug === slug);
 }
 
-export const FEATURED_TEAPOTS: Teapot[] = TEAPOTS.filter((t) => t.featured);
+/** The featured teapots in a list. */
+export function featuredTeapots(list: Teapot[]): Teapot[] {
+  return list.filter((t) => t.featured);
+}
 
 /** Up to `n` other teapots, preferring the same maker. */
-export function relatedTeapots(slug: string, n = 3): Teapot[] {
-  const current = getTeapot(slug);
-  if (!current) return TEAPOTS.slice(0, n);
-  const sameArtist = TEAPOTS.filter(
+export function relatedTeapots(list: Teapot[], slug: string, n = 3): Teapot[] {
+  const current = getTeapot(list, slug);
+  if (!current) return list.filter((t) => t.slug !== slug).slice(0, n);
+  const sameArtist = list.filter(
     (t) => t.slug !== slug && t.artist === current.artist,
   );
-  const rest = TEAPOTS.filter(
+  const rest = list.filter(
     (t) => t.slug !== slug && t.artist !== current.artist,
   );
   return [...sameArtist, ...rest].slice(0, n);
