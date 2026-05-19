@@ -183,10 +183,10 @@ export default async function seedTeapots({ container }: ExecArgs) {
 
   await createInventoryLevelsWorkflow(container).run({
     input: {
-      inventory_levels: inventoryItems.map((item) => ({
+      inventory_levels: inventoryItems.map((item: { id: string; sku?: string | null }) => ({
         location_id: stockLocation.id,
         inventory_item_id: item.id,
-        stocked_quantity: stockBySku.get(item.sku) ?? 0,
+        stocked_quantity: stockBySku.get(item.sku ?? "") ?? 0,
       })),
     },
   });
