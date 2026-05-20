@@ -10,7 +10,8 @@ import { SITE } from "./site";
 import { PRODUCTS, PRICE_FLOOR, heroImage, type Product } from "./products";
 import { ARTISTS, type Teapot } from "./teapots";
 
-const abs = (path: string) => `${SITE.url}${path}`;
+const abs = (path: string) =>
+  /^https?:\/\//i.test(path) ? path : `${SITE.url}${path}`;
 
 export function organizationSchema() {
   return {
@@ -54,7 +55,7 @@ function productSchema(p: Product, url: string = SITE.url) {
     description: p.blurb,
     sku: p.slug,
     category: p.category,
-    image: abs(heroImage(p.slug)),
+    image: abs(heroImage(p)),
     material: p.clay,
     brand: { "@type": "Brand", name: SITE.name },
     offers: {

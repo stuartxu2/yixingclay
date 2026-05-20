@@ -44,13 +44,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       title: `${title} · ${SITE.name}`,
       description: product.blurb,
       url: `${SITE.url}${path}`,
-      images: [{ url: heroImage(product.slug), width: 1200, height: 1200, alt: product.name }],
+      images: [{ url: heroImage(product), width: 1200, height: 1200, alt: product.name }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} · ${SITE.name}`,
       description: product.blurb,
-      images: [heroImage(product.slug)],
+      images: [heroImage(product)],
     },
   };
 }
@@ -60,7 +60,7 @@ export default async function ProductPage({ params }: Params) {
   const product = (await fetchProduct(slug)) ?? getProduct(slug);
   if (!product) notFound();
 
-  const shots = galleryImages(product.slug);
+  const shots = galleryImages(product);
   const related = relatedProducts(product.slug, 3);
   const trail = [
     { name: "Home", path: "/" },

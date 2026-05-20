@@ -51,6 +51,8 @@ export function medusaToProduct(p: MedusaProduct): Product {
     variant?.manage_inventory === true &&
     (variant?.inventory_quantity ?? 0) <= 0;
 
+  const images = (p.images ?? []).map((i) => i.url).filter(Boolean);
+
   return {
     slug: p.handle,
     name: p.title,
@@ -63,6 +65,7 @@ export function medusaToProduct(p: MedusaProduct): Product {
     height: (meta.height as number) ?? 0,
     featured: (meta.featured as boolean) ?? false,
     soldOut,
+    images: images.length > 0 ? images : undefined,
   };
 }
 

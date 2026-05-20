@@ -31,14 +31,14 @@ export function ProductCard({ product }: { product: Product }) {
           }`}
         >
           <Image
-            src={heroImage(product.slug)}
+            src={heroImage(product)}
             alt={`${product.name} — Yixing clay tea pet`}
             fill
             sizes="(max-width: 680px) 50vw, (max-width: 1080px) 33vw, 420px"
             className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-105"
           />
           <Image
-            src={altImage(product.slug)}
+            src={altImage(product)}
             alt=""
             aria-hidden="true"
             fill

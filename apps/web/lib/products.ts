@@ -14,8 +14,14 @@ import type { CatalogProduct, ProductCategory } from "@yixingclay/ts-types";
  * Local aliases keep existing imports (`Product`, `Category`) stable.
  * `soldOut` is derived from Medusa inventory at fetch time — one-of-a-kind
  * pieces sell out for good. Absent (static seed data) means available.
+ * `images` are the Medusa-supplied blob URLs when the product comes from the
+ * backend; for the seeded creatures it stays undefined and the helpers fall
+ * back to the hardcoded /public/products/{slug}/{role}.jpg paths.
  */
-export type Product = CatalogProduct & { soldOut?: boolean };
+export type Product = CatalogProduct & {
+  soldOut?: boolean;
+  images?: string[];
+};
 export type Category = ProductCategory;
 
 export const CATEGORIES: { id: Category | "all"; label: string }[] = [
@@ -259,15 +265,22 @@ export function formatPrice(cents: number): string {
 }
 
 /** First gallery image for a product — used as the card's resting state. */
-export function heroImage(slug: string): string {
-  return `/products/${slug}/front.jpg`;
+export function heroImage(product: Product | string): string {
+  if (typeof product === "string") return `/products/${product}/front.jpg`;
+  return product.images?.[0] ?? `/products/${product.slug}/front.jpg`;
 }
 
 /** Second gallery image, revealed on hover. `hulk` has no `hand` shot. */
-export function altImage(slug: string): string {
-  return slug === "hulk"
-    ? `/products/${slug}/left.jpg`
-    : `/products/${slug}/hand.jpg`;
+export function altImage(product: Product | string): string {
+  if (typeof product === "string") {
+    return product === "hulk"
+      ? `/products/${product}/left.jpg`
+      : `/products/${product}/hand.jpg`;
+  }
+  if (product.images && product.images.length > 1) return product.images[1];
+  return product.slug === "hulk"
+    ? `/products/${product.slug}/left.jpg`
+    : `/products/${product.slug}/hand.jpg`;
 }
 
 /** Human labels for each photographed angle. */
@@ -292,7 +305,21 @@ export interface GalleryShot {
 }
 
 /** Ordered gallery for a product's detail page. */
-export function galleryImages(slug: string): GalleryShot[] {
+export function galleryImages(product: Product | string): GalleryShot[] {
+  const slug = typeof product === "string" ? product : product.slug;
+  const medusaImages =
+    typeof product === "string" ? undefined : product.images;
+
+  if (medusaImages && medusaImages.length > 0) {
+    // Honour Medusa's ordering; reuse the existing role labels for the first
+    // few shots and fall back to a generic "View N" beyond that.
+    const labels = STANDARD_ROLES.map((r) => ROLE_LABELS[r] ?? r);
+    return medusaImages.map((src, i) => ({
+      src,
+      label: labels[i] ?? `View ${i + 1}`,
+    }));
+  }
+
   const roles = slug === "hulk" ? HULK_ROLES : STANDARD_ROLES;
   return roles.map((role) => ({
     src: `/products/${slug}/${role}.jpg`,
