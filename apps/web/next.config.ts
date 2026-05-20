@@ -3,10 +3,10 @@ import path from "node:path";
 
 const nextConfig: NextConfig = {
   images: {
-    // WebP only — AVIF encoding of 2432×2432 source JPEGs times out on first
-    // request in dev and staging. Switch back to AVIF once images are
-    // pre-resized to ≤1024px. WebP still satisfies the CLAUDE.md SEO mandate.
-    formats: ["image/webp"],
+    // AVIF first, WebP fallback. Project standard: all source images are
+    // pre-encoded AVIF at ≤2000px long edge (see CLAUDE.md §2.A), so the
+    // optimizer stays inside per-request encoding budgets.
+    formats: ["image/avif", "image/webp"],
     // Cache optimized images for 24 h so repeated visits skip re-encoding.
     minimumCacheTTL: 86400,
     // Product images uploaded through the Medusa admin are served from Azure

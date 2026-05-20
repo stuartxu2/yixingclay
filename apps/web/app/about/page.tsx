@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     description:
       "Lu Dou and Yaoyun Studio — authentic Yixing zisha teapots and tea pets from Dingshu, the home of Chinese purple sand clay.",
     url: `${SITE.url}/about`,
-    images: [{ url: "/images/lu-dou-portrait.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/images/lu-dou-portrait.avif", width: 1200, height: 630 }],
   },
 };
 
@@ -93,7 +93,7 @@ export default function AboutPage() {
           <div className="relative mt-10 grid gap-6 md:grid-cols-[0.95fr_1.05fr]">
             <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-cream">
               <Image
-                src="/images/lu-dou-portrait.jpg"
+                src="/images/lu-dou-portrait.avif"
                 alt="Lu Dou, founder of Yaoyun Yixing Clay Studio"
                 fill
                 priority
@@ -103,7 +103,7 @@ export default function AboutPage() {
             </div>
             <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-cream">
               <Image
-                src="/images/lu-dou-tea.jpg"
+                src="/images/lu-dou-tea.avif"
                 alt="Lu Dou preparing tea with a Yaoyun zisha teapot"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
