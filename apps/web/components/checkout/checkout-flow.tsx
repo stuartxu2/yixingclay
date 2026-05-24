@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, Fragment } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { loadStripe } from "@stripe/stripe-js";
@@ -42,14 +42,14 @@ interface ShippingOption {
 function Steps({ current }: { current: 1 | 2 | 3 }) {
   const steps = ["Contact", "Shipping", "Payment"];
   return (
-    <ol className="mb-10 flex items-center gap-0">
+    <ol className="mb-10 flex items-center">
       {steps.map((label, i) => {
         const n = (i + 1) as 1 | 2 | 3;
         const done = n < current;
         const active = n === current;
         return (
-          <li key={label} className="flex items-center">
-            <div className="flex items-center gap-2.5">
+          <Fragment key={label}>
+            <li className="flex shrink-0 items-center gap-2 sm:gap-2.5">
               <span
                 className={`flex h-7 w-7 items-center justify-center rounded-full text-[12px] font-semibold transition-colors ${
                   done
@@ -68,11 +68,11 @@ function Steps({ current }: { current: 1 | 2 | 3 }) {
               >
                 {label}
               </span>
-            </div>
+            </li>
             {i < steps.length - 1 && (
-              <div className="mx-4 h-px w-12 bg-ink-faint/25 sm:w-20" />
+              <div className="mx-2 h-px min-w-3 flex-1 bg-ink-faint/25 sm:mx-4 sm:max-w-20" />
             )}
-          </li>
+          </Fragment>
         );
       })}
     </ol>

@@ -1,0 +1,457 @@
+[
+  {
+    "slug": "s0103",
+    "sku": "窑云S0103",
+    "shape_zh": "钱多多",
+    "artist_zh": "窑云",
+    "clay_zh": "紫玉金砂",
+    "capacity": 90,
+    "dimensions": "11.3*7.5*5.2",
+    "weight": "110",
+    "yuan": 200,
+    "images": [
+      "/teapots/s0103/1.jpg",
+      "/teapots/s0103/2.jpg",
+      "/teapots/s0103/3.jpg",
+      "/teapots/s0103/4.jpg",
+      "/teapots/s0103/5.jpg"
+    ],
+    "stock": 12
+  },
+  {
+    "slug": "s0119",
+    "sku": "窑云S0119",
+    "shape_zh": "福禄",
+    "artist_zh": "亦缶",
+    "clay_zh": "紫泥",
+    "capacity": 175,
+    "dimensions": "10.8*7.5*8.8",
+    "weight": "115.5",
+    "yuan": 200,
+    "images": [
+      "/teapots/s0119/1.jpg",
+      "/teapots/s0119/2.jpg",
+      "/teapots/s0119/3.jpg",
+      "/teapots/s0119/4.jpg",
+      "/teapots/s0119/5.jpg"
+    ],
+    "stock": 3
+  },
+  {
+    "slug": "s0136",
+    "sku": "窑云S0136",
+    "shape_zh": "门神（平安）",
+    "artist_zh": "亦缶",
+    "clay_zh": "拼紫泥",
+    "capacity": 160,
+    "dimensions": "9.5*6.3*9.7",
+    "weight": "101.8",
+    "yuan": 240,
+    "images": [
+      "/teapots/s0136/1.jpg",
+      "/teapots/s0136/2.jpg",
+      "/teapots/s0136/3.jpg",
+      "/teapots/s0136/4.jpg",
+      "/teapots/s0136/5.jpg"
+    ],
+    "stock": 2
+  },
+  {
+    "slug": "s0117",
+    "sku": "窑云s0117",
+    "shape_zh": "龙提梁",
+    "artist_zh": "亦缶",
+    "clay_zh": "老紫泥",
+    "capacity": 240,
+    "dimensions": "8.3*7.6*13.2",
+    "weight": "210",
+    "yuan": 310,
+    "images": [
+      "/teapots/s0117/1.jpg",
+      "/teapots/s0117/2.jpg",
+      "/teapots/s0117/3.jpg",
+      "/teapots/s0117/4.jpg",
+      "/teapots/s0117/5.jpg"
+    ],
+    "stock": 13
+  },
+  {
+    "slug": "s0415",
+    "sku": "窑云S0415",
+    "shape_zh": "绣球花盖杯",
+    "artist_zh": "窑云",
+    "clay_zh": "乌金砂",
+    "capacity": 175,
+    "dimensions": "9.5*6.5*10",
+    "weight": "157.8",
+    "yuan": 220,
+    "images": [
+      "/teapots/s0415/1.jpg",
+      "/teapots/s0415/2.jpg",
+      "/teapots/s0415/3.jpg",
+      "/teapots/s0415/4.jpg",
+      "/teapots/s0415/5.jpg"
+    ],
+    "stock": 6
+  },
+  {
+    "slug": "s0065",
+    "sku": "窑云S0065",
+    "shape_zh": "知竹",
+    "artist_zh": "窑云",
+    "clay_zh": "黄玉段",
+    "capacity": 100,
+    "dimensions": "15*9.8*5.8",
+    "weight": "126.5",
+    "yuan": 200,
+    "images": [
+      "/teapots/s0065/1.jpg",
+      "/teapots/s0065/2.jpg",
+      "/teapots/s0065/3.jpg",
+      "/teapots/s0065/4.jpg",
+      "/teapots/s0065/5.jpg"
+    ],
+    "stock": 5
+  },
+  {
+    "slug": "s0070",
+    "sku": "窑云S0070",
+    "shape_zh": "知竹侧把",
+    "artist_zh": "亦缶",
+    "clay_zh": "桃花泥",
+    "capacity": 82,
+    "dimensions": "16.2*10.1*5.3",
+    "weight": "120",
+    "yuan": 280,
+    "images": [
+      "/teapots/s0070/1.jpg",
+      "/teapots/s0070/2.jpg",
+      "/teapots/s0070/3.jpg",
+      "/teapots/s0070/4.jpg",
+      "/teapots/s0070/5.jpg"
+    ],
+    "stock": 5
+  },
+  {
+    "slug": "s0080",
+    "sku": "窑云S0080",
+    "shape_zh": "钰 传香",
+    "artist_zh": "窑云",
+    "clay_zh": "中槽清",
+    "capacity": 150,
+    "dimensions": "10.5*9.1*8.2",
+    "weight": "152.5",
+    "yuan": 209,
+    "images": [
+      "/teapots/s0080/1.jpg",
+      "/teapots/s0080/2.jpg",
+      "/teapots/s0080/3.jpg",
+      "/teapots/s0080/4.jpg",
+      "/teapots/s0080/5.jpg"
+    ],
+    "stock": 4
+  },
+  {
+    "slug": "s0206",
+    "sku": "窑云S0206",
+    "shape_zh": "莫兰迪绿系列-晓梦",
+    "artist_zh": "窑云",
+    "clay_zh": "莫兰迪绿",
+    "capacity": 110,
+    "dimensions": "8.3*6.5*9.8",
+    "weight": "79.5",
+    "yuan": 250,
+    "images": [
+      "/teapots/s0206/1.jpg",
+      "/teapots/s0206/2.jpg",
+      "/teapots/s0206/3.jpg",
+      "/teapots/s0206/4.jpg",
+      "/teapots/s0206/5.jpg"
+    ],
+    "stock": 13
+  },
+  {
+    "slug": "s0212",
+    "sku": "窑云S0212",
+    "shape_zh": "莫兰迪绿系列-拾香",
+    "artist_zh": "窑云",
+    "clay_zh": "莫兰迪绿泥",
+    "capacity": 100,
+    "dimensions": "9.2*6.5*7.2",
+    "weight": "81.2",
+    "yuan": 250,
+    "images": [
+      "/teapots/s0212/1.jpg",
+      "/teapots/s0212/2.jpg",
+      "/teapots/s0212/3.jpg",
+      "/teapots/s0212/4.jpg",
+      "/teapots/s0212/5.jpg"
+    ],
+    "stock": 3
+  },
+  {
+    "slug": "s0241",
+    "sku": "窑云S0241",
+    "shape_zh": "湘妃语系列-逍遥竹",
+    "artist_zh": "窑云",
+    "clay_zh": "段泥",
+    "capacity": 104,
+    "dimensions": "9.8*6.6*7.4",
+    "weight": "86",
+    "yuan": 210,
+    "images": [
+      "/teapots/s0241/1.jpg",
+      "/teapots/s0241/2.jpg",
+      "/teapots/s0241/3.jpg",
+      "/teapots/s0241/4.jpg",
+      "/teapots/s0241/5.jpg"
+    ],
+    "stock": 12
+  },
+  {
+    "slug": "s0259",
+    "sku": "窑云S0259",
+    "shape_zh": "小西施（银杏叶）",
+    "artist_zh": "亦缶",
+    "clay_zh": "降坡泥",
+    "capacity": 80,
+    "dimensions": "8.5*6.5*5.8",
+    "weight": "66.3",
+    "yuan": 155,
+    "images": [
+      "/teapots/s0259/1.jpg",
+      "/teapots/s0259/2.jpg",
+      "/teapots/s0259/3.jpg",
+      "/teapots/s0259/4.jpg",
+      "/teapots/s0259/5.jpg"
+    ],
+    "stock": 13
+  },
+  {
+    "slug": "s0337",
+    "sku": "窑云s0337",
+    "shape_zh": "闻香杯（绣球花）",
+    "artist_zh": "窑云",
+    "clay_zh": "朱泥",
+    "capacity": 40,
+    "dimensions": "4.1*4.1*7.3",
+    "weight": "41",
+    "yuan": 100,
+    "images": [
+      "/teapots/s0337/1.jpg",
+      "/teapots/s0337/2.jpg",
+      "/teapots/s0337/3.jpg",
+      "/teapots/s0337/4.jpg"
+    ],
+    "stock": 10
+  },
+  {
+    "slug": "s0381",
+    "sku": "窑云s0381",
+    "shape_zh": "小葫墩",
+    "artist_zh": "窑云",
+    "clay_zh": "黄金段",
+    "capacity": 135,
+    "dimensions": "10.1*7.4*7.6",
+    "weight": "87",
+    "yuan": 340,
+    "images": [
+      "/teapots/s0381/1.jpg",
+      "/teapots/s0381/2.jpg",
+      "/teapots/s0381/3.jpg",
+      "/teapots/s0381/4.jpg",
+      "/teapots/s0381/5.jpg"
+    ],
+    "stock": 3
+  },
+  {
+    "slug": "s0108",
+    "sku": "窑云S0108",
+    "shape_zh": "憨瓢",
+    "artist_zh": "窑云",
+    "clay_zh": "紫玉金砂",
+    "capacity": 130,
+    "dimensions": "10.8*8.5*5.8",
+    "weight": "94",
+    "yuan": 230,
+    "images": [
+      "/teapots/s0108/1.jpg",
+      "/teapots/s0108/2.jpg",
+      "/teapots/s0108/3.jpg",
+      "/teapots/s0108/4.jpg",
+      "/teapots/s0108/5.jpg"
+    ],
+    "stock": 11
+  },
+  {
+    "slug": "s0126",
+    "sku": "窑云S0126",
+    "shape_zh": "玉堂富贵",
+    "artist_zh": "亦缶",
+    "clay_zh": "紫泥",
+    "capacity": 1365,
+    "dimensions": "7.2*7.9*8",
+    "weight": "94",
+    "yuan": 250,
+    "images": [
+      "/teapots/s0126/1.jpg",
+      "/teapots/s0126/2.jpg",
+      "/teapots/s0126/3.jpg",
+      "/teapots/s0126/4.jpg",
+      "/teapots/s0126/5.jpg"
+    ],
+    "stock": 8
+  },
+  {
+    "slug": "s0142",
+    "sku": "窑云S0142",
+    "shape_zh": "门神（多福）",
+    "artist_zh": "亦缶",
+    "clay_zh": "拼紫泥",
+    "capacity": 160,
+    "dimensions": "9.5*6.3*9.7",
+    "weight": "105",
+    "yuan": 240,
+    "images": [
+      "/teapots/s0142/1.jpg",
+      "/teapots/s0142/2.jpg",
+      "/teapots/s0142/3.jpg",
+      "/teapots/s0142/4.jpg",
+      "/teapots/s0142/5.jpg"
+    ],
+    "stock": 2
+  },
+  {
+    "slug": "s0369",
+    "sku": "窑云S0369",
+    "shape_zh": "小茄瓜",
+    "artist_zh": "窑云",
+    "clay_zh": "老紫泥",
+    "capacity": 1035,
+    "dimensions": "9.1*7*6.2",
+    "weight": "70",
+    "yuan": 170,
+    "images": [
+      "/teapots/s0369/1.jpg",
+      "/teapots/s0369/2.jpg",
+      "/teapots/s0369/3.jpg",
+      "/teapots/s0369/4.jpg",
+      "/teapots/s0369/5.jpg"
+    ],
+    "stock": 2
+  },
+  {
+    "slug": "s0081",
+    "sku": "窑云S0081",
+    "shape_zh": "见山",
+    "artist_zh": "亦缶",
+    "clay_zh": "黄玉段",
+    "capacity": 124,
+    "dimensions": "11.7*8.3*5.8",
+    "weight": "130",
+    "yuan": 200,
+    "images": [
+      "/teapots/s0081/1.jpg",
+      "/teapots/s0081/2.jpg",
+      "/teapots/s0081/3.jpg",
+      "/teapots/s0081/4.jpg",
+      "/teapots/s0081/5.jpg"
+    ],
+    "stock": 3
+  },
+  {
+    "slug": "s0071",
+    "sku": "窑云S0071",
+    "shape_zh": "钰 生香",
+    "artist_zh": "亦缶",
+    "clay_zh": "桃花泥",
+    "capacity": 220,
+    "dimensions": "11.5*10*10",
+    "weight": "201.3",
+    "yuan": 300,
+    "images": [
+      "/teapots/s0071/1.jpg",
+      "/teapots/s0071/2.jpg",
+      "/teapots/s0071/3.jpg",
+      "/teapots/s0071/4.jpg",
+      "/teapots/s0071/5.jpg"
+    ],
+    "stock": 5
+  },
+  {
+    "slug": "s0209",
+    "sku": "窑云S0209",
+    "shape_zh": "莫兰迪绿系列-瓜语",
+    "artist_zh": "窑云",
+    "clay_zh": "莫兰迪绿",
+    "capacity": 100,
+    "dimensions": "10.8*8*5.4",
+    "weight": "96.9",
+    "yuan": 200,
+    "images": [
+      "/teapots/s0209/1.jpg",
+      "/teapots/s0209/2.jpg",
+      "/teapots/s0209/3.jpg",
+      "/teapots/s0209/4.jpg",
+      "/teapots/s0209/5.jpg"
+    ],
+    "stock": 5
+  },
+  {
+    "slug": "s0243",
+    "sku": "窑云S0243",
+    "shape_zh": "湘妃语系列-凝香",
+    "artist_zh": "窑云",
+    "clay_zh": "段泥",
+    "capacity": 135,
+    "dimensions": "10*7.2*8.1",
+    "weight": "86.6",
+    "yuan": 210,
+    "images": [
+      "/teapots/s0243/1.jpg",
+      "/teapots/s0243/2.jpg",
+      "/teapots/s0243/3.jpg",
+      "/teapots/s0243/4.jpg",
+      "/teapots/s0243/5.jpg"
+    ],
+    "stock": 10
+  },
+  {
+    "slug": "s0380",
+    "sku": "窑云s0380",
+    "shape_zh": "茄瓜（绣球花）",
+    "artist_zh": "亦缶",
+    "clay_zh": "朱泥",
+    "capacity": 92,
+    "dimensions": "8.8*6.8*5.9",
+    "weight": "59.3",
+    "yuan": 380,
+    "images": [
+      "/teapots/s0380/1.jpg",
+      "/teapots/s0380/2.jpg",
+      "/teapots/s0380/3.jpg",
+      "/teapots/s0380/4.jpg",
+      "/teapots/s0380/5.jpg"
+    ],
+    "stock": 11
+  },
+  {
+    "slug": "s0315",
+    "sku": "窑云S0315",
+    "shape_zh": "元宝手抓宝瓶",
+    "artist_zh": "亦缶",
+    "clay_zh": "紫玉金砂",
+    "capacity": 126,
+    "dimensions": "9.5*8*7.1",
+    "weight": "135.5",
+    "yuan": 290,
+    "images": [
+      "/teapots/s0315/1.jpg",
+      "/teapots/s0315/2.jpg",
+      "/teapots/s0315/3.jpg",
+      "/teapots/s0315/4.jpg",
+      "/teapots/s0315/5.jpg"
+    ],
+    "stock": 2
+  }
+]

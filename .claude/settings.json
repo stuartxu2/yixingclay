@@ -5,6 +5,7 @@
     ]
   },
   "enabledPlugins": {
-    "ecommerce-storefront@medusa": true
+    "ecommerce-storefront@medusa": true,
+    "compound-engineering@compound-engineering-plugin": true
   }
 }
