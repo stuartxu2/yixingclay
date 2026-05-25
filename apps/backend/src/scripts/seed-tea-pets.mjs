@@ -93,7 +93,7 @@ async function main() {
         handle: p.slug,
         description: p.blurb,
         status: "published",
-        thumbnail: `/products/${p.slug}/front.jpg`,
+        thumbnail: `/products/${p.slug}/front.avif`,
         metadata: {
           zh: p.zh,
           clay: p.clay,

@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/images/getty_pots.jpg",
+        url: "/images/getty_pots.avif",
         width: 1200,
         height: 800,
         alt: "A shelf of handmade Yixing clay tea pets by PO/ET",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${SITE.name} — ${SITE.tagline}`,
     description: SITE.description,
-    images: ["/images/getty_pots.jpg"],
+    images: ["/images/getty_pots.avif"],
   },
   robots: {
     index: true,

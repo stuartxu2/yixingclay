@@ -24,7 +24,7 @@ export function organizationSchema() {
     email: SITE.email,
     foundingDate: String(SITE.founded),
     description: SITE.description,
-    logo: abs("/brand/logo.png"),
+    logo: abs("/brand/logo.avif"),
     slogan: SITE.tagline,
     knowsAbout: [
       "Yixing clay",

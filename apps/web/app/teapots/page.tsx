@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description:
       "Handmade Yixing zisha teapots — classic forms thrown from purple sand clay, unglazed and made to season with your tea.",
     url: `${SITE.url}/teapots`,
-    images: [{ url: "/images/teapot1.png", width: 1200, height: 545 }],
+    images: [{ url: "/images/teapot1.avif", width: 1200, height: 545 }],
   },
 };
 
@@ -111,7 +111,7 @@ export default async function TeapotsPage() {
 
           <div className="relative mt-10 aspect-[16/7] overflow-hidden rounded-2xl bg-cream">
             <Image
-              src="/images/teapot1.png"
+              src="/images/teapot1.avif"
               alt="A Yixing zisha teapot pouring tea on a wooden tea table"
               fill
               priority

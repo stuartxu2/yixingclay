@@ -33,7 +33,7 @@ export function SiteHeader() {
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3" aria-label="PO/ET home">
           <Image
-            src="/brand/logo.png"
+            src="/brand/logo.avif"
             alt=""
             width={42}
             height={42}

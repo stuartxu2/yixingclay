@@ -126,9 +126,9 @@ async function main() {
       description: t.blurb,
       status: "published",
       weight: t.weight,
-      thumbnail: `${STORE_ORIGIN}/teapots/${t.slug}/1.jpg`,
+      thumbnail: `${STORE_ORIGIN}/teapots/${t.slug}/1.avif`,
       images: [1, 2, 3, 4, 5].map((n) => ({
-        url: `${STORE_ORIGIN}/teapots/${t.slug}/${n}.jpg`,
+        url: `${STORE_ORIGIN}/teapots/${t.slug}/${n}.avif`,
       })),
       metadata: {
         zh: t.zh,

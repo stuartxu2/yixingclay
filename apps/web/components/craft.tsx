@@ -34,7 +34,7 @@ export function Craft() {
       <div className="grid lg:grid-cols-2">
         <div className="relative min-h-[360px] overflow-hidden lg:min-h-[640px]">
           <Image
-            src="/products/wukong/pottery.jpg"
+            src="/products/wukong/pottery.avif"
             alt="A Yixing clay tea pet as unfired greenware in the PO/ET studio"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"

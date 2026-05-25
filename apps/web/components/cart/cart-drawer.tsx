@@ -92,7 +92,7 @@ export function CartDrawer() {
               {lines.map((line) => {
                 const href = line.href ?? `/tea-pets/${line.slug}`;
                 const image =
-                  line.image ?? `/products/${line.slug}/front.jpg`;
+                  line.image ?? `/products/${line.slug}/front.avif`;
                 return (
                 <li key={line.slug} className="flex gap-4">
                   {/* Product image */}

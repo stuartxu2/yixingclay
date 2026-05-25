@@ -6,7 +6,7 @@
  * reorder/replace them in the admin, and the storefront reads them straight
  * off the product record.
  *
- * Source images: apps/web/public/teapots/<slug>/{1..5}.jpg
+ * Source images: apps/web/public/teapots/<slug>/{1..5}.avif
  *
  *   node src/scripts/upload-teapot-images.mjs
  *
@@ -44,7 +44,7 @@ async function uploadFiles(token, files) {
   const form = new FormData();
   for (const file of files) {
     const buf = readFileSync(file);
-    form.append("files", new Blob([buf], { type: "image/jpeg" }), path.basename(file));
+    form.append("files", new Blob([buf], { type: "image/avif" }), path.basename(file));
   }
   const res = await fetch(`${MEDUSA_URL}/admin/uploads`, {
     method: "POST",
@@ -106,7 +106,7 @@ async function main() {
 
     const dir = path.join(IMAGES_DIR, slug);
     const files = readdirSync(dir)
-      .filter((f) => /\.jpe?g$/i.test(f))
+      .filter((f) => /\.avif$/i.test(f))
       .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
       .map((f) => path.join(dir, f));
     if (files.length === 0) {

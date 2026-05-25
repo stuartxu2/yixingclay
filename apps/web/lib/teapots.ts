@@ -110,11 +110,11 @@ export const TEAPOTS: Teapot[] = [
       "A compact, low-shouldered pot thrown from purple gold sand — a zini variant flecked with mica that catches light like scattered grit of gold. At 90 ml it is built for solo gongfu sessions and warms to a deeper aubergine the longer it is brewed.",
     featured: true,
     images: [
-      "/teapots/s0103/1.jpg",
-      "/teapots/s0103/2.jpg",
-      "/teapots/s0103/3.jpg",
-      "/teapots/s0103/4.jpg",
-      "/teapots/s0103/5.jpg",
+      "/teapots/s0103/1.avif",
+      "/teapots/s0103/2.avif",
+      "/teapots/s0103/3.avif",
+      "/teapots/s0103/4.avif",
+      "/teapots/s0103/5.avif",
     ],
   },
   {
@@ -135,11 +135,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A tall gourd pot, its body pinched into the twin swell of the fu-lu — the bottle-gourd that Chinese craft has carried as a blessing for centuries. Classic Zi Ni purple clay, dense and even, holds the carved waist crisply through the kiln.",
     images: [
-      "/teapots/s0119/1.jpg",
-      "/teapots/s0119/2.jpg",
-      "/teapots/s0119/3.jpg",
-      "/teapots/s0119/4.jpg",
-      "/teapots/s0119/5.jpg",
+      "/teapots/s0119/1.avif",
+      "/teapots/s0119/2.avif",
+      "/teapots/s0119/3.avif",
+      "/teapots/s0119/4.avif",
+      "/teapots/s0119/5.avif",
     ],
   },
   {
@@ -160,11 +160,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A tall pot carrying a low-relief door god — the painted guardian pasted to Chinese gates at New Year — modelled directly into the soft wall. Blended purple clay gives a warm, even brown that lets the carved figure read clearly without glaze.",
     images: [
-      "/teapots/s0136/1.jpg",
-      "/teapots/s0136/2.jpg",
-      "/teapots/s0136/3.jpg",
-      "/teapots/s0136/4.jpg",
-      "/teapots/s0136/5.jpg",
+      "/teapots/s0136/1.avif",
+      "/teapots/s0136/2.avif",
+      "/teapots/s0136/3.avif",
+      "/teapots/s0136/4.avif",
+      "/teapots/s0136/5.avif",
     ],
   },
   {
@@ -186,11 +186,11 @@ export const TEAPOTS: Teapot[] = [
       "A ti-liang pot — the handle vaults overhead in a single bridge rather than sitting at the side — sculpted here into the curl of a dragon. Aged Zi Ni purple clay, mellowed for years before throwing, gives it a quiet matte depth. At 240 ml it is the studio's table pot.",
     featured: true,
     images: [
-      "/teapots/s0117/1.jpg",
-      "/teapots/s0117/2.jpg",
-      "/teapots/s0117/3.jpg",
-      "/teapots/s0117/4.jpg",
-      "/teapots/s0117/5.jpg",
+      "/teapots/s0117/1.avif",
+      "/teapots/s0117/2.avif",
+      "/teapots/s0117/3.avif",
+      "/teapots/s0117/4.avif",
+      "/teapots/s0117/5.avif",
     ],
   },
   {
@@ -211,11 +211,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A lidded brewing cup — the gaiwan — finished with a hand-built hydrangea where the knob would sit. Black gold sand fires the darkest body in the studio, a near-graphite brown shot with mica, so the pale bloom stands clear above it.",
     images: [
-      "/teapots/s0415/1.jpg",
-      "/teapots/s0415/2.jpg",
-      "/teapots/s0415/3.jpg",
-      "/teapots/s0415/4.jpg",
-      "/teapots/s0415/5.jpg",
+      "/teapots/s0415/1.avif",
+      "/teapots/s0415/2.avif",
+      "/teapots/s0415/3.avif",
+      "/teapots/s0415/4.avif",
+      "/teapots/s0415/5.avif",
     ],
   },
   {
@@ -237,11 +237,11 @@ export const TEAPOTS: Teapot[] = [
       "A low, wide pot built on the bamboo motif scholars have loved for a thousand years — the spout pulled as a young shoot, the handle a node-marked stem. Yellow jade Duan clay fires a soft, warm gold that suits the green of the plant it borrows.",
     featured: true,
     images: [
-      "/teapots/s0065/1.jpg",
-      "/teapots/s0065/2.jpg",
-      "/teapots/s0065/3.jpg",
-      "/teapots/s0065/4.jpg",
-      "/teapots/s0065/5.jpg",
+      "/teapots/s0065/1.avif",
+      "/teapots/s0065/2.avif",
+      "/teapots/s0065/3.avif",
+      "/teapots/s0065/4.avif",
+      "/teapots/s0065/5.avif",
     ],
   },
   {
@@ -262,11 +262,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A side-handle pot — ce ba — where the grip extends straight out from the body at a right angle to the spout, the way a wooden ladle is held. Peach blossom clay fires a gentle blushed pink-beige, rare and quietly warm, named for the colour of spring orchards.",
     images: [
-      "/teapots/s0070/1.jpg",
-      "/teapots/s0070/2.jpg",
-      "/teapots/s0070/3.jpg",
-      "/teapots/s0070/4.jpg",
-      "/teapots/s0070/5.jpg",
+      "/teapots/s0070/1.avif",
+      "/teapots/s0070/2.avif",
+      "/teapots/s0070/3.avif",
+      "/teapots/s0070/4.avif",
+      "/teapots/s0070/5.avif",
     ],
   },
   {
@@ -287,11 +287,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A full, high-shouldered pot from Yao Yun's Yu series — yu meaning fine jade. Thrown from Zhong Cao Qing, the prized middle seam of the zini deposit, which fires a clean and even purple-brown that potters reserve for their steadiest forms.",
     images: [
-      "/teapots/s0080/1.jpg",
-      "/teapots/s0080/2.jpg",
-      "/teapots/s0080/3.jpg",
-      "/teapots/s0080/4.jpg",
-      "/teapots/s0080/5.jpg",
+      "/teapots/s0080/1.avif",
+      "/teapots/s0080/2.avif",
+      "/teapots/s0080/3.avif",
+      "/teapots/s0080/4.avif",
+      "/teapots/s0080/5.avif",
     ],
   },
   {
@@ -313,11 +313,11 @@ export const TEAPOTS: Teapot[] = [
       "From the Morandi Green series — a tall pear-bodied pot in a clay tuned to the muted, dusty palette of the painter Giorgio Morandi. The body fires a soft greyed sage that no glaze could match, light and quiet on the tea tray.",
     featured: true,
     images: [
-      "/teapots/s0206/1.jpg",
-      "/teapots/s0206/2.jpg",
-      "/teapots/s0206/3.jpg",
-      "/teapots/s0206/4.jpg",
-      "/teapots/s0206/5.jpg",
+      "/teapots/s0206/1.avif",
+      "/teapots/s0206/2.avif",
+      "/teapots/s0206/3.avif",
+      "/teapots/s0206/4.avif",
+      "/teapots/s0206/5.avif",
     ],
   },
   {
@@ -338,11 +338,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A compact, softly rounded pot from the Morandi Green series — 100 ml, palm-sized, with a low centre of gravity that sits steady when poured. The greyed-green body grows a faint sheen as the tea oils settle into its pores.",
     images: [
-      "/teapots/s0212/1.jpg",
-      "/teapots/s0212/2.jpg",
-      "/teapots/s0212/3.jpg",
-      "/teapots/s0212/4.jpg",
-      "/teapots/s0212/5.jpg",
+      "/teapots/s0212/1.avif",
+      "/teapots/s0212/2.avif",
+      "/teapots/s0212/3.avif",
+      "/teapots/s0212/4.avif",
+      "/teapots/s0212/5.avif",
     ],
   },
   {
@@ -363,11 +363,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "From the Xiang Consort series — a rounded pot wrapped in carved bamboo, the stalk knotted loosely around the body as though caught mid-sway. Pale Duan sand clay starts the colour of raw biscuit and warms slowly toward honey with use.",
     images: [
-      "/teapots/s0241/1.jpg",
-      "/teapots/s0241/2.jpg",
-      "/teapots/s0241/3.jpg",
-      "/teapots/s0241/4.jpg",
-      "/teapots/s0241/5.jpg",
+      "/teapots/s0241/1.avif",
+      "/teapots/s0241/2.avif",
+      "/teapots/s0241/3.avif",
+      "/teapots/s0241/4.avif",
+      "/teapots/s0241/5.avif",
     ],
   },
   {
@@ -388,11 +388,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "The Xishi is the most-loved Yixing form — full, low, and round, named for one of the four great beauties of ancient China. This small 80 ml version carries a carved ginkgo leaf at the lid. Slope clay fires a warm reddish-tan with fine sandy texture.",
     images: [
-      "/teapots/s0259/1.jpg",
-      "/teapots/s0259/2.jpg",
-      "/teapots/s0259/3.jpg",
-      "/teapots/s0259/4.jpg",
-      "/teapots/s0259/5.jpg",
+      "/teapots/s0259/1.avif",
+      "/teapots/s0259/2.avif",
+      "/teapots/s0259/3.avif",
+      "/teapots/s0259/4.avif",
+      "/teapots/s0259/5.avif",
     ],
   },
   {
@@ -413,10 +413,10 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A wen xiang bei — the slender scent cup of gongfu tea. Tea is poured in, then tipped into the drinking cup, and the empty vessel is cupped to the nose to read the lingering aroma. Bright Zhu Ni cinnabar clay deepens to a glowing oxblood red.",
     images: [
-      "/teapots/s0337/1.jpg",
-      "/teapots/s0337/2.jpg",
-      "/teapots/s0337/3.jpg",
-      "/teapots/s0337/4.jpg",
+      "/teapots/s0337/1.avif",
+      "/teapots/s0337/2.avif",
+      "/teapots/s0337/3.avif",
+      "/teapots/s0337/4.avif",
     ],
   },
   {
@@ -437,11 +437,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A squat, broad pot drawn from the look of a gourd cut and stood on end — full at the base, drawn in at the lid. Golden Duan clay fires the brightest of the sand bodies, a clean wheat-gold that lifts the whole tea tray.",
     images: [
-      "/teapots/s0381/1.jpg",
-      "/teapots/s0381/2.jpg",
-      "/teapots/s0381/3.jpg",
-      "/teapots/s0381/4.jpg",
-      "/teapots/s0381/5.jpg",
+      "/teapots/s0381/1.avif",
+      "/teapots/s0381/2.avif",
+      "/teapots/s0381/3.avif",
+      "/teapots/s0381/4.avif",
+      "/teapots/s0381/5.avif",
     ],
   },
   {
@@ -462,11 +462,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A near-triangular pot in the Shi Piao lineage — the stone-ladle form prized by Qing scholars for its honest, unornamented geometry. Purple gold sand gives it a mica-flecked depth; the bridge knob and straight spout keep the pour clean and fast.",
     images: [
-      "/teapots/s0108/1.jpg",
-      "/teapots/s0108/2.jpg",
-      "/teapots/s0108/3.jpg",
-      "/teapots/s0108/4.jpg",
-      "/teapots/s0108/5.jpg",
+      "/teapots/s0108/1.avif",
+      "/teapots/s0108/2.avif",
+      "/teapots/s0108/3.avif",
+      "/teapots/s0108/4.avif",
+      "/teapots/s0108/5.avif",
     ],
   },
   {
@@ -487,11 +487,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "Named for the classical motif yu tang fu gui — magnolia, crab-apple and peony, a painted wish for an honoured and prosperous home. A rounded pot with a tall domed lid, thrown from dense Zi Ni purple clay that holds its crisp shoulder line.",
     images: [
-      "/teapots/s0126/1.jpg",
-      "/teapots/s0126/2.jpg",
-      "/teapots/s0126/3.jpg",
-      "/teapots/s0126/4.jpg",
-      "/teapots/s0126/5.jpg",
+      "/teapots/s0126/1.avif",
+      "/teapots/s0126/2.avif",
+      "/teapots/s0126/3.avif",
+      "/teapots/s0126/4.avif",
+      "/teapots/s0126/5.avif",
     ],
   },
   {
@@ -512,11 +512,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "The companion to Door God — Peace: the second of the paired gate guardians, here carrying the wish for many blessings. The same tall figural body in blended purple clay, modelled in relief while the wall is still soft enough to take the line.",
     images: [
-      "/teapots/s0142/1.jpg",
-      "/teapots/s0142/2.jpg",
-      "/teapots/s0142/3.jpg",
-      "/teapots/s0142/4.jpg",
-      "/teapots/s0142/5.jpg",
+      "/teapots/s0142/1.avif",
+      "/teapots/s0142/2.avif",
+      "/teapots/s0142/3.avif",
+      "/teapots/s0142/4.avif",
+      "/teapots/s0142/5.avif",
     ],
   },
   {
@@ -537,11 +537,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A small pot pinched into the soft, lobed shape of an aubergine — one of the studio's garden-vegetable forms, where ordinary produce becomes teaware. Aged Zi Ni purple clay gives it a deep, settled brown with a quiet matte surface.",
     images: [
-      "/teapots/s0369/1.jpg",
-      "/teapots/s0369/2.jpg",
-      "/teapots/s0369/3.jpg",
-      "/teapots/s0369/4.jpg",
-      "/teapots/s0369/5.jpg",
+      "/teapots/s0369/1.avif",
+      "/teapots/s0369/2.avif",
+      "/teapots/s0369/3.avif",
+      "/teapots/s0369/4.avif",
+      "/teapots/s0369/5.avif",
     ],
   },
   {
@@ -562,11 +562,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A low, wide pot whose flat profile and ridged knob recall a distant mountain range — the line from Tao Yuanming's poem, jian nan shan, of looking up by chance and finding the southern hills. Yellow jade Duan clay fires a calm, warm gold.",
     images: [
-      "/teapots/s0081/1.jpg",
-      "/teapots/s0081/2.jpg",
-      "/teapots/s0081/3.jpg",
-      "/teapots/s0081/4.jpg",
-      "/teapots/s0081/5.jpg",
+      "/teapots/s0081/1.avif",
+      "/teapots/s0081/2.avif",
+      "/teapots/s0081/3.avif",
+      "/teapots/s0081/4.avif",
+      "/teapots/s0081/5.avif",
     ],
   },
   {
@@ -587,11 +587,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "The largest pot in the Yu series — a generous 220 ml round body meant for the table, not the solo cup. Peach blossom clay fires a soft blushed beige; at this scale the rare body shows its full, gentle warmth.",
     images: [
-      "/teapots/s0071/1.jpg",
-      "/teapots/s0071/2.jpg",
-      "/teapots/s0071/3.jpg",
-      "/teapots/s0071/4.jpg",
-      "/teapots/s0071/5.jpg",
+      "/teapots/s0071/1.avif",
+      "/teapots/s0071/2.avif",
+      "/teapots/s0071/3.avif",
+      "/teapots/s0071/4.avif",
+      "/teapots/s0071/5.avif",
     ],
   },
   {
@@ -612,11 +612,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "From the Morandi Green series — a low, lobed pot pressed into the soft segments of a ripening melon, the lid a curled stem. The muted greyed-green clay suits the quiet, vegetal form, light at 100 ml and easy in the hand.",
     images: [
-      "/teapots/s0209/1.jpg",
-      "/teapots/s0209/2.jpg",
-      "/teapots/s0209/3.jpg",
-      "/teapots/s0209/4.jpg",
-      "/teapots/s0209/5.jpg",
+      "/teapots/s0209/1.avif",
+      "/teapots/s0209/2.avif",
+      "/teapots/s0209/3.avif",
+      "/teapots/s0209/4.avif",
+      "/teapots/s0209/5.avif",
     ],
   },
   {
@@ -637,11 +637,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "From the Xiang Consort series — a rounded, even-shouldered pot built to hold heat and aroma steady through a long session. Pale Duan sand clay, soft and matte, takes a tea brush beautifully and warms toward oat-gold over the months.",
     images: [
-      "/teapots/s0243/1.jpg",
-      "/teapots/s0243/2.jpg",
-      "/teapots/s0243/3.jpg",
-      "/teapots/s0243/4.jpg",
-      "/teapots/s0243/5.jpg",
+      "/teapots/s0243/1.avif",
+      "/teapots/s0243/2.avif",
+      "/teapots/s0243/3.avif",
+      "/teapots/s0243/4.avif",
+      "/teapots/s0243/5.avif",
     ],
   },
   {
@@ -663,11 +663,11 @@ export const TEAPOTS: Teapot[] = [
       "Yi Fou's finest small pot — the soft lobed aubergine form finished with a hand-built hydrangea at the lid. Fired from bright Zhu Ni cinnabar clay, a high-shrinkage body that few potters risk at this thinness; it rings clear and reddens with every brew.",
     featured: true,
     images: [
-      "/teapots/s0380/1.jpg",
-      "/teapots/s0380/2.jpg",
-      "/teapots/s0380/3.jpg",
-      "/teapots/s0380/4.jpg",
-      "/teapots/s0380/5.jpg",
+      "/teapots/s0380/1.avif",
+      "/teapots/s0380/2.avif",
+      "/teapots/s0380/3.avif",
+      "/teapots/s0380/4.avif",
+      "/teapots/s0380/5.avif",
     ],
   },
   {
@@ -688,11 +688,11 @@ export const TEAPOTS: Teapot[] = [
     blurb:
       "A bao ping — a treasure-vase pot lifted by a moulded grip across the top rather than a side handle, its silhouette drawn from the yuan bao, the boat-shaped gold ingot of imperial China. Purple gold sand gives the auspicious form a mica-bright body.",
     images: [
-      "/teapots/s0315/1.jpg",
-      "/teapots/s0315/2.jpg",
-      "/teapots/s0315/3.jpg",
-      "/teapots/s0315/4.jpg",
-      "/teapots/s0315/5.jpg",
+      "/teapots/s0315/1.avif",
+      "/teapots/s0315/2.avif",
+      "/teapots/s0315/3.avif",
+      "/teapots/s0315/4.avif",
+      "/teapots/s0315/5.avif",
     ],
   },
 ];

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     description:
       "Handmade Yixing teapots and tea pets — the complete PO/ET catalogue, shaped from purple sand clay.",
     url: `${SITE.url}/shop`,
-    images: [{ url: "/images/getty_pots.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/images/getty_pots.avif", width: 1200, height: 630 }],
   },
 };
 

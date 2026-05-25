@@ -70,7 +70,7 @@ export function Hero() {
         <figure className="rise relative mx-auto w-full max-w-[480px]" style={rise(240)}>
           <div className="blob relative aspect-square overflow-hidden bg-cream shadow-[0_40px_80px_-36px_rgba(28,28,28,0.4)]">
             <Image
-              src="/images/teapot2.png"
+              src="/images/teapot2.avif"
               alt="A Zhu Ni cinnabar Xishi teapot by PO/ET"
               fill
               priority
@@ -84,7 +84,7 @@ export function Hero() {
           <figcaption className="absolute -left-5 bottom-10 flex items-center gap-3 rounded-full border border-ink-faint/35 bg-surface/95 py-2 pl-2 pr-5 shadow-[0_16px_30px_-18px_rgba(28,28,28,0.4)] backdrop-blur-sm">
             <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full bg-cream">
               <Image
-                src="/products/wukong/front.jpg"
+                src="/products/wukong/front.avif"
                 alt="Wukong — a Yixing clay tea pet by PO/ET"
                 fill
                 sizes="56px"

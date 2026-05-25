@@ -16,7 +16,7 @@ import type { CatalogProduct, ProductCategory } from "@yixingclay/ts-types";
  * pieces sell out for good. Absent (static seed data) means available.
  * `images` are the Medusa-supplied blob URLs when the product comes from the
  * backend; for the seeded creatures it stays undefined and the helpers fall
- * back to the hardcoded /public/products/{slug}/{role}.jpg paths.
+ * back to the hardcoded /public/products/{slug}/{role}.avif paths.
  */
 export type Product = CatalogProduct & {
   soldOut?: boolean;
@@ -266,21 +266,21 @@ export function formatPrice(cents: number): string {
 
 /** First gallery image for a product — used as the card's resting state. */
 export function heroImage(product: Product | string): string {
-  if (typeof product === "string") return `/products/${product}/front.jpg`;
-  return product.images?.[0] ?? `/products/${product.slug}/front.jpg`;
+  if (typeof product === "string") return `/products/${product}/front.avif`;
+  return product.images?.[0] ?? `/products/${product.slug}/front.avif`;
 }
 
 /** Second gallery image, revealed on hover. `hulk` has no `hand` shot. */
 export function altImage(product: Product | string): string {
   if (typeof product === "string") {
     return product === "hulk"
-      ? `/products/${product}/left.jpg`
-      : `/products/${product}/hand.jpg`;
+      ? `/products/${product}/left.avif`
+      : `/products/${product}/hand.avif`;
   }
   if (product.images && product.images.length > 1) return product.images[1];
   return product.slug === "hulk"
-    ? `/products/${product.slug}/left.jpg`
-    : `/products/${product.slug}/hand.jpg`;
+    ? `/products/${product.slug}/left.avif`
+    : `/products/${product.slug}/hand.avif`;
 }
 
 /** Human labels for each photographed angle. */
@@ -322,7 +322,7 @@ export function galleryImages(product: Product | string): GalleryShot[] {
 
   const roles = slug === "hulk" ? HULK_ROLES : STANDARD_ROLES;
   return roles.map((role) => ({
-    src: `/products/${slug}/${role}.jpg`,
+    src: `/products/${slug}/${role}.avif`,
     label: ROLE_LABELS[role] ?? role,
   }));
 }

@@ -11,7 +11,7 @@ export function SiteFooter() {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src="/brand/logo.png"
+                src="/brand/logo.avif"
                 alt=""
                 width={38}
                 height={38}

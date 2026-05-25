@@ -11,7 +11,7 @@ export function Story() {
       <div className="mx-auto grid max-w-[1320px] items-center gap-14 px-6 sm:px-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div className="reveal relative mx-auto w-full max-w-[420px]">
           <Image
-            src="/images/getty_pots.jpg"
+            src="/images/getty_pots.avif"
             alt="Finished Yixing clay teapots resting in the PO/ET studio"
             width={840}
             height={1050}

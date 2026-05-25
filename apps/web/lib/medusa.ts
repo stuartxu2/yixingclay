@@ -110,7 +110,7 @@ export function medusaToTeapot(p: MedusaProduct): Teapot {
     images:
       images.length > 0
         ? images
-        : [p.thumbnail ?? `/teapots/${p.handle}/1.jpg`],
+        : [p.thumbnail ?? `/teapots/${p.handle}/1.avif`],
   };
 }
 

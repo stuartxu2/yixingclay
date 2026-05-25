@@ -128,7 +128,7 @@ function OrderSummary({
           <li key={line.slug} className="flex items-center gap-3.5">
             <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-cream">
               <Image
-                src={line.image ?? `/products/${line.slug}/front.jpg`}
+                src={line.image ?? `/products/${line.slug}/front.avif`}
                 alt={line.name}
                 fill
                 sizes="56px"
