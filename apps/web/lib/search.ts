@@ -1,4 +1,4 @@
-import { medusa } from "./medusa";
+import { medusa, isTeapotKind } from "./medusa";
 
 /** A single storefront search hit. `price` is in cents, USD. */
 export interface SearchResult {
@@ -30,7 +30,7 @@ interface StoreSearchResponse {
 
 /** Teapots carry `metadata.kind === "teapot"`; everything else is a tea-pet. */
 function hrefFor(p: StoreSearchProduct): string {
-  return p.metadata?.kind === "teapot"
+  return isTeapotKind(p.metadata)
     ? `/teapots/${p.handle}`
     : `/tea-pets/${p.handle}`;
 }

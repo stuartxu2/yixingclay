@@ -4,8 +4,12 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 const { fetchMock } = vi.hoisted(() => ({ fetchMock: vi.fn() }));
 
 // Mock the Medusa SDK client used by lib/search.ts.
+// isTeapotKind is inlined here (same logic as the real export) so that
+// routing tests work without instantiating the Medusa SDK in jsdom.
 vi.mock("./medusa", () => ({
   medusa: { client: { fetch: fetchMock } },
+  isTeapotKind: (metadata: Record<string, unknown> | null | undefined) =>
+    metadata?.kind === "teapot",
 }));
 
 import { searchProducts } from "./search";
@@ -73,7 +77,14 @@ describe("searchProducts", () => {
     });
 
     const [r] = await searchProducts("shi");
-    expect(r.href).toBe("/teapots/shi-piao");
+    expect(r).toEqual({
+      id: "prod_2",
+      title: "Shi Piao",
+      handle: "shi-piao",
+      thumbnail: null,
+      price: 12000,
+      href: "/teapots/shi-piao",
+    });
   });
 
   it("returns [] when the API call throws", async () => {
