@@ -7,6 +7,8 @@ export interface SearchResult {
   handle: string;
   thumbnail: string | null;
   price: number;
+  /** Resolved storefront route for this hit. */
+  href: string;
 }
 
 const REGION_ID = process.env.NEXT_PUBLIC_MEDUSA_REGION_ID;
@@ -19,10 +21,18 @@ interface StoreSearchProduct {
   title: string;
   handle: string;
   thumbnail: string | null;
+  metadata?: Record<string, unknown> | null;
   variants?: StoreSearchVariant[];
 }
 interface StoreSearchResponse {
   products: StoreSearchProduct[];
+}
+
+/** Teapots carry `metadata.kind === "teapot"`; everything else is a tea-pet. */
+function hrefFor(p: StoreSearchProduct): string {
+  return p.metadata?.kind === "teapot"
+    ? `/teapots/${p.handle}`
+    : `/tea-pets/${p.handle}`;
 }
 
 /**
@@ -45,7 +55,7 @@ export async function searchProducts(query: string): Promise<SearchResult[]> {
           region_id: REGION_ID,
           currency_code: "usd",
           // `*`-prefixed so default product scalars are kept, not replaced.
-          fields: "*thumbnail,*variants.prices",
+          fields: "*thumbnail,*variants.prices,*metadata",
         },
       },
     );
@@ -58,6 +68,7 @@ export async function searchProducts(query: string): Promise<SearchResult[]> {
       price:
         p.variants?.[0]?.prices?.find((pr) => pr.currency_code === "usd")
           ?.amount ?? 0,
+      href: hrefFor(p),
     }));
   } catch {
     return [];

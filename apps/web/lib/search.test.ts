@@ -20,7 +20,7 @@ describe("searchProducts", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it("maps the store-endpoint payload to search results", async () => {
+  it("maps a tea-pet hit and requests metadata in the fields param", async () => {
     fetchMock.mockResolvedValue({
       products: [
         {
@@ -28,9 +28,8 @@ describe("searchProducts", () => {
           title: "The White Cat",
           handle: "cat",
           thumbnail: "https://x.blob.core.windows.net/cat.jpg",
-          variants: [
-            { prices: [{ amount: 6800, currency_code: "usd" }] },
-          ],
+          metadata: null,
+          variants: [{ prices: [{ amount: 6800, currency_code: "usd" }] }],
         },
       ],
     });
@@ -44,14 +43,37 @@ describe("searchProducts", () => {
         handle: "cat",
         thumbnail: "https://x.blob.core.windows.net/cat.jpg",
         price: 6800,
+        href: "/tea-pets/cat",
       },
     ]);
     expect(fetchMock).toHaveBeenCalledWith(
       "/store/meilisearch/products",
       expect.objectContaining({
-        query: expect.objectContaining({ query: "cat", limit: 8 }),
+        query: expect.objectContaining({
+          query: "cat",
+          limit: 8,
+          fields: expect.stringContaining("*metadata"),
+        }),
       }),
     );
+  });
+
+  it("routes a teapot hit to /teapots/{handle}", async () => {
+    fetchMock.mockResolvedValue({
+      products: [
+        {
+          id: "prod_2",
+          title: "Shi Piao",
+          handle: "shi-piao",
+          thumbnail: null,
+          metadata: { kind: "teapot" },
+          variants: [{ prices: [{ amount: 12000, currency_code: "usd" }] }],
+        },
+      ],
+    });
+
+    const [r] = await searchProducts("shi");
+    expect(r.href).toBe("/teapots/shi-piao");
   });
 
   it("returns [] when the API call throws", async () => {
@@ -62,7 +84,7 @@ describe("searchProducts", () => {
   it("defaults price to 0 when no usd price is present", async () => {
     fetchMock.mockResolvedValue({
       products: [
-        { id: "p", title: "T", handle: "h", thumbnail: null, variants: [] },
+        { id: "p", title: "T", handle: "h", thumbnail: null, metadata: null, variants: [] },
       ],
     });
     const [r] = await searchProducts("t");
