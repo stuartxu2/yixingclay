@@ -35,9 +35,16 @@ interface MedusaProduct {
   variants: MedusaVariant[];
 }
 
+/** True when a product's metadata marks it a teapot (vs a tea-pet). */
+export function isTeapotKind(
+  metadata: Record<string, unknown> | null | undefined,
+): boolean {
+  return metadata?.kind === "teapot";
+}
+
 /** A teapot is a Medusa product carrying `metadata.kind === "teapot"`. */
 function isTeapot(p: MedusaProduct): boolean {
-  return (p.metadata?.kind as string) === "teapot";
+  return isTeapotKind(p.metadata);
 }
 
 export function medusaToProduct(p: MedusaProduct): Product {

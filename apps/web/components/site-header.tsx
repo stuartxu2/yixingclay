@@ -7,6 +7,7 @@ import { NAV } from "@/lib/site";
 import { Wordmark } from "./wordmark";
 import { useCart } from "./cart/cart-context";
 import { useAuth } from "./auth/auth-context";
+import { SearchOverlay } from "./search/search-overlay";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -61,6 +62,8 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-4">
+          <SearchOverlay />
+
           {/* Account link */}
           <Link
             href="/account"
