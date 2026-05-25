@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 
 const { searchMock, pushMock } = vi.hoisted(() => ({
   searchMock: vi.fn(),
@@ -35,7 +35,6 @@ beforeEach(() => {
   vi.useFakeTimers();
 });
 afterEach(() => {
-  vi.runOnlyPendingTimers();
   vi.useRealTimers();
 });
 
@@ -73,9 +72,10 @@ describe("SearchOverlay", () => {
     });
 
     expect(searchMock).toHaveBeenCalledWith("cat");
-    await waitFor(() => {
-      expect(screen.getByText("The White Cat")).toBeInTheDocument();
-    });
+    // Switch to real timers so findBy's polling (and React's scheduler) run
+    // normally instead of hanging on the faked clock.
+    vi.useRealTimers();
+    expect(await screen.findByText("The White Cat")).toBeInTheDocument();
   });
 
   it("shows a no-results state when search returns []", async () => {
@@ -85,9 +85,8 @@ describe("SearchOverlay", () => {
     await act(async () => {
       vi.advanceTimersByTime(300);
     });
-    await waitFor(() => {
-      expect(screen.getByText(/no results/i)).toBeInTheDocument();
-    });
+    vi.useRealTimers();
+    expect(await screen.findByText(/no results/i)).toBeInTheDocument();
   });
 
   it("routes to /search on Enter", () => {

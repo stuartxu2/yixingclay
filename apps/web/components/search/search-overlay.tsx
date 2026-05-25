@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { flushSync } from "react-dom";
 import { useRouter } from "next/navigation";
 import { searchProducts, type SearchResult } from "@/lib/search";
 import { SearchResultItem } from "./search-result-item";
@@ -36,11 +35,9 @@ export function SearchOverlay() {
     const t = setTimeout(async () => {
       const hits = await searchProducts(q);
       if (!active) return;
-      flushSync(() => {
-        setResults(hits);
-        setSearched(true);
-        setLoading(false);
-      });
+      setResults(hits);
+      setSearched(true);
+      setLoading(false);
     }, DEBOUNCE_MS);
     return () => {
       active = false;
