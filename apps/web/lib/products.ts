@@ -261,7 +261,7 @@ export const PRICE_FLOOR = Math.min(...PRODUCTS.map((p) => p.price));
 export const PRICE_CEILING = Math.max(...PRODUCTS.map((p) => p.price));
 
 export function formatPrice(cents: number): string {
-  return `$${(cents / 100).toFixed(0)}`;
+  return `$${(cents / 100).toFixed(2)}`;
 }
 
 /** First gallery image for a product — used as the card's resting state. */

@@ -30,6 +30,9 @@ env:
   ACR: ${{ vars.ACR_NAME }}
   RG: ${{ vars.AZURE_RESOURCE_GROUP }}
   IMAGE_TAG: ${{ github.sha }}
+  # Run JS actions (checkout, azure/login, setup-node) on Node 24 — Node 20 is
+  # being removed from GitHub runners (forced default 2026-06-02).
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   # ── build both images and push to ACR ─────────────────────────────────────

@@ -20,6 +20,9 @@ on:
 
 env:
   ACR: ${{ vars.ACR_NAME }}
+  # Run JS actions (checkout, azure/login) on Node 24 — Node 20 is being
+  # removed from GitHub runners (forced default 2026-06-02).
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
