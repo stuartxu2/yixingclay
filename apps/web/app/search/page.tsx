@@ -10,7 +10,8 @@ export async function generateMetadata({
   searchParams,
 }: SearchParams): Promise<Metadata> {
   const { q } = await searchParams;
-  const query = (q ?? "").trim();
+  // Clamp so an oversized ?q= can't bloat the <title> tag.
+  const query = (q ?? "").trim().slice(0, 100);
   return {
     title: query ? `Search · ${query}` : "Search",
     robots: { index: false, follow: true },

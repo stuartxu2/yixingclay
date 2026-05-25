@@ -68,7 +68,7 @@ describe("SearchOverlay", () => {
     expect(searchMock).not.toHaveBeenCalled();
 
     await act(async () => {
-      vi.advanceTimersByTime(300);
+      vi.advanceTimersByTime(250);
     });
 
     expect(searchMock).toHaveBeenCalledWith("cat");
@@ -83,7 +83,7 @@ describe("SearchOverlay", () => {
     openOverlay();
     fireEvent.change(screen.getByRole("searchbox"), { target: { value: "zzz" } });
     await act(async () => {
-      vi.advanceTimersByTime(300);
+      vi.advanceTimersByTime(250);
     });
     vi.useRealTimers();
     expect(await screen.findByText(/no results/i)).toBeInTheDocument();

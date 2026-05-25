@@ -16,9 +16,15 @@ export function SearchOverlay() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Focus the input whenever the overlay opens.
+  // Focus the input and lock body scroll while the overlay is open.
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (!open) return;
+    inputRef.current?.focus();
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
   }, [open]);
 
   // Debounced search; ignore stale responses that no longer match the input.
