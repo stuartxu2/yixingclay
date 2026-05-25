@@ -1,13 +1,23 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { SearchResultItem } from "./search-result-item";
 
 // next/image renders an <img>; stub to a plain img for jsdom.
 vi.mock("next/image", () => ({
-  default: (props: Record<string, unknown>) => {
-    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
-    return <img {...(props as Record<string, string>)} />;
-  },
+  default: ({
+    src,
+    alt,
+    sizes,
+    className,
+  }: {
+    src: string;
+    alt: string;
+    sizes?: string;
+    className?: string;
+  }) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt={alt} sizes={sizes} className={className} />
+  ),
 }));
 
 describe("SearchResultItem", () => {
@@ -45,5 +55,24 @@ describe("SearchResultItem", () => {
       />,
     );
     expect(screen.getByText("No Image")).toBeInTheDocument();
+  });
+
+  it("calls onNavigate when the result is clicked", () => {
+    const onNavigate = vi.fn();
+    render(
+      <SearchResultItem
+        result={{
+          id: "p3",
+          title: "Clickable",
+          handle: "c",
+          thumbnail: null,
+          price: 100,
+          href: "/tea-pets/c",
+        }}
+        onNavigate={onNavigate}
+      />,
+    );
+    fireEvent.click(screen.getByRole("link", { name: /clickable/i }));
+    expect(onNavigate).toHaveBeenCalledTimes(1);
   });
 });
