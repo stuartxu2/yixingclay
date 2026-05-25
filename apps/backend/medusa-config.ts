@@ -1,10 +1,65 @@
-import { loadEnv, defineConfig } from '@medusajs/framework/utils'
+import { loadEnv, defineConfig, Modules } from '@medusajs/framework/utils'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
+
+const REDIS_URL = process.env.REDIS_URL
+
+// Redis-backed infrastructure. Azure Container Apps runs multiple replicas, so
+// the in-memory defaults are unsafe in production: the local event bus only
+// fires handlers on the replica that emitted the event, in-memory locking is
+// not shared across replicas (oversell / double-charge risk), and the
+// in-memory workflow engine loses running workflows on restart or scale-in.
+// Registered only when REDIS_URL is set so local dev without Redis still boots
+// on the in-memory defaults.
+const redisModules = REDIS_URL
+  ? [
+      {
+        // 2.15 caching module (providers pattern), not the legacy cache module.
+        key: Modules.CACHING,
+        resolve: "@medusajs/caching",
+        options: {
+          providers: [
+            {
+              resolve: "@medusajs/caching-redis",
+              id: "caching-redis",
+              options: { redisUrl: REDIS_URL },
+            },
+          ],
+        },
+      },
+      {
+        key: Modules.EVENT_BUS,
+        resolve: "@medusajs/event-bus-redis",
+        options: { redisUrl: REDIS_URL },
+      },
+      {
+        key: Modules.WORKFLOW_ENGINE,
+        resolve: "@medusajs/workflow-engine-redis",
+        // Connection URL is nested under `redis.redisUrl` for this module
+        // (top-level `redisUrl` is ignored; `redis.url` is deprecated).
+        options: { redis: { redisUrl: REDIS_URL } },
+      },
+      {
+        key: Modules.LOCKING,
+        resolve: "@medusajs/locking",
+        options: {
+          providers: [
+            {
+              resolve: "@medusajs/locking-redis",
+              id: "locking-redis",
+              is_default: true,
+              options: { redisUrl: REDIS_URL },
+            },
+          ],
+        },
+      },
+    ]
+  : []
 
 module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
+    redisUrl: REDIS_URL,
     http: {
       storeCors: process.env.STORE_CORS!,
       adminCors: process.env.ADMIN_CORS!,
@@ -71,6 +126,7 @@ module.exports = defineConfig({
         ],
       },
     },
+    ...redisModules,
   ],
   plugins: [
     {
