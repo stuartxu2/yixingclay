@@ -89,6 +89,12 @@ describe("SearchOverlay", () => {
     expect(await screen.findByText(/no results/i)).toBeInTheDocument();
   });
 
+  it("closes on Esc", () => {
+    openOverlay();
+    fireEvent.keyDown(screen.getByRole("searchbox"), { key: "Escape" });
+    expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
+  });
+
   it("routes to /search on Enter", () => {
     openOverlay();
     const input = screen.getByRole("searchbox");

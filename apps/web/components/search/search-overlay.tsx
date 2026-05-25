@@ -30,9 +30,11 @@ export function SearchOverlay() {
       setLoading(false);
       return;
     }
-    setLoading(true);
     let active = true;
     const t = setTimeout(async () => {
+      // Only show the spinner once the debounce window has actually elapsed,
+      // so a fast typist doesn't flash "Searching…" on every keystroke.
+      setLoading(true);
       const hits = await searchProducts(q);
       if (!active) return;
       setResults(hits);
@@ -50,6 +52,7 @@ export function SearchOverlay() {
     setQuery("");
     setResults([]);
     setSearched(false);
+    setLoading(false);
   }
 
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -83,6 +86,9 @@ export function SearchOverlay() {
           role="presentation"
         >
           <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Search"
             className="mt-[12vh] w-full max-w-[640px] overflow-hidden rounded-2xl border border-ink-faint/25 bg-paper shadow-[0_40px_80px_-40px_rgba(28,28,28,0.6)]"
             onClick={(e) => e.stopPropagation()}
           >
@@ -91,7 +97,7 @@ export function SearchOverlay() {
               <input
                 ref={inputRef}
                 type="search"
-                role="searchbox"
+                aria-label="Search the collection"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={onKeyDown}
