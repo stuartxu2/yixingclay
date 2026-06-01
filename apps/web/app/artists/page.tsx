@@ -27,6 +27,13 @@ export const metadata: Metadata = {
     url: `${SITE.url}/artists`,
     images: [{ url: "/artists/xu-xuefang/portrait-1.avif" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `The Artist · ${SITE.name}`,
+    description:
+      "Xu Xuefang (许学芳), Senior Master of Arts & Crafts — every PO/ET teapot leaves her bench in Yixing.",
+    images: ["/artists/xu-xuefang/portrait-1.avif"],
+  },
 };
 
 const trail = [

@@ -5,8 +5,23 @@ import { SectionHead } from "./section-head";
  * Visible FAQ. The same content is emitted as FAQPage JSON-LD on the page,
  * so answer engines and readers see one consistent source of truth.
  * Native <details> keeps it accordion-like with zero JavaScript.
+ *
+ * Defaults to the site-wide FAQ; pass a guide's own `items` to reuse it on
+ * any page with matching FAQPage schema.
  */
-export function Faq() {
+export function Faq({
+  items = FAQ,
+  kicker = "Good to Know",
+  title = (
+    <>
+      Questions, <em className="font-normal not-italic text-clay">answered</em>.
+    </>
+  ),
+}: {
+  items?: { q: string; a: string }[];
+  kicker?: string;
+  title?: React.ReactNode;
+}) {
   return (
     <section
       id="faq"
@@ -14,18 +29,10 @@ export function Faq() {
       aria-labelledby="faq-title"
     >
       <div className="mx-auto max-w-[920px] px-6 sm:px-10">
-        <SectionHead
-          id="faq-title"
-          kicker="Good to Know"
-          title={
-            <>
-              Questions, <em className="font-normal not-italic text-clay">answered</em>.
-            </>
-          }
-        />
+        <SectionHead id="faq-title" kicker={kicker} title={title} />
 
         <div className="mt-12 divide-y divide-ink-faint/25 border-y border-ink-faint/25">
-          {FAQ.map((item) => (
+          {items.map((item) => (
             <details key={item.q} className="group py-5">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-[18px] font-medium tracking-[-0.01em] [&::-webkit-details-marker]:hidden">
                 {item.q}

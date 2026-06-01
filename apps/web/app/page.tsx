@@ -21,7 +21,7 @@ import { fetchAllProducts } from "@/lib/medusa";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: `${SITE.name} — ${SITE.tagline}`,
+  title: `Handmade Yixing Clay Teapots & Tea Pets — ${SITE.name}`,
   description: SITE.description,
   alternates: { canonical: "/" },
 };

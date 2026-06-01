@@ -25,6 +25,13 @@ export const metadata: Metadata = {
     url: `${SITE.url}/shop`,
     images: [{ url: "/images/getty_pots.avif", width: 1200, height: 630 }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `Shop · ${SITE.name}`,
+    description:
+      "Handmade Yixing teapots and tea pets — the complete PO/ET catalogue, shaped from purple sand clay.",
+    images: ["/images/getty_pots.avif"],
+  },
 };
 
 const trail = [
@@ -95,10 +102,11 @@ export default async function ShopPage() {
         <div className="mt-9">
           <SectionHead
             id="shop-title"
+            as="h1"
             kicker="The Whole Studio"
             title={
               <>
-                Pots and pets,{" "}
+                Yixing teapots &amp; tea pets,{" "}
                 <em className="font-normal not-italic text-clay">
                   one catalogue
                 </em>

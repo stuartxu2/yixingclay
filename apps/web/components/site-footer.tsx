@@ -7,7 +7,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-ink-faint/25 bg-surface">
       <div className="mx-auto max-w-[1320px] px-6 py-16 sm:px-10">
-        <div className="grid gap-12 border-b border-ink-faint/20 pb-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-x-8 gap-y-12 border-b border-ink-faint/20 pb-12 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
               <Image

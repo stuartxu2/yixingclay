@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -25,6 +26,13 @@ export const metadata: Metadata = {
       "Handmade Yixing zisha teapots — classic forms thrown from purple sand clay, unglazed and made to season with your tea.",
     url: `${SITE.url}/teapots`,
     images: [{ url: "/images/teapot1.avif", width: 1200, height: 545 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Yixing Teapots · ${SITE.name}`,
+    description:
+      "Handmade Yixing zisha teapots — classic forms thrown from purple sand clay, unglazed and made to season with your tea.",
+    images: ["/images/teapot1.avif"],
   },
 };
 
@@ -137,6 +145,22 @@ export default async function TeapotsPage() {
                   one pot, one tea. It is not washed with soap, only rinsed and
                   wiped, and like the tea pets it slowly deepens into a patina
                   that is yours alone.
+                </p>
+                <p className="pt-1 text-[13.5px]">
+                  New to this clay?{" "}
+                  <Link
+                    href="/guides/what-is-yixing-clay"
+                    className="font-medium text-clay underline decoration-clay/40 underline-offset-2 hover:decoration-clay"
+                  >
+                    What is Yixing clay?
+                  </Link>{" "}
+                  ·{" "}
+                  <Link
+                    href="/guides/how-to-season-a-yixing-teapot"
+                    className="font-medium text-clay underline decoration-clay/40 underline-offset-2 hover:decoration-clay"
+                  >
+                    How to season a teapot
+                  </Link>
                 </p>
               </div>
             </div>

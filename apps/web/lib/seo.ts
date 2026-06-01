@@ -9,6 +9,7 @@
 import { SITE } from "./site";
 import { PRODUCTS, PRICE_FLOOR, heroImage, type Product } from "./products";
 import { ARTISTS, type Teapot } from "./teapots";
+import type { Guide, GuideHowTo } from "./guides";
 
 const abs = (path: string) =>
   /^https?:\/\//i.test(path) ? path : `${SITE.url}${path}`;
@@ -26,12 +27,30 @@ export function organizationSchema() {
     description: SITE.description,
     logo: abs("/brand/logo.avif"),
     slogan: SITE.tagline,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Dingshu, Yixing",
+      addressRegion: "Jiangsu",
+      addressCountry: "CN",
+    },
+    areaServed: "Worldwide",
     knowsAbout: [
       "Yixing clay",
       "Zisha purple sand pottery",
+      "Yixing teapots (宜兴紫砂壶)",
       "Tea pets (茶宠)",
+      "Gongfu tea",
       "Chinese tea ceremony",
     ],
+    makesOffer: {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Product",
+        name: "Handmade Yixing zisha teapots and tea pets",
+        category: "Yixing teaware",
+      },
+      priceCurrency: SITE.currency,
+    },
   };
 }
 
@@ -145,15 +164,56 @@ export function collectionSchema() {
   };
 }
 
-/** FAQ schema — gives answer engines clean, extractable Q&A snippets. */
-export function faqSchema() {
+/**
+ * FAQ schema — gives answer engines clean, extractable Q&A snippets.
+ * Defaults to the site-wide FAQ; pass a guide's own Q&A to reuse on any page.
+ */
+export function faqSchema(items: { q: string; a: string }[] = FAQ) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
+    mainEntity: items.map((f) => ({
       "@type": "Question",
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}
+
+/**
+ * Article schema for a guide page — the core AEO/GEO unit. Gives answer
+ * engines an authored, dated, attributed source they can cite.
+ */
+export function articleSchema(g: Guide) {
+  const url = `${SITE.url}/guides/${g.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: g.title,
+    description: g.description,
+    image: abs(g.ogImage),
+    datePublished: g.datePublished,
+    dateModified: g.dateModified,
+    inLanguage: "en",
+    author: { "@id": `${SITE.url}/#organization` },
+    publisher: { "@id": `${SITE.url}/#organization` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    url,
+  };
+}
+
+/** HowTo schema — for step-by-step care/seasoning guides. */
+export function howToSchema(h: GuideHowTo) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: h.name,
+    description: h.description,
+    step: h.steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      text: s.text,
     })),
   };
 }
@@ -173,7 +233,15 @@ export const FAQ: { q: string; a: string }[] = [
     a: "Pour warm leftover tea over the pet after each session and brush it gently with a soft tea brush. Never use soap. With regular tea baths the clay darkens and gains a lustre that is unique to your own brewing.",
   },
   {
-    q: "Do you sell tea pets wholesale?",
-    a: "Yes. PO/ET supplies tea shops and distributors worldwide with wholesale pricing and tiered minimum orders. Contact the studio to open a trade account.",
+    q: "Are your Yixing teapots authentic and handmade?",
+    a: "Yes. Every PO/ET teapot is hand-shaped from genuine Yixing zisha (purple sand) clay quarried in Yixing, Jiangsu, and thrown at the bench of master potter Xu Xuefang — never slip-cast, never machine-pressed, and signed with the maker's seal. Each piece is unglazed single-walled clay.",
+  },
+  {
+    q: "How much does a real Yixing teapot cost?",
+    a: "Authentic handmade Yixing teapots vary with the clay, the form, and the maker. PO/ET pots are priced for their hand work and named-master provenance rather than factory output; browse the teapots collection for current prices, with the full range shown on each product page.",
+  },
+  {
+    q: "Do you ship worldwide, and do you sell wholesale?",
+    a: "Yes to both. PO/ET ships retail orders worldwide, and supplies tea shops and distributors with wholesale pricing and tiered minimum orders. Contact the studio to open a trade account.",
   },
 ];

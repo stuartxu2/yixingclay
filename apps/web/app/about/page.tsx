@@ -24,6 +24,13 @@ export const metadata: Metadata = {
     url: `${SITE.url}/about`,
     images: [{ url: "/images/lu-dou-portrait.avif", width: 1200, height: 630 }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `About · ${SITE.name}`,
+    description:
+      "Lu Dou and Yaoyun Studio — authentic Yixing zisha teapots and tea pets from Dingshu, the home of Chinese purple sand clay.",
+    images: ["/images/lu-dou-portrait.avif"],
+  },
 };
 
 const trail = [

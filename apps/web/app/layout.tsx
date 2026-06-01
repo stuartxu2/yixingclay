@@ -30,18 +30,23 @@ const ekster = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} — ${SITE.tagline}`,
+    default: `Handmade Yixing Clay Teapots & Tea Pets — ${SITE.name}`,
     template: `%s · ${SITE.name}`,
   },
   description: SITE.description,
   applicationName: SITE.name,
   keywords: [
+    "Yixing teapot",
+    "zisha teapot",
+    "authentic Yixing teapot",
+    "buy Yixing teapot",
+    "purple clay teapot",
+    "handmade Chinese teaware",
     "Yixing clay tea pets",
     "zisha tea pet",
+    "handmade tea pet",
     "茶宠",
-    "purple clay figurine",
     "gongfu tea accessories",
-    "handmade Chinese teaware",
   ],
   alternates: { canonical: "/" },
   openGraph: {

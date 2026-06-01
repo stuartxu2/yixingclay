@@ -22,7 +22,7 @@ export const NAV = [
   { label: "The Pets", href: "/tea-pets" },
   { label: "The Clay", href: "/#clay" },
   { label: "The Artists", href: "/artists" },
-  { label: "Our Craft", href: "/#craft" },
+  { label: "Guides", href: "/guides" },
   { label: "About", href: "/about" },
 ] as const;
 
@@ -37,12 +37,25 @@ export const FOOTER_LINKS = [
     ],
   },
   {
+    heading: "Learn",
+    links: [
+      { label: "All Guides", href: "/guides" },
+      { label: "What Is Yixing Clay?", href: "/guides/what-is-yixing-clay" },
+      {
+        label: "Season a Teapot",
+        href: "/guides/how-to-season-a-yixing-teapot",
+      },
+      { label: "What Is a Tea Pet?", href: "/guides/tea-pets-explained" },
+      { label: "Tea Glossary", href: "/guides/yixing-tea-glossary" },
+    ],
+  },
+  {
     heading: "Studio",
     links: [
       { label: "About PO/ET", href: "/about" },
+      { label: "The Artists", href: "/artists" },
       { label: "The Clay", href: "/#clay" },
       { label: "Our Craft", href: "/#craft" },
-      { label: "The Maker", href: "/#story" },
     ],
   },
   {
@@ -50,8 +63,8 @@ export const FOOTER_LINKS = [
     links: [
       { label: "Wholesale", href: "/#wholesale" },
       { label: "Shipping", href: "/#wholesale" },
-      { label: "Care Guide", href: "/#craft" },
-      { label: "Contact", href: "/#wholesale" },
+      { label: "Care Guide", href: "/guides/how-to-care-for-a-tea-pet" },
+      { label: "Contact", href: `mailto:${SITE.email}` },
     ],
   },
 ] as const;

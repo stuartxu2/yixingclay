@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
 import { PRODUCTS } from "@/lib/products";
 import { TEAPOTS } from "@/lib/teapots";
+import { GUIDES } from "@/lib/guides";
 
 /**
  * Sitemap for the storefront: the homepage, the top-level routes, and every
@@ -17,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/teapots", priority: 0.9 },
     { path: "/tea-pets", priority: 0.9 },
     { path: "/artists", priority: 0.8 },
+    { path: "/guides", priority: 0.75 },
     { path: "/about", priority: 0.7 },
   ].map((r) => ({
     url: `${SITE.url}${r.path}`,
@@ -38,6 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+    })),
+    ...GUIDES.map((g) => ({
+      url: `${SITE.url}/guides/${g.slug}`,
+      lastModified: new Date(g.dateModified),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
   ];
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -24,6 +25,13 @@ export const metadata: Metadata = {
       "Yixing clay tea pets (茶宠) — small unglazed creatures kept on the tea tray and raised on years of tea, sculpted from the same purple sand clay as our teapots.",
     url: `${SITE.url}/tea-pets`,
     images: [{ url: "/products/wukong/tray.avif", width: 1200, height: 1200 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Tea Pets · ${SITE.name}`,
+    description:
+      "Yixing clay tea pets (茶宠) — small unglazed creatures kept on the tea tray and raised on years of tea, sculpted from the same purple sand clay as our teapots.",
+    images: ["/products/wukong/tray.avif"],
   },
 };
 
@@ -106,6 +114,22 @@ export default async function TeaPetsPage() {
                   pilgrims of Journey to the West for the road. One pet, many
                   years — it becomes a record of your tea, a colour that is
                   yours alone.
+                </p>
+                <p className="pt-1 text-[13.5px]">
+                  New to tea pets?{" "}
+                  <Link
+                    href="/guides/tea-pets-explained"
+                    className="font-medium text-clay underline decoration-clay/40 underline-offset-2 hover:decoration-clay"
+                  >
+                    What is a tea pet?
+                  </Link>{" "}
+                  ·{" "}
+                  <Link
+                    href="/guides/how-to-care-for-a-tea-pet"
+                    className="font-medium text-clay underline decoration-clay/40 underline-offset-2 hover:decoration-clay"
+                  >
+                    How to care for one
+                  </Link>
                 </p>
               </div>
             </div>
