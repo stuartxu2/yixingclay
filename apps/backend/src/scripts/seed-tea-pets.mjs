@@ -6,7 +6,11 @@
 
 const MEDUSA_URL = "http://localhost:9000";
 const ADMIN_EMAIL = "admin@yixingclay.com";
-const ADMIN_PASSWORD = "PoetAdmin2026!";
+const ADMIN_PASSWORD = process.env.MEDUSA_ADMIN_PASSWORD;
+if (!ADMIN_PASSWORD) {
+  console.error("Set MEDUSA_ADMIN_PASSWORD (admin credential) before running.");
+  process.exit(1);
+}
 const SALES_CHANNEL_ID = "sc_01KRSZ9W4RY5M7GB7D4PGFD729";
 
 const PRODUCTS = [

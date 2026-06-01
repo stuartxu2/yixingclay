@@ -17,7 +17,11 @@
 
 const MEDUSA_URL = process.env.MEDUSA_URL ?? "https://api.yixingclay.com";
 const ADMIN_EMAIL = process.env.MEDUSA_ADMIN_EMAIL ?? "admin@yixingclay.com";
-const ADMIN_PASSWORD = process.env.MEDUSA_ADMIN_PASSWORD ?? "PoetAdmin2026!";
+const ADMIN_PASSWORD = process.env.MEDUSA_ADMIN_PASSWORD;
+if (!ADMIN_PASSWORD) {
+  console.error("Set MEDUSA_ADMIN_PASSWORD (admin credential) before running.");
+  process.exit(1);
+}
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes("--dry-run");

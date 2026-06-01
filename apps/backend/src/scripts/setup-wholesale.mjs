@@ -11,7 +11,11 @@
 
 const MEDUSA_URL = "http://localhost:9000";
 const ADMIN_EMAIL = "test-admin@yixingclay.com";
-const ADMIN_PASSWORD = "TeaStudio2026";
+const ADMIN_PASSWORD = process.env.MEDUSA_ADMIN_PASSWORD;
+if (!ADMIN_PASSWORD) {
+  console.error("Set MEDUSA_ADMIN_PASSWORD (admin credential) before running.");
+  process.exit(1);
+}
 const WHOLESALE_FACTOR = 0.7; // 30% trade discount
 
 async function api(method, path, token, body) {
