@@ -1,7 +1,7 @@
 import Medusa from "@medusajs/js-sdk";
 import type { ProductCategory } from "@yixingclay/ts-types";
 import type { Product } from "./products";
-import type { ArtistKey, Teapot } from "./teapots";
+import type { Teapot } from "./teapots";
 
 export const medusa = new Medusa({
   baseUrl: process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL ?? "http://localhost:9000",
@@ -92,8 +92,7 @@ export function medusaToTeapot(p: MedusaProduct): Teapot {
       ? Math.max(0, variant?.inventory_quantity ?? 0)
       : 99;
 
-  const artistName = String(meta.artist ?? "");
-  const artist: ArtistKey = /fou/i.test(artistName) ? "yi-fou" : "yao-yun";
+  // The studio has one master; every teapot is credited to her.
   const clay = String(meta.clay ?? "");
   const images = (p.images ?? []).map((i) => i.url).filter(Boolean);
 
@@ -102,7 +101,7 @@ export function medusaToTeapot(p: MedusaProduct): Teapot {
     sku: `PO/ET · ${p.handle.toUpperCase()}`,
     name: p.title,
     zh: String(meta.zh ?? ""),
-    artist,
+    artist: "xu-xuefang",
     clay,
     clayKey: clay.split(" · ")[0] || clay || "Yixing clay",
     shape: String(meta.shape ?? ""),

@@ -41,9 +41,9 @@ export function Story() {
             — the rest is years of your tea.&rdquo;
           </blockquote>
           <p className="mt-7 text-[14px] font-medium tracking-[0.04em]">
-            Dou Lu
+            Xu Xuefang 许学芳
             <span className="mt-1 block text-[13px] font-light tracking-normal text-ink-faint">
-              Founder &amp; sculptor, Yixing — since 1983
+              Senior Master of Arts &amp; Crafts, Yixing
             </span>
           </p>
 

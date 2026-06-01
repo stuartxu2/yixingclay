@@ -9,7 +9,7 @@
  * maps Medusa products onto this same `Teapot` interface.
  */
 
-export type ArtistKey = "yao-yun" | "yi-fou";
+export type ArtistKey = "xu-xuefang";
 
 export interface Artist {
   key: ArtistKey;
@@ -18,41 +18,44 @@ export interface Artist {
   /** Pinyin pronunciation aid. */
   pinyin: string;
   title: string;
-  /** One-line studio credit shown on cards. */
+  /** One-line studio credit shown on cards and badges. */
   signature: string;
   bio: string[];
-  /** A teapot slug used as the artist's portrait image on the Artists page. */
-  portrait: string;
+  /** Selected competition awards, newest first, for the Artists page. */
+  awards: string[];
+  /** Real photographs of the artist — public AVIF paths. */
+  portraits: string[];
 }
 
 export const ARTISTS: Record<ArtistKey, Artist> = {
-  "yao-yun": {
-    key: "yao-yun",
-    name: "Yao Yun",
-    zh: "窑云",
-    pinyin: "yáo yún — “kiln cloud”",
-    title: "Master potter · zisha forms",
-    signature: "Throws the round, full-bodied forms",
+  "xu-xuefang": {
+    key: "xu-xuefang",
+    name: "Xu Xuefang",
+    zh: "许学芳",
+    pinyin: "xǔ xué fāng",
+    title: "Senior Master of Arts & Crafts · 正高级工艺美术师",
+    signature: "Jiangsu Ceramic Art Celebrity · Yixing zisha",
     bio: [
-      "Yao Yun keeps to the classical Yixing repertoire — full, round bodies that pour in a single clean arc. Every pot is paddled by hand from a flat sheet of clay, never cast.",
-      "Her work is unhurried. A single teapot moves through her bench a dozen times before firing: shaped, rested, trimmed, rested again, until the wall rings true when tapped.",
-      "She signs the underside of each pot with the studio's kiln-cloud seal — the same mark stamped on PO/ET teaware since 1983.",
+      "Xu Xuefang was born in Yixing in 1974 and works the city's native purple-sand clay as a Senior Master of Arts and Crafts (正高级工艺美术师) and a named Jiangsu Ceramic Art Celebrity — one of the strongest hands among the region's mid-generation zisha potters.",
+      "She read fine art and design at Nanjing Normal University, completed the humanistic-ceramics seminar at Tsinghua University's Academy of Fine Arts in 2014, and trained in a dedicated zisha programme at the University of London in 2018. She apprenticed under Wu Ming (吴鸣), the Chinese Arts & Crafts Master and designer at the China Zisha Museum.",
+      "Her bench runs from the strict classical forms — bi-disc and bridge-handle pots — to her own sculptural sets, each paddled by hand from a flat sheet of clay and signed with her seal. Over more than a decade her work has taken gold at the country's leading ceramic exhibitions.",
     ],
-    portrait: "s0117",
-  },
-  "yi-fou": {
-    key: "yi-fou",
-    name: "Yi Fou",
-    zh: "亦缶",
-    pinyin: "yì fǒu — “also a vessel”",
-    title: "Sculptor · botanical & figural work",
-    signature: "Carves the botanical and figural pots",
-    bio: [
-      "Yi Fou took the studio name from 缶, an ancient clay vessel. He works where pottery meets sculpture — gourds, bamboo, hydrangea, door-god reliefs pressed into the clay while it is still soft.",
-      "His pots wear their decoration as structure, not surface: a handle becomes a vine, a knob becomes a bud. Nothing is glued on after firing.",
-      "He fires in small batches and rejects freely. A season at his bench yields perhaps thirty pots he is willing to sign.",
+    awards: [
+      "2024 · Gold — “Eight-Direction Bridge Set” 八方提梁套壶, Jiangsu “Zi Yu Dunhuang · Yibo Cup”",
+      "2020 · First Prize — “Bi-Disc Lift” 提璧, 3rd Jiangsu Ceramic Art Classic-Heritage review",
+      "2019 · Gold — “Eight-Direction Wisdom” 八方行智, Yangtze Delta Arts & Crafts new-talent competition",
+      "2017 · Gold — “Growth Rings” 年轮, 7th national “Dadi Award” ceramic competition",
+      "2017 · Gold — “Lifting Orchid (set)” 提兰, 5th “Yibo Cup” ceramic-innovation exhibition",
+      "2015 · Gold — “Elegance Pot” 雅洁壶, 17th China Arts & Crafts Masters Expo",
+      "2014 · Gold — “Leisure Pot” 悠然壶, 16th China Arts & Crafts Masters Expo",
+      "2013 · Gold — “A Wisp of Fragrance” 一缕清香, 15th China Arts & Crafts Masters Expo",
     ],
-    portrait: "s0380",
+    portraits: [
+      "/artists/xu-xuefang/portrait-1.avif",
+      "/artists/xu-xuefang/portrait-2.avif",
+      "/artists/xu-xuefang/portrait-3.avif",
+      "/artists/xu-xuefang/portrait-4.avif",
+    ],
   },
 };
 
@@ -92,11 +95,37 @@ export interface Teapot {
 
 export const TEAPOTS: Teapot[] = [
   {
+    slug: "s0901",
+    sku: "PO/ET · S0901",
+    name: "All As You Wish",
+    zh: "称心如意",
+    artist: "xu-xuefang",
+    clay: "Di Cao Qing Purple Clay · 底槽清",
+    clayKey: "Di Cao Qing",
+    shape: "Ti Liang — bridge-handle ruyi set",
+    capacity: 450,
+    dimensions: "15 × 11.5 × 16.5 cm",
+    weight: 360,
+    price: 88000,
+    stock: 1,
+    poem: "Cheng xin ru yi — all as the heart wishes.",
+    blurb:
+      "A presentation tea set by the Yixing master Xu Xuefang — one bridge-handle (ti-liang) pot with two matched cups, fully hand-paddled from a flat sheet of clay. The body is Di Cao Qing, the prized bottom-slot seam of Huanglongshan purple-sand ore, fired in the zi ni family to a warm, settled brown-red that grows more lustrous the longer it is brewed. A hand-applied band of gilt and the heart-curl knob carry the ruyi (如意) motif — the ancient Chinese emblem of good fortune, a wish that all go as the heart desires. At 450 ml the overhead handle sits comfortably in the hand for pouring; sold as the pot with its two cups.",
+    featured: true,
+    images: [
+      "/teapots/s0901/1.avif",
+      "/teapots/s0901/2.avif",
+      "/teapots/s0901/3.avif",
+      "/teapots/s0901/4.avif",
+      "/teapots/s0901/5.avif",
+    ],
+  },
+  {
     slug: "s0103",
     sku: "PO/ET · S0103",
     name: "The Coin Pot",
     zh: "钱多多",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Purple Gold Sand · 紫玉金砂",
     clayKey: "Zi Yu Jin Sha",
     shape: "Round-bellied gongfu pot",
@@ -122,7 +151,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0119",
     name: "The Gourd of Fortune",
     zh: "福禄",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Purple Clay · 紫泥",
     clayKey: "Zi Ni",
     shape: "Gourd form, double-stacked",
@@ -147,7 +176,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0136",
     name: "Door God — Peace",
     zh: "门神（平安）",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Blended Purple Clay · 拼紫泥",
     clayKey: "Pin Zi Ni",
     shape: "Relief-carved figural pot",
@@ -172,7 +201,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0117",
     name: "The Dragon Bridge",
     zh: "龙提梁",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Aged Purple Clay · 老紫泥",
     clayKey: "Lao Zi Ni",
     shape: "Ti Liang — overhead bridge handle",
@@ -198,7 +227,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0415",
     name: "Hydrangea Lidded Cup",
     zh: "绣球花盖杯",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Black Gold Sand · 乌金砂",
     clayKey: "Wu Jin Sha",
     shape: "Gaiwan — lidded brewing cup",
@@ -223,7 +252,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0065",
     name: "Knowing Bamboo",
     zh: "知竹",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Yellow Jade Duan · 黄玉段",
     clayKey: "Huang Yu Duan",
     shape: "Bamboo-segment pot",
@@ -249,7 +278,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0070",
     name: "Knowing Bamboo, Side-Handle",
     zh: "知竹侧把",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Peach Blossom Clay · 桃花泥",
     clayKey: "Tao Hua Ni",
     shape: "Ce Ba — side-handle pot",
@@ -274,7 +303,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0080",
     name: "Yu — Carried Fragrance",
     zh: "钰 · 传香",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Mid-Seam Purple · 中槽清",
     clayKey: "Zhong Cao Qing",
     shape: "Rounded high-shoulder pot",
@@ -285,7 +314,7 @@ export const TEAPOTS: Teapot[] = [
     stock: 4,
     poem: "A pot that carries the scent forward.",
     blurb:
-      "A full, high-shouldered pot from Yao Yun's Yu series — yu meaning fine jade. Thrown from Zhong Cao Qing, the prized middle seam of the zini deposit, which fires a clean and even purple-brown that potters reserve for their steadiest forms.",
+      "A full, high-shouldered pot from Xu Xuefang's Yu series — yu meaning fine jade. Thrown from Zhong Cao Qing, the prized middle seam of the zini deposit, which fires a clean and even purple-brown that potters reserve for their steadiest forms.",
     images: [
       "/teapots/s0080/1.avif",
       "/teapots/s0080/2.avif",
@@ -299,7 +328,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0206",
     name: "Dawn Dream",
     zh: "晓梦",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Morandi Green · 莫兰迪绿",
     clayKey: "Morandi Green",
     shape: "Tall pear-form pot",
@@ -325,7 +354,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0212",
     name: "Gathered Scent",
     zh: "拾香",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Morandi Green · 莫兰迪绿泥",
     clayKey: "Morandi Green",
     shape: "Compact rounded pot",
@@ -350,7 +379,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0241",
     name: "Wandering Bamboo",
     zh: "逍遥竹",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Sand Clay · 段泥",
     clayKey: "Duan Ni",
     shape: "Bamboo-form pot",
@@ -375,7 +404,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0259",
     name: "Little Xishi — Ginkgo",
     zh: "小西施（银杏叶）",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Slope Clay · 降坡泥",
     clayKey: "Jiang Po Ni",
     shape: "Xishi — the classic rounded form",
@@ -400,7 +429,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0337",
     name: "Aroma Cup — Hydrangea",
     zh: "闻香杯（绣球花）",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Cinnabar Clay · 朱泥",
     clayKey: "Zhu Ni",
     shape: "Wen Xiang — scent cup",
@@ -424,7 +453,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0381",
     name: "The Little Gourd Stump",
     zh: "小葫墩",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Golden Duan · 黄金段",
     clayKey: "Huang Jin Duan",
     shape: "Squat gourd-stump pot",
@@ -449,7 +478,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0108",
     name: "The Honest Ladle",
     zh: "憨瓢",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Purple Gold Sand · 紫玉金砂",
     clayKey: "Zi Yu Jin Sha",
     shape: "Shi Piao — the stone ladle",
@@ -474,7 +503,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0126",
     name: "Jade Hall",
     zh: "玉堂富贵",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Purple Clay · 紫泥",
     clayKey: "Zi Ni",
     shape: "Rounded high-lid pot",
@@ -499,7 +528,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0142",
     name: "Door God — Blessings",
     zh: "门神（多福）",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Blended Purple Clay · 拼紫泥",
     clayKey: "Pin Zi Ni",
     shape: "Relief-carved figural pot",
@@ -524,7 +553,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0369",
     name: "The Little Aubergine",
     zh: "小茄瓜",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Aged Purple Clay · 老紫泥",
     clayKey: "Lao Zi Ni",
     shape: "Aubergine-gourd form",
@@ -549,7 +578,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0081",
     name: "Seeing the Mountain",
     zh: "见山",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Yellow Jade Duan · 黄玉段",
     clayKey: "Huang Yu Duan",
     shape: "Low wide flat pot",
@@ -574,7 +603,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0071",
     name: "Yu — Born of Fragrance",
     zh: "钰 · 生香",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Peach Blossom Clay · 桃花泥",
     clayKey: "Tao Hua Ni",
     shape: "Large round table pot",
@@ -599,7 +628,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0209",
     name: "Gourd's Whisper",
     zh: "瓜语",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Morandi Green · 莫兰迪绿",
     clayKey: "Morandi Green",
     shape: "Lobed gourd-form pot",
@@ -624,7 +653,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0243",
     name: "Held Fragrance",
     zh: "凝香",
-    artist: "yao-yun",
+    artist: "xu-xuefang",
     clay: "Sand Clay · 段泥",
     clayKey: "Duan Ni",
     shape: "Rounded shoulder pot",
@@ -649,7 +678,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0380",
     name: "The Aubergine — Hydrangea",
     zh: "茄瓜（绣球花）",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Cinnabar Clay · 朱泥",
     clayKey: "Zhu Ni",
     shape: "Aubergine-gourd form",
@@ -660,7 +689,7 @@ export const TEAPOTS: Teapot[] = [
     stock: 11,
     poem: "An aubergine crowned with a bloom.",
     blurb:
-      "Yi Fou's finest small pot — the soft lobed aubergine form finished with a hand-built hydrangea at the lid. Fired from bright Zhu Ni cinnabar clay, a high-shrinkage body that few potters risk at this thinness; it rings clear and reddens with every brew.",
+      "Xu Xuefang's finest small pot — the soft lobed aubergine form finished with a hand-built hydrangea at the lid. Fired from bright Zhu Ni cinnabar clay, a high-shrinkage body that few potters risk at this thinness; it rings clear and reddens with every brew.",
     featured: true,
     images: [
       "/teapots/s0380/1.avif",
@@ -675,7 +704,7 @@ export const TEAPOTS: Teapot[] = [
     sku: "PO/ET · S0315",
     name: "The Ingot Vessel",
     zh: "元宝手抓宝瓶",
-    artist: "yi-fou",
+    artist: "xu-xuefang",
     clay: "Purple Gold Sand · 紫玉金砂",
     clayKey: "Zi Yu Jin Sha",
     shape: "Bao Ping — grip-top treasure pot",
