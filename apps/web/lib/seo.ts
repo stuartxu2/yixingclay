@@ -68,15 +68,27 @@ export function websiteSchema() {
 }
 
 function productSchema(p: Product, url: string = SITE.url) {
+  const additionalProperty = [
+    p.zh && { "@type": "PropertyValue", name: "Chinese name", value: p.zh },
+    p.clay && { "@type": "PropertyValue", name: "Clay body", value: p.clay },
+    p.height && {
+      "@type": "PropertyValue",
+      name: "Height",
+      value: `${p.height} cm`,
+    },
+  ].filter(Boolean);
+
   return {
     "@type": "Product",
     name: p.name,
-    description: p.blurb,
+    description: p.seoDescription ?? p.blurb,
     sku: p.slug,
-    category: p.category,
+    category: "Yixing tea pet (茶宠)",
+    ...(p.keywords?.length ? { keywords: p.keywords.join(", ") } : {}),
     image: abs(heroImage(p)),
     material: p.clay,
     brand: { "@type": "Brand", name: SITE.name },
+    ...(additionalProperty.length ? { additionalProperty } : {}),
     offers: {
       "@type": "Offer",
       price: (p.price / 100).toFixed(2),

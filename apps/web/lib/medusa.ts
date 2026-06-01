@@ -60,11 +60,20 @@ export function medusaToProduct(p: MedusaProduct): Product {
 
   const images = (p.images ?? []).map((i) => i.url).filter(Boolean);
 
+  // Tea pets share one Medusa category ("teapets"); their storefront filter
+  // family (cats | legends | creatures) travels in `metadata.group`.
+  const category = ((meta.group as ProductCategory) ??
+    (p.categories?.[0]?.handle as ProductCategory) ??
+    "creatures") as ProductCategory;
+  const keywords = Array.isArray(meta.keywords)
+    ? (meta.keywords as string[])
+    : undefined;
+
   return {
     slug: p.handle,
     name: p.title,
     zh: (meta.zh as string) ?? "",
-    category: (p.categories?.[0]?.handle ?? "creatures") as ProductCategory,
+    category,
     clay: (meta.clay as string) ?? "",
     price: usdPrice,
     poem: (meta.poem as string) ?? "",
@@ -73,6 +82,9 @@ export function medusaToProduct(p: MedusaProduct): Product {
     featured: (meta.featured as boolean) ?? false,
     soldOut,
     images: images.length > 0 ? images : undefined,
+    seoTitle: (meta.seo_title as string) ?? undefined,
+    seoDescription: (meta.seo_description as string) ?? undefined,
+    keywords,
   };
 }
 

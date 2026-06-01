@@ -33,23 +33,25 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const product = (await fetchProduct(slug)) ?? getProduct(slug);
   if (!product) return { title: "Tea pet not found" };
 
-  const title = `${product.name} (${product.zh})`;
+  const title = product.seoTitle ?? `${product.name} (${product.zh})`;
+  const description = product.seoDescription ?? product.blurb;
   const path = `/tea-pets/${product.slug}`;
   return {
     title,
-    description: product.blurb,
+    description,
+    keywords: product.keywords,
     alternates: { canonical: path },
     openGraph: {
       type: "website",
       title: `${title} · ${SITE.name}`,
-      description: product.blurb,
+      description,
       url: `${SITE.url}${path}`,
       images: [{ url: heroImage(product), width: 1200, height: 1200, alt: product.name }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} · ${SITE.name}`,
-      description: product.blurb,
+      description,
       images: [heroImage(product)],
     },
   };

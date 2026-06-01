@@ -21,6 +21,10 @@ import type { CatalogProduct, ProductCategory } from "@yixingclay/ts-types";
 export type Product = CatalogProduct & {
   soldOut?: boolean;
   images?: string[];
+  /** SEO/AEO fields sourced from Medusa `metadata` (see `medusaToProduct`). */
+  seoTitle?: string;
+  seoDescription?: string;
+  keywords?: string[];
 };
 export type Category = ProductCategory;
 
