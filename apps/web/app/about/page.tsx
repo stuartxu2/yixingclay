@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -74,20 +75,28 @@ export default function AboutPage() {
 
         {/* Hero */}
         <section className="mt-9" aria-labelledby="about-hero">
-          <p className="eyebrow">The Maker</p>
+          <p className="eyebrow">The Founder</p>
           <h1
             id="about-hero"
             className="mt-5 max-w-[20ch] text-[clamp(38px,5.4vw,72px)] font-extralight leading-[1.04] tracking-[-0.022em]"
           >
             Lu Dou — Yixing clay,{" "}
-            <em className="font-normal not-italic text-clay">in his own hands</em>.
+            <em className="font-normal not-italic text-clay">from the ground up</em>.
           </h1>
           <p className="mt-6 max-w-[52ch] text-[17px] font-light text-ink-soft">
             PO/ET is the storefront of{" "}
             <strong className="font-medium text-ink">Yaoyun Yixing Clay Studio</strong>{" "}
             (窑韵), founded by Lu Dou in Dingshu, Yixing — the historic home of
-            Chinese zisha culture. Every pot we ship begins in his studio: clay
-            selected by hand, shaped by hand, fired in his own kiln.
+            Chinese zisha culture. The clay is selected, blended, and aged in his
+            studio; the pots themselves are thrown by the studio&rsquo;s master
+            potter,{" "}
+            <Link
+              href="/artists"
+              className="font-medium text-ink underline decoration-ink-faint/40 underline-offset-2 hover:decoration-ink"
+            >
+              Xu Xuefang 许学芳
+            </Link>
+            .
           </p>
 
           <div className="relative mt-10 grid gap-6 md:grid-cols-[0.95fr_1.05fr]">
@@ -145,6 +154,18 @@ export default function AboutPage() {
               companionship. From classical silhouettes to forms inspired by
               Dunhuang, Zen aesthetics, and auspicious motifs, the studio brings
               Yixing heritage into modern living spaces.
+            </p>
+            <p>
+              The pots themselves are thrown at the bench of the studio&rsquo;s
+              master potter,{" "}
+              <Link
+                href="/artists"
+                className="font-medium text-ink underline decoration-ink-faint/40 underline-offset-2 hover:decoration-ink"
+              >
+                Xu Xuefang (许学芳)
+              </Link>
+              , a Senior Master of Arts &amp; Crafts — every pot signed with her
+              seal.
             </p>
           </div>
         </section>

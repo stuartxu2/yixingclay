@@ -16,7 +16,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Yixing Teapots",
   description:
-    "The PO/ET teapots — 24 handmade Yixing zisha teapots thrown from purple sand clay. Classic Xishi, Shi Piao, gourd and bamboo forms, unglazed and ready to brew.",
+    "The PO/ET teapots — handmade Yixing zisha teapots thrown from purple sand clay. Classic Xishi, Shi Piao, gourd and bamboo forms, unglazed and ready to brew.",
   alternates: { canonical: "/teapots" },
   openGraph: {
     type: "website",
@@ -92,69 +92,70 @@ export default async function TeapotsPage() {
       >
         <Breadcrumbs trail={trail} />
 
-        {/* Hero */}
-        <section className="mt-9" aria-labelledby="teapots-hero">
+        {/* Cultural intro */}
+        <section className="mt-6" aria-labelledby="teapots-hero">
           <p className="eyebrow">The Pots of PO/ET</p>
           <h1
             id="teapots-hero"
-            className="mt-5 max-w-[16ch] text-[clamp(38px,5.4vw,72px)] font-extralight leading-[1.04] tracking-[-0.022em]"
+            className="mt-5 max-w-[18ch] text-[clamp(36px,5vw,68px)] font-extralight leading-[1.04] tracking-[-0.022em]"
           >
             Teapots, thrown to{" "}
             <em className="font-normal not-italic text-clay">pour</em>.
           </h1>
-          <p className="mt-6 max-w-[48ch] text-[17px] font-light text-ink-soft">
-            PO is the pot; ET is the pet. The same Yixing purple sand clay that
-            becomes our tea pets is thrown, paddled, and fired into teapots —
-            unglazed, single-walled, and made to brew. {teapots.length} pots in
-            stock, from {formatPrice(floor)} to {formatPrice(ceiling)}.
-          </p>
 
-          <div className="relative mt-10 aspect-[16/7] overflow-hidden rounded-2xl bg-cream">
-            <Image
-              src="/images/teapot1.avif"
-              alt="A Yixing zisha teapot pouring tea on a wooden tea table"
-              fill
-              priority
-              sizes="(max-width: 1320px) 100vw, 1320px"
-              className="object-cover"
-            />
-          </div>
-        </section>
+          <div className="mt-9 grid items-center gap-10 lg:grid-cols-[1fr_0.82fr] lg:gap-14">
+            <div>
+              <p className="max-w-[48ch] text-[17px] font-light text-ink-soft">
+                PO is the pot; ET is the pet. The same Yixing purple sand clay
+                that becomes our tea pets is thrown, paddled, and fired into
+                teapots — unglazed, single-walled, and made to brew.{" "}
+                {teapots.length} pots in stock, from {formatPrice(floor)} to{" "}
+                {formatPrice(ceiling)}.
+              </p>
 
-        {/* Why Yixing teapots — AEO-friendly informational block */}
-        <section
-          className="mt-20 grid gap-10 border-t border-ink-faint/20 pt-14 lg:grid-cols-[0.9fr_1.1fr]"
-          aria-labelledby="why-yixing"
-        >
-          <h2
-            id="why-yixing"
-            className="text-[clamp(24px,3vw,36px)] font-extralight tracking-[-0.02em]"
-          >
-            Why a clay pot{" "}
-            <em className="font-normal not-italic text-clay">remembers</em>.
-          </h2>
-          <div className="space-y-4 text-[15px] font-light text-ink-soft">
-            <p>
-              Yixing teapots are thrown from zisha — &ldquo;purple sand&rdquo;
-              clay quarried near Yixing in Jiangsu, China. The clay is left
-              unglazed, so its open pore structure can breathe.
-            </p>
-            <p>
-              With each brewing the walls absorb a trace of the tea&apos;s oil
-              and aroma. Over years a seasoned pot is so saturated that, as the
-              old saying goes, it can draw tea from nothing but hot water.
-            </p>
-            <p>
-              For that reason a Yixing pot is kept to a single kind of tea — one
-              pot, one tea. It is not washed with soap, only rinsed and wiped,
-              and like the tea pets it slowly deepens into a patina that is
-              yours alone.
-            </p>
+              <h2
+                id="why-yixing"
+                className="mt-8 text-[clamp(22px,2.6vw,32px)] font-extralight tracking-[-0.02em]"
+              >
+                Why a clay pot{" "}
+                <em className="font-normal not-italic text-clay">remembers</em>.
+              </h2>
+              <div className="mt-4 space-y-3 text-[14.5px] font-light text-ink-soft">
+                <p>
+                  Yixing teapots are thrown from zisha — &ldquo;purple
+                  sand&rdquo; clay quarried near Yixing in Jiangsu, China. The
+                  clay is left unglazed, so its open pore structure can breathe.
+                </p>
+                <p>
+                  With each brewing the walls absorb a trace of the tea&apos;s
+                  oil and aroma. Over years a seasoned pot is so saturated that,
+                  as the old saying goes, it can draw tea from nothing but hot
+                  water.
+                </p>
+                <p>
+                  For that reason a Yixing pot is kept to a single kind of tea —
+                  one pot, one tea. It is not washed with soap, only rinsed and
+                  wiped, and like the tea pets it slowly deepens into a patina
+                  that is yours alone.
+                </p>
+              </div>
+            </div>
+
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-cream">
+              <Image
+                src="/images/teapot1.avif"
+                alt="A Yixing zisha teapot pouring tea on a wooden tea table"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 560px"
+                className="object-cover"
+              />
+            </div>
           </div>
         </section>
 
         {/* The teapots — filterable collection */}
-        <section className="mt-20" aria-labelledby="the-teapots">
+        <section className="mt-16" aria-labelledby="the-teapots">
           <SectionHead
             id="the-teapots"
             kicker="The Collection"

@@ -248,9 +248,9 @@ export default async function ArtistsPage() {
           </h2>
           <p className="mx-auto mt-5 max-w-[48ch] text-[15px] font-light text-paper/65">
             Xu Xuefang trained under the Chinese Arts &amp; Crafts Master Wu Ming
-            and fires in her own studio in Yixing — the source town for every pot
-            in this catalogue. Nothing here is cast, glazed, or finished by
-            another hand.
+            and throws every pot at the Yaoyun studio bench in Yixing — the source
+            town for all the clay in this catalogue. Nothing here is cast, glazed,
+            or finished by another hand.
           </p>
         </section>
       </main>
