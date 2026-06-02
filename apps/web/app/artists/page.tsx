@@ -84,22 +84,40 @@ export default async function ArtistsPage() {
       >
         <Breadcrumbs trail={trail} />
 
-        {/* Hero */}
+        {/* Hero — intro beside a portrait of the master */}
         <section className="mt-9" aria-labelledby="artist-hero">
-          <p className="eyebrow">The Master</p>
-          <h1
-            id="artist-hero"
-            className="mt-5 max-w-[16ch] text-[clamp(38px,5.4vw,72px)] font-extralight leading-[1.04] tracking-[-0.022em]"
-          >
-            One master, one{" "}
-            <em className="font-normal not-italic text-clay">bench</em>.
-          </h1>
-          <p className="mt-6 max-w-[52ch] text-[17px] font-light text-ink-soft">
-            Every PO/ET teapot is paddled by hand from a flat sheet of Yixing
-            purple-sand clay and signed with a single seal — that of Xu Xuefang,
-            a Senior Master of Arts &amp; Crafts who has worked the clay of her
-            home city since 1974.
-          </p>
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.78fr] lg:gap-16">
+            <div>
+              <p className="eyebrow">The Master</p>
+              <h1
+                id="artist-hero"
+                className="mt-5 max-w-[14ch] text-[clamp(38px,5.4vw,72px)] font-extralight leading-[1.04] tracking-[-0.022em]"
+              >
+                One master, one{" "}
+                <em className="font-normal not-italic text-clay">bench</em>.
+              </h1>
+              <p className="mt-6 max-w-[52ch] text-[17px] font-light text-ink-soft">
+                Every PO/ET teapot is paddled by hand from a flat sheet of Yixing
+                purple-sand clay and signed with a single seal — that of Xu
+                Xuefang, a Senior Master of Arts &amp; Crafts who has worked the
+                clay of her home city since 1974.
+              </p>
+            </div>
+
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-cream">
+              <Image
+                src={ARTIST.portraits[0]}
+                alt={`${ARTIST.name} (${ARTIST.zh}), Senior Master of Yixing zisha, at her studio bench`}
+                fill
+                priority
+                sizes="(max-width: 1024px) 90vw, 520px"
+                className="object-cover"
+              />
+              <div className="absolute bottom-5 left-5 rounded-full bg-paper/92 px-4 py-2 text-[12px] font-medium tracking-[0.04em] text-ink-soft backdrop-blur-sm">
+                {ARTIST.name} · {ARTIST.zh}
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Profile */}
@@ -107,10 +125,9 @@ export default async function ArtistsPage() {
           <article className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-cream">
               <Image
-                src={ARTIST.portraits[0]}
+                src={ARTIST.portraits[1]}
                 alt={`${ARTIST.name} carving a teapot at her bench`}
                 fill
-                priority
                 sizes="(max-width: 1024px) 90vw, 620px"
                 className="object-cover"
               />
@@ -143,8 +160,8 @@ export default async function ArtistsPage() {
           </article>
 
           {/* Portrait strip — at the bench */}
-          <div className="mt-12 grid grid-cols-3 gap-3.5 sm:gap-5">
-            {ARTIST.portraits.slice(1).map((src, i) => (
+          <div className="mt-12 grid grid-cols-2 gap-3.5 sm:gap-5">
+            {ARTIST.portraits.slice(2).map((src, i) => (
               <div
                 key={src}
                 className="relative aspect-[3/4] overflow-hidden rounded-xl bg-cream"
