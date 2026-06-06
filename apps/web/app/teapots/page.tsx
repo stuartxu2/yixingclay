@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { SectionHead } from "@/components/section-head";
 import { TeapotCollection } from "@/components/teapot-collection";
@@ -10,7 +8,7 @@ import { breadcrumbSchema } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 import { TEAPOTS, priceRange } from "@/lib/teapots";
 import { fetchTeapots } from "@/lib/medusa";
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 
 export const revalidate = 3600;
 
@@ -92,7 +90,6 @@ export default async function TeapotsPage() {
         }}
       />
 
-      <SiteHeader />
 
       <main
         id="main-content"
@@ -196,7 +193,6 @@ export default async function TeapotsPage() {
         </section>
       </main>
 
-      <SiteFooter />
     </>
   );
 }

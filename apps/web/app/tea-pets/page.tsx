@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { SectionHead } from "@/components/section-head";
 import { CollectionGrid } from "@/components/collection";
 import { breadcrumbSchema, collectionSchema } from "@/lib/seo";
 import { SITE } from "@/lib/site";
-import { PRODUCTS, PRICE_FLOOR, PRICE_CEILING, formatPrice } from "@/lib/products";
+import { PRODUCTS, PRICE_FLOOR, PRICE_CEILING } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 import { fetchAllProducts } from "@/lib/medusa";
 
 export const revalidate = 3600;
@@ -59,7 +58,6 @@ export default async function TeaPetsPage() {
         }}
       />
 
-      <SiteHeader />
 
       <main id="main-content" className="mx-auto max-w-[1320px] px-6 py-10 sm:px-10 sm:py-14">
         <Breadcrumbs trail={trail} />
@@ -172,7 +170,6 @@ export default async function TeaPetsPage() {
         </section>
       </main>
 
-      <SiteFooter />
     </>
   );
 }

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ARTISTS, type Teapot, teapotAlt, teapotHero } from "@/lib/teapots";
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 import { useCart } from "./cart/cart-context";
 import { useAuth } from "./auth/auth-context";
 

@@ -7,7 +7,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useCart } from "@/components/cart/cart-context";
 import { useAuth } from "@/components/auth/auth-context";
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 import { medusa } from "@/lib/medusa";
 import { track } from "@/lib/analytics";
 

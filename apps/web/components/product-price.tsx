@@ -1,6 +1,6 @@
 "use client";
 
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 import { useAuth } from "./auth/auth-context";
 
 /**

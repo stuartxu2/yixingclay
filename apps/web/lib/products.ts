@@ -264,10 +264,6 @@ export const PRODUCTS: Product[] = [
 export const PRICE_FLOOR = Math.min(...PRODUCTS.map((p) => p.price));
 export const PRICE_CEILING = Math.max(...PRODUCTS.map((p) => p.price));
 
-export function formatPrice(cents: number): string {
-  return `$${(cents / 100).toFixed(2)}`;
-}
-
 /** First gallery image for a product — used as the card's resting state. */
 export function heroImage(product: Product | string): string {
   if (typeof product === "string") return `/products/${product}/front.avif`;

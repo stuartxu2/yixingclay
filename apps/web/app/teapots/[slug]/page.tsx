@@ -12,8 +12,6 @@ import {
 import { fetchTeapot, fetchTeapots } from "@/lib/medusa";
 import { SITE } from "@/lib/site";
 import { breadcrumbSchema, teapotDetailSchema } from "@/lib/seo";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ProductGallery } from "@/components/product-gallery";
 import { AddToTray } from "@/components/add-to-tray";
@@ -110,7 +108,6 @@ export default async function TeapotPage({ params }: Params) {
         }}
       />
 
-      <SiteHeader />
 
       <main
         id="main-content"
@@ -230,7 +227,6 @@ export default async function TeapotPage({ params }: Params) {
         </section>
       </main>
 
-      <SiteFooter />
     </>
   );
 }

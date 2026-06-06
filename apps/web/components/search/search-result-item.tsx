@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 import type { SearchResult } from "@/lib/search";
 
 /** One search hit: thumbnail, title, price. Links to the resolved route. */

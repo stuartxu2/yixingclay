@@ -3,11 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { useAuth } from "@/components/auth/auth-context";
 import { medusa } from "@/lib/medusa";
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 
 interface Order {
   id: string;
@@ -50,11 +48,9 @@ export default function AccountPage() {
   if (loading) {
     return (
       <>
-        <SiteHeader />
         <main className="mx-auto flex min-h-[70vh] max-w-[900px] items-center justify-center px-6 py-16">
           <p className="text-[14px] text-ink-faint">Loading…</p>
         </main>
-        <SiteFooter />
       </>
     );
   }
@@ -63,7 +59,6 @@ export default function AccountPage() {
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto max-w-[900px] px-6 py-14 sm:px-10 sm:py-20">
         {/* Header */}
         <div className="mb-10 flex items-start justify-between gap-4">
@@ -155,7 +150,6 @@ export default function AccountPage() {
           )}
         </section>
       </main>
-      <SiteFooter />
     </>
   );
 }

@@ -2,12 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  type Product,
-  altImage,
-  formatPrice,
-  heroImage,
-} from "@/lib/products";
+import { type Product, altImage, heroImage } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 import { useCart } from "./cart/cart-context";
 import { useAuth } from "./auth/auth-context";
 

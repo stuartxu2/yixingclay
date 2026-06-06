@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SiteHeader } from "@/components/site-header";
 import { Hero } from "@/components/hero";
 import { Marquee } from "@/components/marquee";
 import { ClaySection } from "@/components/clay-section";
@@ -12,7 +11,6 @@ import { Story } from "@/components/story";
 import { Faq } from "@/components/faq";
 import { Newsletter } from "@/components/newsletter";
 import { Wholesale } from "@/components/wholesale";
-import { SiteFooter } from "@/components/site-footer";
 import { collectionSchema, faqSchema } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 import { PRODUCTS } from "@/lib/products";
@@ -42,7 +40,6 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema()) }}
       />
 
-      <SiteHeader />
 
       <main id="main-content">
         <Hero />
@@ -82,7 +79,6 @@ export default async function HomePage() {
         <Wholesale />
       </main>
 
-      <SiteFooter />
     </>
   );
 }
