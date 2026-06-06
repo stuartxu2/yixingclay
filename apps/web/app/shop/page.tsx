@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { SectionHead } from "@/components/section-head";
 import { ShopGrid } from "@/components/shop-grid";
 import { breadcrumbSchema } from "@/lib/seo";
 import { SITE } from "@/lib/site";
-import { PRODUCTS, formatPrice } from "@/lib/products";
+import { PRODUCTS } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 import { fetchAllProducts, fetchTeapots } from "@/lib/medusa";
 import { TEAPOTS } from "@/lib/teapots";
 
@@ -91,7 +90,6 @@ export default async function ShopPage() {
         }}
       />
 
-      <SiteHeader />
 
       <main
         id="main-content"
@@ -124,7 +122,6 @@ export default async function ShopPage() {
         <ShopGrid products={products} teapots={teapots} />
       </main>
 
-      <SiteFooter />
     </>
   );
 }

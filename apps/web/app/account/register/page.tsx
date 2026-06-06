@@ -3,8 +3,6 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { useAuth } from "@/components/auth/auth-context";
 
 export default function RegisterPage() {
@@ -44,7 +42,6 @@ export default function RegisterPage() {
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto flex min-h-[70vh] max-w-[480px] flex-col justify-center px-6 py-16 sm:px-10">
         <h1 className="mb-2 text-[clamp(28px,3.5vw,40px)] font-extralight tracking-[-0.02em]">
           Create account
@@ -149,7 +146,6 @@ export default function RegisterPage() {
           </button>
         </form>
       </main>
-      <SiteFooter />
     </>
   );
 }

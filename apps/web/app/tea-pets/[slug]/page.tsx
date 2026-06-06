@@ -10,8 +10,6 @@ import {
 import { fetchProduct } from "@/lib/medusa";
 import { SITE } from "@/lib/site";
 import { breadcrumbSchema, productDetailSchema } from "@/lib/seo";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ProductGallery } from "@/components/product-gallery";
 import { AddToTray } from "@/components/add-to-tray";
@@ -101,7 +99,6 @@ export default async function ProductPage({ params }: Params) {
         }}
       />
 
-      <SiteHeader />
 
       <main id="main-content" className="mx-auto max-w-[1320px] px-6 py-10 sm:px-10 sm:py-14">
         <Breadcrumbs trail={trail} />
@@ -220,7 +217,6 @@ export default async function ProductPage({ params }: Params) {
         </section>
       </main>
 
-      <SiteFooter />
     </>
   );
 }

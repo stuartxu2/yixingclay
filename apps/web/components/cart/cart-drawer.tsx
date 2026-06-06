@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "./cart-context";
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 
 export function CartDrawer() {
   const { lines, subtotal, count, open, closeCart, remove, setQuantity } =

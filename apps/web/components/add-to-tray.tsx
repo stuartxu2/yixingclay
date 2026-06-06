@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 import { useCart } from "./cart/cart-context";
 import { useAuth } from "./auth/auth-context";
 import { track } from "@/lib/analytics";

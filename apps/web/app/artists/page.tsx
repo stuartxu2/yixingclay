@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { TeapotCard } from "@/components/teapot-card";
 import { breadcrumbSchema } from "@/lib/seo";
@@ -76,7 +74,6 @@ export default async function ArtistsPage() {
         }}
       />
 
-      <SiteHeader />
 
       <main
         id="main-content"
@@ -279,7 +276,6 @@ export default async function ArtistsPage() {
         </section>
       </main>
 
-      <SiteFooter />
     </>
   );
 }

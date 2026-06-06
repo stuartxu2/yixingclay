@@ -6,6 +6,8 @@ import { organizationSchema, websiteSchema } from "@/lib/seo";
 import { CartProvider } from "@/components/cart/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { AuthProvider } from "@/components/auth/auth-context";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { AnnouncementBar } from "@/components/announcement-bar";
 import { RevealObserver } from "@/components/reveal-observer";
 import { PostHogProvider } from "@/components/posthog-provider";
@@ -115,7 +117,9 @@ export default function RootLayout({
         <PostHogProvider>
           <AuthProvider>
             <CartProvider>
+              <SiteHeader />
               {children}
+              <SiteFooter />
               <CartDrawer />
             </CartProvider>
           </AuthProvider>

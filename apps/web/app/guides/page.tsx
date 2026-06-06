@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Cta } from "@/components/cta";
 import { breadcrumbSchema } from "@/lib/seo";
@@ -67,7 +65,6 @@ export default function GuidesPage() {
         }}
       />
 
-      <SiteHeader />
 
       <main
         id="main-content"
@@ -157,7 +154,6 @@ export default function GuidesPage() {
         </section>
       </main>
 
-      <SiteFooter />
     </>
   );
 }

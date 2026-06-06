@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Faq } from "@/components/faq";
 import { Cta } from "@/components/cta";
@@ -95,7 +93,6 @@ export default async function GuidePage({ params }: Params) {
         />
       )}
 
-      <SiteHeader />
 
       <main id="main-content">
         <div className="mx-auto max-w-[820px] px-6 py-10 sm:px-10 sm:py-14">
@@ -292,7 +289,6 @@ export default async function GuidePage({ params }: Params) {
         )}
       </main>
 
-      <SiteFooter />
     </>
   );
 }

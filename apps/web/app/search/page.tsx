@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { searchProducts } from "@/lib/search";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { SearchResultItem } from "@/components/search/search-result-item";
 
 type SearchParams = { searchParams: Promise<{ q?: string }> };
@@ -25,7 +23,6 @@ export default async function SearchPage({ searchParams }: SearchParams) {
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto min-h-[60vh] max-w-[860px] px-6 py-16 sm:px-10">
         <section>
           <h1 className="text-[28px] font-light tracking-[-0.01em] text-ink">
@@ -61,7 +58,6 @@ export default async function SearchPage({ searchParams }: SearchParams) {
           )}
         </section>
       </main>
-      <SiteFooter />
     </>
   );
 }

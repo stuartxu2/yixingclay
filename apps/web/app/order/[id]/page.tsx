@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 
 export const metadata: Metadata = {
   title: "Order Confirmed",
@@ -19,7 +17,6 @@ export default async function OrderPage({ params }: Params) {
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto flex max-w-[680px] flex-col items-center px-6 py-20 text-center sm:px-10 sm:py-28">
         {/* Confirmation mark */}
         <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-jade/30">
@@ -73,7 +70,6 @@ export default async function OrderPage({ params }: Params) {
           </Link>
         </div>
       </main>
-      <SiteFooter />
     </>
   );
 }

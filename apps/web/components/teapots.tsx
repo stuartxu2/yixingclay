@@ -4,7 +4,7 @@ import { SectionHead } from "./section-head";
 import { Cta } from "./cta";
 import { ARTISTS, TEAPOTS, featuredTeapots } from "@/lib/teapots";
 import { fetchTeapots } from "@/lib/medusa";
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/price";
 
 /** Homepage section for the "pot" half of PO/ET — a teapot showcase. */
 export async function Teapots() {
